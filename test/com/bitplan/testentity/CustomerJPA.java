@@ -1,13 +1,24 @@
 package com.bitplan.testentity;
 
-import javax.persistence.Entity;
+import java.util.Collection;
 
-@Entity
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.CascadeType;
+//import javax.persistence.Transient;
+
+@Entity(name="Customer")
+@Table (name="Customer")
 public class CustomerJPA implements Customer {
 
-	long id;
+	@Id
+	Long id;
 	String name;
-	
+
+	@Column(name="ORDER_ID")
 	@Override
 	public long getId() {
 		return id;
@@ -28,4 +39,14 @@ public class CustomerJPA implements Customer {
 	  name=pname;	
 	}
 
+  @OneToMany(cascade=CascadeType.ALL, mappedBy="customer")
+	private Collection<OrderJPA> orders;
+  @Override
+  public Collection<Order> getOrders() {
+      return null;
+  }
+
+  public void setOrders(Collection<Order> newValue) {
+      //this.orders = newValue;
+  }
 }
