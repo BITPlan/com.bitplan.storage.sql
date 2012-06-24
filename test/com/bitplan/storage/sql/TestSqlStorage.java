@@ -14,7 +14,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.bitplan.testentity.Customer;
-import com.bitplan.testentity.CustomerJPA;
 import com.bitplan.testentity.Order;
 import com.bitplan.testentity.TestentityJPAModule;
 import com.google.inject.Guice;
@@ -37,7 +36,7 @@ import javax.persistence.Query;
  * http://www.vogella.com/articles/JavaPersistenceAPI/article.html
  * 
  * @author wf
- *  grant all on customers.* to 'cm'@'mars.bitplan.com' identified by 'secret';
+ *  grant all on customers.* to 'cm'@'%.bitplan.com' identified by 'secret';
  */
 public class TestSqlStorage {
 	private static final String PERSISTENCE_UNIT_NAME = "default";

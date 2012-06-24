@@ -46,4 +46,5 @@
 			<version>5.1.18</version>
 		</dependency>
 	</dependencies>
+	<name>REST JPA Persistence</name>
 </project>
