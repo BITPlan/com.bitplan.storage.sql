@@ -28,6 +28,7 @@ public class  TestentityJPAModule extends AbstractModule {
   public void configure() {
     // guice binding for Customer
     bind(Customer.class).to(CustomerJPA.class);
+    bind(CustomerManager.class).to(CustomerManagerJPA.class);
     // guice binding for Order
     bind(Order.class).to(OrderJPA.class);
  

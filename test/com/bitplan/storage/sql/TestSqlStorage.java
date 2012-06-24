@@ -13,7 +13,9 @@ package com.bitplan.storage.sql;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.bitplan.storage.TestStorage;
 import com.bitplan.testentity.Customer;
+import com.bitplan.testentity.CustomerManager;
 import com.bitplan.testentity.Order;
 import com.bitplan.testentity.TestentityJPAModule;
 import com.google.inject.Guice;
@@ -28,8 +30,6 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
-
-
 /**
  * Test SQL storage with EclipseLink
  * see e.g.
@@ -41,15 +41,12 @@ import javax.persistence.Query;
 public class TestSqlStorage {
 	private static final String PERSISTENCE_UNIT_NAME = "default";
 	private static EntityManagerFactory factory;
+	private static EntityManager em;
 	private Injector injector;
 
 	@Before
 	public void prepareGuice() {
 		injector = Guice.createInjector(new TestentityJPAModule());
-	}
-	
-	@Test
-	public void testEclipseLink() {
 		Map<String,String> props=new HashMap<String,String>();
 		props.put("eclipselink.target-database","MYSQL");
 		props.put("javax.persistence.jdbc.driver","com.mysql.jdbc.Driver");
@@ -60,7 +57,11 @@ public class TestSqlStorage {
 		// props.put("eclipselink.ddl-generation","create-tables");
 		props.put("eclipselink.ddl-generation.output-mode","database");
 		factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME,props);
-		EntityManager em = factory.createEntityManager();
+		em = factory.createEntityManager();
+	}
+	
+	@Test
+	public void testEclipseLink() {
 		// Read the existing entries and write to console
 		Query q = em.createQuery("select c from Customer c");
 		@SuppressWarnings("unchecked")
@@ -99,6 +100,15 @@ public class TestSqlStorage {
     em.persist(order2);
 		em.getTransaction().commit();
 		em.close();
+	}
+	
+	/**
+	 * test the JPA CustomerManager
+	 */
+	public void testCustomerManagerJPA() {
+		CustomerManager cm=injector.getInstance(CustomerManager.class);
+		cm.setContext(em);
+		TestStorage.testGenericStorage(cm);
 	}
 
 }
