@@ -7,7 +7,7 @@ import com.bitplan.javax.persistence.Query;
 public class JPAQuery implements com.bitplan.javax.persistence.Query {
 
 	@Override
-	public List getResultList() {
+	public List<Object> getResultList() {
 		// TODO Auto-generated method stub
 		return null;
 	}

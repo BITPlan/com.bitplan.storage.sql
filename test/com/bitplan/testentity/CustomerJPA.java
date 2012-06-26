@@ -1,6 +1,8 @@
 package com.bitplan.testentity;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -43,7 +45,11 @@ public class CustomerJPA implements Customer {
 	private Collection<OrderJPA> orders;
   @Override
   public Collection<Order> getOrders() {
-      return null;
+     List<Order> result=new ArrayList<Order>();
+     for(OrderJPA o:orders) {
+    	 result.add(o);
+     }
+     return result;
   }
 
   public void setOrders(Collection<Order> newValue) {
