@@ -18,6 +18,7 @@
 	<groupId>com.bitplan.storage.sql</groupId>
 	<artifactId>com.bitplan.storage.sql</artifactId>
 	<version>0.0.2</version>
+	<name>REST JPA Persistence</name>
 	<repositories>
 		<repository>
 			<id>eclipselink</id>
@@ -26,6 +27,26 @@
 		</repository>
 	</repositories>
 	<dependencies>
+		<!-- Resthelper -->
+		<dependency>
+			<groupId>com.bitplan.resthelper</groupId>
+			<artifactId>com.bitplan.resthelper</artifactId>
+			<version>0.0.3</version>
+			<scope>test</scope>
+		</dependency>
+		<!-- RestHelper Interface -->
+		<dependency>
+			<groupId>com.bitplan.resthelperinterface</groupId>
+			<artifactId>com.bitplan.resthelperinterface</artifactId>
+			<version>0.0.2</version>
+		</dependency>
+		<!-- Google guice dependency injection tool -->
+		<dependency>
+			<groupId>com.google.inject</groupId>
+			<artifactId>guice</artifactId>
+			<version>3.0</version>
+		</dependency>
+		<!--  Eclipse Link persistence -->
 		<dependency>
 			<groupId>org.eclipse.persistence</groupId>
 			<artifactId>eclipselink</artifactId>
@@ -33,18 +54,22 @@
 			<scope>provided</scope><!-- since I'm running inside a Java EE container -->
 		</dependency>
 		<dependency>
-			<groupId>org.eclipse.persistence</groupId>
-			<artifactId>javax.persistence</artifactId>
-			<version>2.0.0</version>
-			<scope>provided</scope><!-- since I'm running inside a Java EE container -->
+			<groupId>javax.persistence</groupId>
+			<artifactId>persistence-api</artifactId>
+			<version>1.0</version>
 		</dependency>
-
 		<!-- mySQL Connector -->
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<version>5.1.18</version>
 		</dependency>
+		<!-- JUnit -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.8.1</version>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
-	<name>REST JPA Persistence</name>
 </project>
