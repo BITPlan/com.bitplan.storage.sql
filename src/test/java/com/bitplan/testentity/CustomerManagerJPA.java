@@ -66,7 +66,7 @@ public class CustomerManagerJPA implements CustomerManager {
 		this.getEntityManager().getTransaction().commit();
 	}
 
-	@Override
+	// @Override
 	public void beginTransaction() {
 		this.getEntityManager().getTransaction().begin();
 	}
