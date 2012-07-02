@@ -20,7 +20,7 @@
 	<parent>
 		<groupId>com.bitplan.rest</groupId>
 		<artifactId>com.bitplan.rest</artifactId>
-		<version>0.0.4-SNAPSHOT</version>
+		<version>0.0.5-SNAPSHOT</version>
 		<relativePath>../com.bitplan.rest/pom.xml</relativePath>
 	</parent>
 	<repositories>
