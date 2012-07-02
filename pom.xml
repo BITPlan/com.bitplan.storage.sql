@@ -43,6 +43,7 @@
 			<artifactId>com.bitplan.resthelperinterface</artifactId>
 			<groupId>${project.groupId}</groupId>
 			<version>${project.version}</version>
+			<scope>compile</scope>
 		</dependency>
 		<!-- and tests for the RestHelper Interface -->
 		<dependency>
