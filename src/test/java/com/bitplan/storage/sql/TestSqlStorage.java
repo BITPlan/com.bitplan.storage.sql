@@ -50,7 +50,7 @@ public class TestSqlStorage {
 		Map<String,String> props=new HashMap<String,String>();
 		props.put("eclipselink.target-database","MYSQL");
 		props.put("javax.persistence.jdbc.driver","com.mysql.jdbc.Driver");
-		props.put("javax.persistence.jdbc.url", "jdbc:mysql://capri.bitplan.com:3306/customers");
+		props.put("javax.persistence.jdbc.url", "jdbc:mysql://localhost:3306/testsqlstorage");
 		props.put("javax.persistence.jdbc.user","cm");
 		props.put("javax.persistence.jdbc.password", "secret");
 		props.put("eclipselink.ddl-generation","drop-and-create-tables");
@@ -105,6 +105,7 @@ public class TestSqlStorage {
 	/**
 	 * test the JPA CustomerManager
 	 */
+	@Test
 	public void testCustomerManagerJPA() {
 		CustomerManager cm=injector.getInstance(CustomerManager.class);
 		cm.setContext(em);

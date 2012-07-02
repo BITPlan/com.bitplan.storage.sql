@@ -1,5 +1,6 @@
 package com.bitplan.testentity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -11,6 +12,8 @@ import javax.persistence.Query;
  *
  */
 public class CustomerManagerJPA implements CustomerManager {
+	// for examples
+	// http://www.winstonprakash.com/articles/netbeans/JPA_Add_Update_Delete.html
 	EntityManager entityManager;
 	
 	/**
@@ -29,25 +32,26 @@ public class CustomerManagerJPA implements CustomerManager {
 
 	@Override
 	public List<Customer> getCustomers() {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<Customer> result=new ArrayList<Customer>();
+		// FIXME - need test and implementation
+		return result;
 	}
 
 	@Override
 	public void setCustomers(List<Customer> customers) {
-		// TODO Auto-generated method stub
+		// FIXME need test and implementation
 		
 	}
 
 	@Override
 	public Customer create() {
-		// TODO Auto-generated method stub
-		return null;
+		Customer result=new CustomerJPA();
+		return result;
 	}
 
 	@Override
 	public void purge() {
-		Query q = this.getEntityManager().createQuery("delete Customer");
+		Query q = this.getEntityManager().createQuery("delete from Customer customer");
 		q.executeUpdate();
 	}
 
@@ -60,6 +64,11 @@ public class CustomerManagerJPA implements CustomerManager {
 	@Override
 	public void commit() {
 		this.getEntityManager().getTransaction().commit();
+	}
+
+	@Override
+	public void beginTransaction() {
+		this.getEntityManager().getTransaction().begin();
 	}
 
 }

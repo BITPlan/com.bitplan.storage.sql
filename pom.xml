@@ -40,6 +40,14 @@
 			<artifactId>com.bitplan.resthelperinterface</artifactId>
 			<version>0.0.2</version>
 		</dependency>
+		<!--  and tests for the RestHelper Interface -->
+		<dependency>
+     	<groupId>com.bitplan.resthelperinterface</groupId>
+			<artifactId>com.bitplan.resthelperinterface</artifactId>
+			<version>0.0.2</version>
+      <type>test-jar</type>
+      <scope>test</scope>
+    </dependency>
 		<!-- Google guice dependency injection tool -->
 		<dependency>
 			<groupId>com.google.inject</groupId>
