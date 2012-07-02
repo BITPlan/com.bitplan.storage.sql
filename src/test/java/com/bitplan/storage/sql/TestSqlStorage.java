@@ -36,7 +36,8 @@ import javax.persistence.Query;
  * http://www.vogella.com/articles/JavaPersistenceAPI/article.html
  * 
  * @author wf
- *  grant all on customers.* to 'cm'@'%.bitplan.com' identified by 'secret';
+ *  grant all on testsqlstorage.* to 'cm'@'%.bitplan.com' identified by 'secret';
+ *  see testsqlstorage.sql
  */
 public class TestSqlStorage {
 	private static final String PERSISTENCE_UNIT_NAME = "default";
