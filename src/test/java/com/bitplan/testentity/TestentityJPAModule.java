@@ -31,7 +31,7 @@ public class  TestentityJPAModule extends AbstractModule {
     bind(CustomerManager.class).to(CustomerManagerJPA.class);
     // guice binding for Order
     bind(Order.class).to(OrderJPA.class);
- 
+    bind(OrderManager.class).to(OrderManagerJPA.class);
   }
 
 } // TestentityJPAModule
