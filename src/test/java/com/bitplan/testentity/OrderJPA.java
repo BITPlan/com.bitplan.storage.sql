@@ -20,7 +20,7 @@ public class OrderJPA implements Order {
 	Long id;
 	String address;
 	@Transient
-	Long customer_id;
+	Long customerId;
 	private CustomerJPA customer;
 
 	@ManyToOne()
@@ -31,8 +31,11 @@ public class OrderJPA implements Order {
 	}
 
 	@Override
-	public void setCustomer(Customer customer) {
-		this.customer = (CustomerJPA) customer;
+	public void setCustomer(Customer pCustomer) {
+		this.customer = (CustomerJPA) pCustomer;
+		if (pCustomer!=null) {
+			customerId=pCustomer.getId();
+		}
 	}
 
 	@Override
@@ -57,11 +60,11 @@ public class OrderJPA implements Order {
 
 	@Override
 	public long getCustomerId() {
-		return customer_id;
+		return customerId;
 	}
 
 	@Override
 	public void setCustomerId(long pcustomerId) {
-		customer_id = pcustomerId;
+		customerId = pcustomerId;
 	}
 }

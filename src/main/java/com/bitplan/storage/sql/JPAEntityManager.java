@@ -29,8 +29,12 @@ public abstract class JPAEntityManager<BO> extends BOManagerImpl<BO>  {
 	
 	@Override
 	public void setContext(Object context) {
-		this.setEntityManager((EntityManager) context);
-		
+		assert(context!=null);
+		if (context==this.getFactory()) {
+			context=this.getFactory().getContext();
+		}
+		assert(context instanceof EntityManager);
+		this.setEntityManager((EntityManager) context);			
 	}
 
 	@Override
@@ -38,12 +42,12 @@ public abstract class JPAEntityManager<BO> extends BOManagerImpl<BO>  {
 		this.getEntityManager().getTransaction().commit();
 	}
 
-	// @Override
+	@Override
 	public void beginTransaction() {
+		assert(this.getEntityManager().isOpen());
 		this.getEntityManager().getTransaction().begin();
 	}
 
-	
 	@Override
 	public void persist(BO entity) {
 		this.getEntityManager().persist(entity);
@@ -53,5 +57,10 @@ public abstract class JPAEntityManager<BO> extends BOManagerImpl<BO>  {
 	public void close() {
 		this.getEntityManager().close();
 	}
-
+	
+	@Override
+	public <T> T find(Class<T> entityClass, Object primaryKey) throws Exception {
+		T result = this.getEntityManager().find(entityClass, primaryKey);
+		return result;
+	}
 }

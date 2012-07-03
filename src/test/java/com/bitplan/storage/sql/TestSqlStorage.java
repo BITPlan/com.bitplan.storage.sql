@@ -12,14 +12,13 @@ package com.bitplan.storage.sql;
 
 import static org.junit.Assert.*;
 
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
+import com.bitplan.restinterface.BOManagerFactory;
 import com.bitplan.storage.TestStorage;
 import com.bitplan.testentity.Customer;
-import com.bitplan.testentity.CustomerManager;
 import com.bitplan.testentity.Order;
-import com.bitplan.testentity.OrderManager;
 import com.bitplan.testentity.TestentityJPAModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
@@ -29,8 +28,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.persistence.Query;
 
 /**
@@ -41,17 +38,16 @@ import javax.persistence.Query;
  *         'secret'; see testsqlstorage.sql
  */
 public class TestSqlStorage {
-	private static final String PERSISTENCE_UNIT_NAME = "default";
-	private static EntityManagerFactory factory;
-	private static EntityManager em;
-	private Injector injector;
+
 	boolean debug = false;
-	CustomerManager cm;
-	OrderManager om;
-	
-	@Before
-	public void prepareGuice() throws Exception {
+	private static Injector injector;
+	static BOManagerFactory boManagerFactory;
+
+	@BeforeClass
+	public static void prepareGuice() throws Exception {
 		injector = Guice.createInjector(new TestentityJPAModule());
+		boManagerFactory=injector.getInstance(BOManagerFactory.class);
+		boManagerFactory.setInjector(injector);
 		Map<String, String> props = new HashMap<String, String>();
 		props.put("eclipselink.target-database", "MYSQL");
 		props.put("javax.persistence.jdbc.driver", "com.mysql.jdbc.Driver");
@@ -62,18 +58,12 @@ public class TestSqlStorage {
 		props.put("eclipselink.ddl-generation", "drop-and-create-tables");
 		// props.put("eclipselink.ddl-generation","create-tables");
 		props.put("eclipselink.ddl-generation.output-mode", "database");
-		factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME,
-				props);
-		em = factory.createEntityManager();
-		cm = injector.getInstance(CustomerManager.class);
-		cm.setContext(em);
-		om=injector.getInstance(OrderManager.class);
-		om.setContext(em);
+		boManagerFactory.setContext(props);
 	}
 
 	@Test
-	public void testEclipseLink() {
-		// Create new Customer
+	public void testEclipseLink() throws Exception {
+		EntityManager em=(EntityManager) boManagerFactory.getContext();
 		em.getTransaction().begin();
 		Customer customer = injector.getInstance(Customer.class);
 		customer.setId(1);
@@ -120,16 +110,16 @@ public class TestSqlStorage {
 		// customer.getOrders().add(order2);
 		em.persist(order2);
 		em.getTransaction().commit();
-		em.close();
+		// em.close();
 	}
 
 	/**
-	 * test the JPA CustomerManager
+	 * test the JPA Storage
 	 * @throws Exception 
 	 */
 	@Test
-	public void testCustomerManagerJPA() throws Exception {
-		TestStorage.testGenericStorage(cm,om);
+	public void testJPAStorage() throws Exception {
+		TestStorage.testGenericStorage(boManagerFactory);	
 	}
 	
 	/**
@@ -138,6 +128,6 @@ public class TestSqlStorage {
 	 */
 	@Test
 	public void testRead() throws Exception {
-		TestStorage.testGenericRead(cm,om);
+		TestStorage.testGenericRead(boManagerFactory);
 	}
 }

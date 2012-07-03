@@ -18,6 +18,8 @@
  * generated: 07.01.2012 um 16:54
  */
 package com.bitplan.testentity;
+import com.bitplan.restinterface.BOManagerFactory;
+import com.bitplan.storage.sql.JPAEntityManagerFactory;
 import com.google.inject.AbstractModule;
 
 /**
@@ -32,6 +34,8 @@ public class  TestentityJPAModule extends AbstractModule {
     // guice binding for Order
     bind(Order.class).to(OrderJPA.class);
     bind(OrderManager.class).to(OrderManagerJPA.class);
+    // guice binding for BOManagerFactory
+    bind(BOManagerFactory.class).to(JPAEntityManagerFactory.class);
   }
 
 } // TestentityJPAModule
