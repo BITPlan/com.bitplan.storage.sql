@@ -36,7 +36,6 @@
 			<artifactId>com.bitplan.resthelper</artifactId>
 			<groupId>${project.groupId}</groupId>
 			<version>${project.version}</version>
-			<scope>test</scope>
 		</dependency>
 		<!-- RestHelper Interface -->
 		<dependency>
