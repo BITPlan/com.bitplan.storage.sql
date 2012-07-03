@@ -14,7 +14,6 @@ package com.bitplan.storage.sql;
  $Id$
  */
 
-import com.bitplan.javax.persistence.EntityManager;
 import com.bitplan.javax.persistence.Query;
 import com.google.inject.AbstractModule;
 
@@ -27,7 +26,6 @@ public class JPAStorageModule extends AbstractModule {
 
 	@Override
 	protected void configure() {
-		bind(EntityManager.class).to(JPAEntityManager.class);	
 		bind(Query.class).to(JPAQuery.class);
 	}
 

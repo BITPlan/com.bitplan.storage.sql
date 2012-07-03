@@ -46,9 +46,11 @@ public class TestSqlStorage {
 	private static EntityManager em;
 	private Injector injector;
 	boolean debug = false;
-
+	CustomerManager cm;
+	OrderManager om;
+	
 	@Before
-	public void prepareGuice() {
+	public void prepareGuice() throws Exception {
 		injector = Guice.createInjector(new TestentityJPAModule());
 		Map<String, String> props = new HashMap<String, String>();
 		props.put("eclipselink.target-database", "MYSQL");
@@ -63,6 +65,10 @@ public class TestSqlStorage {
 		factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME,
 				props);
 		em = factory.createEntityManager();
+		cm = injector.getInstance(CustomerManager.class);
+		cm.setContext(em);
+		om=injector.getInstance(OrderManager.class);
+		om.setContext(em);
 	}
 
 	@Test
@@ -123,10 +129,15 @@ public class TestSqlStorage {
 	 */
 	@Test
 	public void testCustomerManagerJPA() throws Exception {
-		CustomerManager cm = injector.getInstance(CustomerManager.class);
-		OrderManager om=injector.getInstance(OrderManager.class);
-		cm.setContext(em);
 		TestStorage.testGenericStorage(cm,om);
 	}
-
+	
+	/**
+	 * test find function
+	 * @throws Exception
+	 */
+	@Test
+	public void testRead() throws Exception {
+		TestStorage.testGenericRead(cm,om);
+	}
 }

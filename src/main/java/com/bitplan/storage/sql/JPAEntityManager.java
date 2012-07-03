@@ -8,7 +8,7 @@ import com.bitplan.resthelper.BOManagerImpl;
  * @author wf
  *
  */
-public abstract class JPAEntityManager<BO> extends BOManagerImpl<BO> implements com.bitplan.javax.persistence.EntityManager {
+public abstract class JPAEntityManager<BO> extends BOManagerImpl<BO>  {
 	// for examples
 	// http://www.winstonprakash.com/articles/netbeans/JPA_Add_Update_Delete.html
 	EntityManager entityManager;
@@ -43,23 +43,15 @@ public abstract class JPAEntityManager<BO> extends BOManagerImpl<BO> implements 
 		this.getEntityManager().getTransaction().begin();
 	}
 
+	
 	@Override
-	public <T> T find(Class<T> entityClass, Object primaryKey) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void persist(Object entity) {
-		// TODO Auto-generated method stub
-		
+	public void persist(BO entity) {
+		this.getEntityManager().persist(entity);
 	}
 
 	@Override
 	public void close() {
-		// TODO Auto-generated method stub
-		
+		this.getEntityManager().close();
 	}
-
 
 }

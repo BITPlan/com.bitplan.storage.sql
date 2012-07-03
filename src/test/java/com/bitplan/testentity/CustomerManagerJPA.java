@@ -6,32 +6,48 @@ import com.bitplan.storage.sql.JPAEntityManager;
 
 /**
  * Customer Manager
+ * 
  * @author wf
- *
+ * 
  */
-public class CustomerManagerJPA extends JPAEntityManager<Customer> implements CustomerManager  {
+public class CustomerManagerJPA extends JPAEntityManager<Customer> implements
+		CustomerManager {
 
 	@Override
 	public List<Customer> getCustomers() {
 		return bolist;
 	}
 
+	/**
+	 * set the customers
+	 * 
+	 * @param pCustomers
+	 */
+	@Override
+	public void setCustomers(List<Customer> pCustomers) {
+		super.bolist = pCustomers;
+	}
+
 	@Override
 	public Customer create() {
-		Customer result=new CustomerJPA(); // injector.
+		Customer result = new CustomerJPA(); // injector.
 		return result;
 	}
 
 	@Override
 	public void purge() {
-		Query q = getEntityManager().createQuery("delete from Customer customer");
+		Query q = getEntityManager().createQuery(
+				"delete from Customer customer");
 		q.executeUpdate();
 	}
 
 	@Override
-	public Customer findById(Object id) {
-		// TODO Auto-generated method stub
-		return null;
+	public Customer findById(Object pId) {
+		long id=(Long)pId;
+		Query q = getEntityManager().createQuery(
+				"select c from Customer as c where c.id="+id);
+		Customer result=(Customer) q.getSingleResult();
+		return result;
 	}
 
 }
