@@ -29,11 +29,11 @@ public class  TestentityJPAModule extends AbstractModule {
   @Override 
   public void configure() {
     // guice binding for Customer
-    bind(Customer.class).to(CustomerJPA.class);
-    bind(CustomerManager.class).to(CustomerManagerJPA.class);
+    bind(Customer.class).to(com.bitplan.testentity.jpa.CustomerJpaDao.class);
+    bind(CustomerManager.class).to(com.bitplan.testentity.jpa.CustomerManagerJPA.class);
     // guice binding for Order
-    bind(Order.class).to(OrderJPA.class);
-    bind(OrderManager.class).to(OrderManagerJPA.class);
+    bind(Order.class).to(com.bitplan.testentity.jpa.OrderJpaDao.class);
+    bind(OrderManager.class).to(com.bitplan.testentity.jpa.OrderManagerJPA.class);
     // guice binding for BOManagerFactory
     bind(BOManagerFactory.class).to(JPAEntityManagerFactory.class);
   }

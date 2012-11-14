@@ -11,9 +11,11 @@ import javax.persistence.Transient;
 
 import javax.persistence.Table;
 
+import com.bitplan.storage.sql.JPABOImpl;
+
 @Entity(name = "Order")
 @Table(name = "Order_Table")
-public class OrderJPA implements Order {
+public class OrderJPAOld extends JPABOImpl<Order> implements Order {
 	@Id
 	@Column(name = "ORDER_ID")
 	//@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,7 +23,7 @@ public class OrderJPA implements Order {
 	String address;
 	@Transient
 	Long customerId;
-	private CustomerJPA customer;
+	private CustomerJPAOld customer;
 
 	@ManyToOne()
 	@JoinColumn(name = "CUSTOMER_ID")
@@ -32,7 +34,7 @@ public class OrderJPA implements Order {
 
 	@Override
 	public void setCustomer(Customer pCustomer) {
-		this.customer = (CustomerJPA) pCustomer;
+		this.customer = (CustomerJPAOld) pCustomer;
 		if (pCustomer!=null) {
 			customerId=pCustomer.getId();
 		}
@@ -66,5 +68,10 @@ public class OrderJPA implements Order {
 	@Override
 	public void setCustomerId(long pcustomerId) {
 		customerId = pcustomerId;
+	}
+
+	@Override
+	public Object getPrimaryKey() {
+		return getId();
 	}
 }

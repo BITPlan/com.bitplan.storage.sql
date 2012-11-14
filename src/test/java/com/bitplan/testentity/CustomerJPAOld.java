@@ -12,9 +12,11 @@ import javax.persistence.Table;
 import javax.persistence.CascadeType;
 //import javax.persistence.Transient;
 
+import com.bitplan.storage.sql.JPABOImpl;
+
 @Entity(name="Customer")
 @Table (name="Customer")
-public class CustomerJPA implements Customer {
+public class CustomerJPAOld extends JPABOImpl<Customer> implements Customer {
 
 	@Id
 	Long id;
@@ -42,17 +44,24 @@ public class CustomerJPA implements Customer {
 	}
 
   @OneToMany(cascade=CascadeType.ALL, mappedBy="customer")
-	private Collection<OrderJPA> orders;
+	private List<Order> orders;
   @Override
-  public Collection<Order> getOrders() {
+  public List<Order> getOrders() {
      List<Order> result=new ArrayList<Order>();
-     for(OrderJPA o:orders) {
+     for(Order o:orders) {
     	 result.add(o);
      }
      return result;
   }
 
-  public void setOrders(Collection<Order> newValue) {
-      //this.orders = newValue;
-  }
+
+	@Override
+	public void setOrders(List<Order> porders) {
+   orders=porders;		
+	}
+
+	@Override
+	public Object getPrimaryKey() {
+		return getId();
+	}
 }

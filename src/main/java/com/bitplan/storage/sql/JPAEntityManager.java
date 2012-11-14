@@ -2,13 +2,14 @@ package com.bitplan.storage.sql;
 
 import javax.persistence.EntityManager;
 import com.bitplan.resthelper.BOManagerImpl;
+import com.bitplan.restinterface.BOManager;
 
 /**
  * JPA Entity Manager
  * @author wf
  *
  */
-public abstract class JPAEntityManager<BO> extends BOManagerImpl<BO>  {
+public abstract class JPAEntityManager<BO> extends BOManagerImpl<BO>  implements BOManager<BO>{
 	// for examples
 	// http://www.winstonprakash.com/articles/netbeans/JPA_Add_Update_Delete.html
 	EntityManager entityManager;

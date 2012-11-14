@@ -2,6 +2,8 @@ package com.bitplan.testentity;
 
 import java.util.List;
 import javax.persistence.Query;
+
+import com.bitplan.restinterface.BO;
 import com.bitplan.storage.sql.JPAEntityManager;
 
 /**
@@ -9,7 +11,7 @@ import com.bitplan.storage.sql.JPAEntityManager;
  * @author wf
  *
  */
-public class OrderManagerJPA extends JPAEntityManager<Order> implements OrderManager  {
+public class OrderManagerJPAOld extends JPAEntityManager<Order> implements OrderManager  {
 
 	@Override
 	public List<Order> getOrders() {
@@ -26,7 +28,7 @@ public class OrderManagerJPA extends JPAEntityManager<Order> implements OrderMan
 	
 	@Override
 	public Order create() {
-		Order result=new OrderJPA(); // injector.
+		Order result=new OrderJPAOld(); // injector.
 		return result;
 	}
 
@@ -43,6 +45,11 @@ public class OrderManagerJPA extends JPAEntityManager<Order> implements OrderMan
 				"select c from Order as c where c.id="+id);
 		Order result=(Order) q.getSingleResult();
 		return result;
+	}
+
+	@Override
+	public Class<? extends BO<?>> getEntityType() {
+		return OrderJPAOld.class;
 	}
 
 }

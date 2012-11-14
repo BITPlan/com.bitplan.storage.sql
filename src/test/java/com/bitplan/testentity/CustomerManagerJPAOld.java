@@ -2,6 +2,8 @@ package com.bitplan.testentity;
 
 import java.util.List;
 import javax.persistence.Query;
+
+import com.bitplan.restinterface.BO;
 import com.bitplan.storage.sql.JPAEntityManager;
 
 /**
@@ -10,7 +12,7 @@ import com.bitplan.storage.sql.JPAEntityManager;
  * @author wf
  * 
  */
-public class CustomerManagerJPA extends JPAEntityManager<Customer> implements
+public class CustomerManagerJPAOld extends JPAEntityManager<Customer> implements
 		CustomerManager {
 
 	@Override
@@ -30,7 +32,7 @@ public class CustomerManagerJPA extends JPAEntityManager<Customer> implements
 
 	@Override
 	public Customer create() {
-		Customer result = new CustomerJPA(); // injector.
+		Customer result = new CustomerJPAOld(); // injector.
 		return result;
 	}
 
@@ -48,6 +50,12 @@ public class CustomerManagerJPA extends JPAEntityManager<Customer> implements
 				"select c from Customer as c where c.id="+id);
 		Customer result=(Customer) q.getSingleResult();
 		return result;
+	}
+
+	@Override
+	public Class<? extends BO<?>> getEntityType() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
