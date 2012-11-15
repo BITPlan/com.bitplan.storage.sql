@@ -57,7 +57,8 @@ public class TestSqlStorage {
 		props.put("javax.persistence.jdbc.password", "secret");
 		props.put("eclipselink.ddl-generation", "drop-and-create-tables");
 		// props.put("eclipselink.ddl-generation","create-tables");
-		props.put("eclipselink.ddl-generation.output-mode", "database");
+		// props.put("eclipselink.ddl-generation.output-mode", "database");
+		props.put("eclipselink.ddl-generation.output-mode", "both");
 		boManagerFactory.setContext(props);
 	}
 

@@ -24,7 +24,7 @@ import com.bitplan.testentity.Customer;
  * Table: Order
  */
 @Entity
-@Table(name="Order")
+@Table(name="Order_Table")
 public class OrderJpaDao extends JPABOImpl<Order>  implements Order, Serializable{
 
   /**   

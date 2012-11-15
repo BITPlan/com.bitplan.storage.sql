@@ -10,13 +10,16 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.CascadeType;
+import javax.persistence.Transient;
 //import javax.persistence.Transient;
 
 import com.bitplan.storage.sql.JPABOImpl;
 
 @Entity(name="Customer")
 @Table (name="Customer")
-public class CustomerJPAOld extends JPABOImpl<Customer> implements Customer {
+public class CustomerJPAOld 
+//extends JPABOImpl<Customer> 
+implements Customer {
 
 	@Id
 	Long id;
@@ -44,7 +47,7 @@ public class CustomerJPAOld extends JPABOImpl<Customer> implements Customer {
 	}
 
   @OneToMany(cascade=CascadeType.ALL, mappedBy="customer")
-	private List<Order> orders;
+	private List<OrderJPAOld> orders;
   @Override
   public List<Order> getOrders() {
      List<Order> result=new ArrayList<Order>();
@@ -57,10 +60,14 @@ public class CustomerJPAOld extends JPABOImpl<Customer> implements Customer {
 
 	@Override
 	public void setOrders(List<Order> porders) {
-   orders=porders;		
+		orders.clear();
+		for (Order order:porders) {
+      orders.add((OrderJPAOld) order);		
+		}
 	}
 
-	@Override
+	//@Override
+	@Transient
 	public Object getPrimaryKey() {
 		return getId();
 	}

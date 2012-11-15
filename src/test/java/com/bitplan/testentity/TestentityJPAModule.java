@@ -26,8 +26,8 @@ import com.google.inject.AbstractModule;
  * Guice Module for  Testentity
  */
 public class  TestentityJPAModule extends AbstractModule {  
-  @Override 
-  public void configure() {
+  //@Override 
+  public void configurenew() {
     // guice binding for Customer
     bind(Customer.class).to(com.bitplan.testentity.jpa.CustomerJpaDao.class);
     bind(CustomerManager.class).to(com.bitplan.testentity.jpa.CustomerManagerJPA.class);
@@ -37,5 +37,18 @@ public class  TestentityJPAModule extends AbstractModule {
     // guice binding for BOManagerFactory
     bind(BOManagerFactory.class).to(JPAEntityManagerFactory.class);
   }
+  
+  @Override 
+  public void configure() {
+    // guice binding for Customer
+    bind(Customer.class).to(CustomerJPAOld.class);
+    bind(CustomerManager.class).to(CustomerManagerJPAOld.class);
+    // guice binding for Order
+    bind(Order.class).to(OrderJPAOld.class);
+    bind(OrderManager.class).to(OrderManagerJPAOld.class);
+    // guice binding for BOManagerFactory
+    bind(BOManagerFactory.class).to(JPAEntityManagerFactory.class);
+  }
+
 
 } // TestentityJPAModule

@@ -15,7 +15,9 @@ import com.bitplan.storage.sql.JPABOImpl;
 
 @Entity(name = "Order")
 @Table(name = "Order_Table")
-public class OrderJPAOld extends JPABOImpl<Order> implements Order {
+public class OrderJPAOld 
+// extends JPABOImpl<Order> 
+implements Order {
 	@Id
 	@Column(name = "ORDER_ID")
 	//@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -70,7 +72,8 @@ public class OrderJPAOld extends JPABOImpl<Order> implements Order {
 		customerId = pcustomerId;
 	}
 
-	@Override
+	//@Override
+	@Transient
 	public Object getPrimaryKey() {
 		return getId();
 	}

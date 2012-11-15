@@ -3,8 +3,8 @@
 	version="2.0">
 	<persistence-unit name="default" transaction-type="RESOURCE_LOCAL">
 		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-		<class>com.bitplan.testentity.CustomerJPA</class>
-		<class>com.bitplan.testentity.OrderJPA</class>
+		<class>com.bitplan.testentity.CustomerJPAOld</class>
+		<class>com.bitplan.testentity.OrderJPAOld</class>
 		<exclude-unlisted-classes>true</exclude-unlisted-classes> 
 		<properties>
 		<!-- 

@@ -54,7 +54,7 @@ public class CustomerManagerJPAOld extends JPAEntityManager<Customer> implements
 
 	@Override
 	public Class<? extends BO<?>> getEntityType() {
-		// TODO Auto-generated method stub
+		//return CustomerJPAOld.class;
 		return null;
 	}
 

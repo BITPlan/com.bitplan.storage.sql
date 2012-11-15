@@ -49,7 +49,8 @@ public class OrderManagerJPAOld extends JPAEntityManager<Order> implements Order
 
 	@Override
 	public Class<? extends BO<?>> getEntityType() {
-		return OrderJPAOld.class;
+		//return OrderJPAOld.class;
+		return null;
 	}
 
 }
