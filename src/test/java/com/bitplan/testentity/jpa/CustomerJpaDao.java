@@ -6,7 +6,7 @@
  *
  * http://www.bitplan.com
  * 
- * generated: 2012-11-15 15:54 with smartGENERATOR
+ * generated: 2012-11-16 10:32 with smartGENERATOR
  */
 package com.bitplan.testentity.jpa;
 import java.io.Serializable;
@@ -24,7 +24,7 @@ import com.bitplan.testentity.Order;
  * Entity: Customer for container testentity
  * Table: Customer
  */
-@Entity(name="Customer")
+@Entity
 @Table(name="Customer")
 public class CustomerJpaDao extends JPABOImpl<Customer>  implements Customer, Serializable{
 

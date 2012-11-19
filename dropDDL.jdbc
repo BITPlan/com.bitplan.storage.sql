@@ -1,0 +1,3 @@
+ALTER TABLE Order_Table DROP FOREIGN KEY FK_Order_Table_CUSTOMER_ID
+DROP TABLE Customer
+DROP TABLE Order_Table
