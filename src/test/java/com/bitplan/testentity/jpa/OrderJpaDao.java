@@ -6,7 +6,7 @@
  *
  * http://www.bitplan.com
  * 
- * generated: 2012-11-16 10:32 with smartGENERATOR
+ * generated: 2012-11-24 17:26 with smartGENERATOR
  */
 package com.bitplan.testentity.jpa;
 import java.io.Serializable;
@@ -16,16 +16,18 @@ import javax.persistence.*;
 import com.bitplan.storage.sql.JPABOImpl;
 
 import com.bitplan.testentity.Order;
+import com.bitplan.testentity.OrderDao;
 import com.bitplan.testentity.Customer;
+import com.bitplan.testentity.CustomerDao;
 
 /**
  * JPA Data access object for Order
  * Entity: Order for container testentity
- * Table: Order
+ * Table: order_table
  */
-@Entity
-@Table(name="Order")
-public class OrderJpaDao extends JPABOImpl<Order>  implements Order, Serializable{
+@Entity(name="Order")
+@Table(name="order_table")
+public class OrderJpaDao extends JPABOImpl<Order>  implements OrderDao, Serializable{
 
   /**   
    * make Serializable happy ...   
@@ -45,11 +47,6 @@ public class OrderJpaDao extends JPABOImpl<Order>  implements Order, Serializabl
    * customer
    */
   private Customer customer;
-  
-  /**
-   * customerId
-   */
-  private long customerId;
   
   /**
    * getter for id
@@ -82,7 +79,7 @@ public class OrderJpaDao extends JPABOImpl<Order>  implements Order, Serializabl
    * getter for customer
    * @return customer
    */
-  @Column(name="customer")
+  @ManyToOne(targetEntity=CustomerJpaDao.class)
   public Customer getCustomer() { return customer; };
 
   /**
@@ -90,19 +87,6 @@ public class OrderJpaDao extends JPABOImpl<Order>  implements Order, Serializabl
    * @param pcustomer - new value for customer
    */
   public void setCustomer(Customer pcustomer) { customer=pcustomer; };
-
-  /**
-   * getter for customerId
-   * @return customerId
-   */
-  @Column(name="customerId")
-  public long getCustomerId() { return customerId; };
-
-  /**
-   * setter for customerId
-   * @param pcustomerId - new value for customerId
-   */
-  public void setCustomerId(long pcustomerId) { customerId=pcustomerId; };
 
 
   /**

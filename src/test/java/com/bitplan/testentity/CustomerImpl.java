@@ -6,19 +6,36 @@
  *
  * http://www.bitplan.com
  * 
- * generated: 2012-11-14 17:22 with smartGENERATOR
+ * generated: 2012-11-24 17:24 with smartGENERATOR
  */
 package com.bitplan.testentity;
 import java.util.List;
 import com.bitplan.testentity.Customer;
+import com.bitplan.testentity.CustomerDao;
 import com.bitplan.testentity.Order;
+import com.bitplan.testentity.OrderDao;
+import com.google.inject.Inject;
+	// >>>{implSection}{Customer}{Customer}
+	// no implementation yet !!!
+	// <<<{implSection}{Customer}{Customer}
 
 /**
  * Pojo Implementation for Customer
  */
 public class CustomerImpl implements Customer {
  
-  Customer mCustomerDao;
+  /**
+   * the data access object
+   */
+  protected CustomerDao mCustomerDao;
+  
+  /**
+   * return the data access object for Customer
+   * @return the CustomerDao 
+   */
+  public CustomerDao getDao() {
+    return mCustomerDao;
+  }
 
 	// >>>{code}{Customer}{Customer}
 	// no implementation yet !!!
@@ -35,9 +52,9 @@ public class CustomerImpl implements Customer {
   
   /**
    * construct a CustomerImpl from a given Data Access Object
-   * @param pCustomer the Data Access Object to initialize this class from
+   * @param pCustomerDao the Data Access Object to initialize this class from
    */
-  public CustomerImpl(Customer pCustomer) {
+  @Inject public CustomerImpl(CustomerDao pCustomer) {
     super();
     mCustomerDao=pCustomer;
 	// >>>{constructor}{Customer}{Customer}
@@ -93,4 +110,16 @@ public class CustomerImpl implements Customer {
   public void setOrders(List<Order> porders) { 
   	mCustomerDao.setOrders(porders); 
   }
+
+  /**
+   * create a copy of the given CustomerDao
+   * @param CustomerDao - the Data Access Object to copy from
+   * @return Customer - an implementation fullfilling the Customer interface
+   */
+	public static Customer createCopy(CustomerDao pCustomer) {
+	  // FIXME need guice injection of interface here
+	  Customer result=new CustomerImpl();
+	  return result;
+	} // createCopy
+	
 } // CustomerImpl

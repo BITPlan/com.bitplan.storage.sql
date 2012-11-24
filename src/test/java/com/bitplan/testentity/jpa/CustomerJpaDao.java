@@ -6,7 +6,7 @@
  *
  * http://www.bitplan.com
  * 
- * generated: 2012-11-16 10:32 with smartGENERATOR
+ * generated: 2012-11-23 18:50 with smartGENERATOR
  */
 package com.bitplan.testentity.jpa;
 import java.io.Serializable;
@@ -17,16 +17,18 @@ import com.bitplan.storage.sql.JPABOImpl;
 
 import java.util.List;
 import com.bitplan.testentity.Customer;
+import com.bitplan.testentity.CustomerDao;
 import com.bitplan.testentity.Order;
+import com.bitplan.testentity.OrderDao;
 
 /**
  * JPA Data access object for Customer
  * Entity: Customer for container testentity
  * Table: Customer
  */
-@Entity
+@Entity(name="Customer")
 @Table(name="Customer")
-public class CustomerJpaDao extends JPABOImpl<Customer>  implements Customer, Serializable{
+public class CustomerJpaDao extends JPABOImpl<Customer>  implements CustomerDao, Serializable{
 
   /**   
    * make Serializable happy ...   
@@ -78,7 +80,7 @@ public class CustomerJpaDao extends JPABOImpl<Customer>  implements Customer, Se
    * getter for orders
    * @return orders
    */
-  @Column(name="orders")
+  @OneToMany(targetEntity=OrderJpaDao.class, cascade=CascadeType.ALL, mappedBy="customer")
   public List<Order> getOrders() { return orders; };
 
   /**

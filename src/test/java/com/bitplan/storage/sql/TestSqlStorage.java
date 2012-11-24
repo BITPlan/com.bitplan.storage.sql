@@ -18,8 +18,11 @@ import org.junit.Test;
 import com.bitplan.restinterface.BOManagerFactory;
 import com.bitplan.storage.TestStorage;
 import com.bitplan.testentity.Customer;
+import com.bitplan.testentity.CustomerImpl;
+import com.bitplan.testentity.OrderImpl;
 import com.bitplan.testentity.Order;
 import com.bitplan.testentity.TestentityJPAModule;
+import com.bitplan.testentity.jpa.CustomerJpaDao;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 
@@ -55,8 +58,10 @@ public class TestSqlStorage {
 				"jdbc:mysql://localhost:3306/testsqlstorage");
 		props.put("javax.persistence.jdbc.user", "cm");
 		props.put("javax.persistence.jdbc.password", "secret");
+		//props.put("eclipselink.ddl-generation","create-tables");
 		props.put("eclipselink.ddl-generation", "drop-and-create-tables");
-		// props.put("eclipselink.ddl-generation","create-tables");
+		// http://wiki.eclipse.org/EclipseLink/UserGuide/JPA/Advanced_JPA_Development/Schema_Generation/Appending_strings_to_CREATE_TABLE_statements
+		props.put("eclipselink.ddl.default-table-suffix", "engine=InnoDB");
 		// props.put("eclipselink.ddl-generation.output-mode", "database");
 		props.put("eclipselink.ddl-generation.output-mode", "both");
 		boManagerFactory.setContext(props);
@@ -69,18 +74,19 @@ public class TestSqlStorage {
 		Customer customer = injector.getInstance(Customer.class);
 		customer.setId(1);
 		customer.setName("John Doe");
-		em.persist(customer);
+		CustomerImpl ci=(CustomerImpl)customer;
+		em.persist(ci.getDao());
 
 		// Read the existing entries and write to console
 		Query q = em.createQuery("select c from Customer c");
 		@SuppressWarnings("unchecked")
-		List<Customer> lCustomerList = q.getResultList();
+		List<CustomerJpaDao> lCustomerList = q.getResultList();
 		if (debug) {
 			System.out.println("Size: " + lCustomerList.size());
 		}
 		assertEquals("There should be one customer in the list", 1,
 				lCustomerList.size());
-		for (Customer lCustomer : lCustomerList) {
+		for (CustomerJpaDao lCustomer : lCustomerList) {
 			if (debug) {
 				System.out.println("id: " + lCustomer.getId());
 				System.out.println("name: " + lCustomer.getName());
@@ -105,11 +111,11 @@ public class TestSqlStorage {
 		// owning side:
 		order1.setCustomer(customer);
 		// customer.getOrders().add(order1);
-		em.persist(order1);
+		em.persist(((OrderImpl)order1).getDao());
 
 		order2.setCustomer(customer);
 		// customer.getOrders().add(order2);
-		em.persist(order2);
+		em.persist(((OrderImpl)order2).getDao());
 		em.getTransaction().commit();
 		// em.close();
 	}

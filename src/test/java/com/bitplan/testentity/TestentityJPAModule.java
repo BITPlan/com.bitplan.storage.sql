@@ -5,50 +5,38 @@
  * D-47877 Willich-Schiefbahn
  *
  * http://www.bitplan.com
- *
- * Tel. 02154 811-480
- * Fax. 02154 811-480
  * 
- * $HeadURL$
- * $LastChangedDate$
- * $LastChangedRevision$
- * $LastChangedBy$
- * $Id$
- *
- * generated: 07.01.2012 um 16:54
+ * generated: 2012-11-24 17:48 with smartGENERATOR
  */
 package com.bitplan.testentity;
-import com.bitplan.restinterface.BOManagerFactory;
-import com.bitplan.storage.sql.JPAEntityManagerFactory;
+import com.bitplan.testentity.Customer;
+import com.bitplan.testentity.CustomerImpl;
+import com.bitplan.testentity.CustomerManager;
+import com.bitplan.testentity.CustomerDao;
+import com.bitplan.testentity.jpa.CustomerJpaDao;
+import com.bitplan.testentity.jpa.CustomerManagerJPA;
+import com.bitplan.testentity.Order;
+import com.bitplan.testentity.OrderImpl;
+import com.bitplan.testentity.OrderManager;
+import com.bitplan.testentity.OrderDao;
+import com.bitplan.testentity.jpa.OrderJpaDao;
+import com.bitplan.testentity.jpa.OrderManagerJPA;
 import com.google.inject.AbstractModule;
 
 /**
  * Guice Module for  Testentity
  */
 public class  TestentityJPAModule extends AbstractModule {  
-  //@Override 
-  public void configurenew() {
-    // guice binding for Customer
-    bind(Customer.class).to(com.bitplan.testentity.jpa.CustomerJpaDao.class);
-    bind(CustomerManager.class).to(com.bitplan.testentity.jpa.CustomerManagerJPA.class);
-    // guice binding for Order
-    bind(Order.class).to(com.bitplan.testentity.jpa.OrderJpaDao.class);
-    bind(OrderManager.class).to(com.bitplan.testentity.jpa.OrderManagerJPA.class);
-    // guice binding for BOManagerFactory
-    bind(BOManagerFactory.class).to(JPAEntityManagerFactory.class);
-  }
-  
   @Override 
-  public void configure() {
+  protected void configure() {
     // guice binding for Customer
-    bind(Customer.class).to(CustomerJPAOld.class);
-    bind(CustomerManager.class).to(CustomerManagerJPAOld.class);
+    bind(CustomerDao.class).to(CustomerJpaDao.class);
+    bind(Customer.class).to(CustomerImpl.class);
+    bind(CustomerManager.class).to(CustomerManagerJPA.class);
     // guice binding for Order
-    bind(Order.class).to(OrderJPAOld.class);
-    bind(OrderManager.class).to(OrderManagerJPAOld.class);
-    // guice binding for BOManagerFactory
-    bind(BOManagerFactory.class).to(JPAEntityManagerFactory.class);
+    bind(OrderDao.class).to(OrderJpaDao.class);
+    bind(Order.class).to(OrderImpl.class);
+    bind(OrderManager.class).to(OrderManagerJPA.class);
   }
 
-
-} // TestentityJPAModule
+} // TestentityModule

@@ -6,18 +6,35 @@
  *
  * http://www.bitplan.com
  * 
- * generated: 2012-11-14 17:22 with smartGENERATOR
+ * generated: 2012-11-24 17:24 with smartGENERATOR
  */
 package com.bitplan.testentity;
 import com.bitplan.testentity.Order;
+import com.bitplan.testentity.OrderDao;
 import com.bitplan.testentity.Customer;
+import com.bitplan.testentity.CustomerDao;
+import com.google.inject.Inject;
+	// >>>{implSection}{Order}{Order}
+	// no implementation yet !!!
+	// <<<{implSection}{Order}{Order}
 
 /**
  * Pojo Implementation for Order
  */
 public class OrderImpl implements Order {
  
-  Order mOrderDao;
+  /**
+   * the data access object
+   */
+  protected OrderDao mOrderDao;
+  
+  /**
+   * return the data access object for Order
+   * @return the OrderDao 
+   */
+  public OrderDao getDao() {
+    return mOrderDao;
+  }
 
 	// >>>{code}{Order}{Order}
 	// no implementation yet !!!
@@ -34,9 +51,9 @@ public class OrderImpl implements Order {
   
   /**
    * construct a OrderImpl from a given Data Access Object
-   * @param pOrder the Data Access Object to initialize this class from
+   * @param pOrderDao the Data Access Object to initialize this class from
    */
-  public OrderImpl(Order pOrder) {
+  @Inject public OrderImpl(OrderDao pOrder) {
     super();
     mOrderDao=pOrder;
 	// >>>{constructor}{Order}{Order}
@@ -92,20 +109,16 @@ public class OrderImpl implements Order {
   public void setCustomer(Customer pcustomer) { 
   	mOrderDao.setCustomer(pcustomer); 
   }
- 
-  /**
-   * getter for customerId
-   * @return customerId
-   */
-  public long getCustomerId() { 
-  	return mOrderDao.getCustomerId(); 
-  };
 
   /**
-   * setter for customerId
-   * @param pcustomerId - new value for customerId
+   * create a copy of the given OrderDao
+   * @param OrderDao - the Data Access Object to copy from
+   * @return Order - an implementation fullfilling the Order interface
    */
-  public void setCustomerId(long pcustomerId) { 
-  	mOrderDao.setCustomerId(pcustomerId); 
-  }
+	public static Order createCopy(OrderDao pOrder) {
+	  // FIXME need guice injection of interface here
+	  Order result=new OrderImpl();
+	  return result;
+	} // createCopy
+	
 } // OrderImpl

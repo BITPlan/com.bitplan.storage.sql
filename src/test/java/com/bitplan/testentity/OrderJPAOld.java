@@ -62,6 +62,7 @@ implements Order {
 		address = paddress;
 	}
 
+	/*
 	@Override
 	public long getCustomerId() {
 		return customerId;
@@ -71,7 +72,7 @@ implements Order {
 	public void setCustomerId(long pcustomerId) {
 		customerId = pcustomerId;
 	}
-
+*/
 	//@Override
 	@Transient
 	public Object getPrimaryKey() {

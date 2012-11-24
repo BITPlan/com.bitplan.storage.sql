@@ -6,7 +6,7 @@
  *
  * http://www.bitplan.com
  * 
- * generated: 2012-11-14 18:00 with smartGENERATOR
+ * generated: 2012-11-23 17:41 with smartGENERATOR
  */
 package com.bitplan.testentity.jpa;
 // List interface
@@ -17,6 +17,7 @@ import com.bitplan.restinterface.BO;
 import com.bitplan.storage.sql.JPAEntityManager;
 // Entity interfaces
 import com.bitplan.testentity.Customer;
+import com.bitplan.testentity.CustomerImpl;
 import com.bitplan.testentity.CustomerManager;
 /**
  * JPA EntityManager implementation for interface Customer
@@ -43,8 +44,9 @@ public class CustomerManagerJPA extends JPAEntityManager<Customer>
 	
 	@Override
 	public Customer create() {
-		CustomerJpaDao result = new CustomerJpaDao();
-		result.setBOManager(this);
+		CustomerJpaDao CustomerDao = new CustomerJpaDao();
+		CustomerDao.setBOManager(this);
+		Customer result=new CustomerImpl(CustomerDao);
 		return result;
 	}
 		
