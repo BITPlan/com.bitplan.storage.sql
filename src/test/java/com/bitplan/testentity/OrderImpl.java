@@ -6,15 +6,15 @@
  *
  * http://www.bitplan.com
  * 
- * generated: 2012-11-25 12:03 with smartGENERATOR
+ * generated: 2012-11-25 14:52 with smartGENERATOR
  */
 package com.bitplan.testentity;
 import com.bitplan.testentity.Order;
 import com.bitplan.testentity.Customer;
-import com.google.inject.Inject;
 	// >>>{implSection}{Order}{Order}
 	// no implementation yet !!!
 	// <<<{implSection}{Order}{Order}
+import com.google.inject.Inject;
 
 /**
  * Pojo Implementation for Order

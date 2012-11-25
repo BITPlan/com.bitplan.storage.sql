@@ -6,17 +6,17 @@
  *
  * http://www.bitplan.com
  * 
- * generated: 2012-11-25 12:03 with smartGENERATOR
+ * generated: 2012-11-25 14:52 with smartGENERATOR
  */
 package com.bitplan.testentity;
 import java.util.List;
 import com.bitplan.testentity.Customer;
 import com.bitplan.testentity.Order;
 import java.util.ArrayList;
-import com.google.inject.Inject;
 	// >>>{implSection}{Customer}{Customer}
 	// no implementation yet !!!
 	// <<<{implSection}{Customer}{Customer}
+import com.google.inject.Inject;
 
 /**
  * Pojo Implementation for Customer
