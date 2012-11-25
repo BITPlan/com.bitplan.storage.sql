@@ -6,7 +6,7 @@
  *
  * http://www.bitplan.com
  * 
- * generated: 2012-11-25 09:29 with smartGENERATOR
+ * generated: 2012-11-25 10:17 with smartGENERATOR
  */
 package com.bitplan.testentity;
 import java.util.List;
@@ -14,6 +14,7 @@ import com.bitplan.testentity.Customer;
 import com.bitplan.testentity.CustomerImpl;
 import com.bitplan.testentity.Order;
 import com.bitplan.testentity.OrderImpl;
+import java.util.ArrayList;
 import com.google.inject.Inject;
 	// >>>{implSection}{Customer}{Customer}
 	// no implementation yet !!!
@@ -50,7 +51,7 @@ public class CustomerImpl implements Customer {
   /**
    * orders
    */
-  private List<Order> orders;
+  private List<Order> orders=new ArrayList<Order>();
   
   /**
    * getter for name
