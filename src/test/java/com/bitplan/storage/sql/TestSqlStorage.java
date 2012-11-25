@@ -18,8 +18,6 @@ import org.junit.Test;
 import com.bitplan.restinterface.BOManagerFactory;
 import com.bitplan.storage.TestStorage;
 import com.bitplan.testentity.Customer;
-import com.bitplan.testentity.CustomerImpl;
-import com.bitplan.testentity.OrderImpl;
 import com.bitplan.testentity.Order;
 import com.bitplan.testentity.TestentityJPAModule;
 import com.bitplan.testentity.jpa.CustomerJpaDao;

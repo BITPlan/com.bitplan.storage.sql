@@ -6,7 +6,7 @@
  *
  * http://www.bitplan.com
  * 
- * generated: 2012-11-25 09:29 with smartGENERATOR
+ * generated: 2012-11-25 11:27 with smartGENERATOR
  */
 package com.bitplan.testentity.jpa;
 import java.io.Serializable;
@@ -52,7 +52,7 @@ public class CustomerJpaDao extends JPABOImpl<Customer>  implements Customer, Se
   /**
    * default constructor for Customer
    */
-  protected CustomerJpaDao() {
+  public CustomerJpaDao() {
     mCustomerImpl=new CustomerImpl();
     
   }

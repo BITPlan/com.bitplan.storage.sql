@@ -6,7 +6,7 @@
  *
  * http://www.bitplan.com
  * 
- * generated: 2012-11-25 09:29 with smartGENERATOR
+ * generated: 2012-11-25 11:27 with smartGENERATOR
  */
 package com.bitplan.testentity.jpa;
 import java.io.Serializable;
@@ -51,7 +51,7 @@ public class OrderJpaDao extends JPABOImpl<Order>  implements Order, Serializabl
   /**
    * default constructor for Order
    */
-  protected OrderJpaDao() {
+  public OrderJpaDao() {
     mOrderImpl=new OrderImpl();
     
   }
