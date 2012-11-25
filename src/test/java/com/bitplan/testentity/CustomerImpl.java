@@ -6,14 +6,12 @@
  *
  * http://www.bitplan.com
  * 
- * generated: 2012-11-25 10:17 with smartGENERATOR
+ * generated: 2012-11-25 12:03 with smartGENERATOR
  */
 package com.bitplan.testentity;
 import java.util.List;
 import com.bitplan.testentity.Customer;
-import com.bitplan.testentity.CustomerImpl;
 import com.bitplan.testentity.Order;
-import com.bitplan.testentity.OrderImpl;
 import java.util.ArrayList;
 import com.google.inject.Inject;
 	// >>>{implSection}{Customer}{Customer}
