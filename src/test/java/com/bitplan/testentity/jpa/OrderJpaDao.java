@@ -6,7 +6,7 @@
  *
  * http://www.bitplan.com
  * 
- * generated: 2012-11-25 12:06 with smartGENERATOR
+ * generated: 2012-11-25 14:52 with smartGENERATOR
  */
 package com.bitplan.testentity.jpa;
 import java.io.Serializable;
@@ -20,6 +20,9 @@ import com.google.inject.Inject;
 import com.bitplan.testentity.Order;
 import com.bitplan.testentity.OrderImpl;
 import com.bitplan.testentity.Customer;
+	// >>>{implSection}{Order}{Order}
+	// no implementation yet !!!
+	// <<<{implSection}{Order}{Order}
 
 /**
  * JPA Data access object for Order
