@@ -6,7 +6,7 @@
  *
  * http://www.bitplan.com
  * 
- * generated: 2012-11-24 22:31 with smartGENERATOR
+ * generated: 2012-11-25 09:29 with smartGENERATOR
  */
 package com.bitplan.testentity.jpa;
 import java.io.Serializable;
@@ -21,7 +21,7 @@ import java.util.List;
 import com.bitplan.testentity.Customer;
 import com.bitplan.testentity.CustomerImpl;
 import com.bitplan.testentity.Order;
-import com.bitplan.testentity.OrderDao;
+import com.bitplan.testentity.OrderImpl;
 
 /**
  * JPA Data access object for Customer
@@ -54,6 +54,7 @@ public class CustomerJpaDao extends JPABOImpl<Customer>  implements Customer, Se
    */
   protected CustomerJpaDao() {
     mCustomerImpl=new CustomerImpl();
+    
   }
   
   /**
@@ -67,16 +68,11 @@ public class CustomerJpaDao extends JPABOImpl<Customer>  implements Customer, Se
 	// no implementation yet !!!
 	// <<<{constructor}{CustomerJpaDao}{Customer}
   }
-
   /**
    * getter for name
    * @return name
    */
   @Column(name="name")
- /**
-   * getter for name
-   * @return name
-   */
   public String getName() { 
   	return mCustomerImpl.getName(); 
   }
@@ -88,16 +84,13 @@ public class CustomerJpaDao extends JPABOImpl<Customer>  implements Customer, Se
   public void setName(String pname) { 
   	mCustomerImpl.setName(pname); 
   }
+  
   /**
    * getter for id
    * @return id
    */
   @Id
   @Column(name="id")
- /**
-   * getter for id
-   * @return id
-   */
   public long getId() { 
   	return mCustomerImpl.getId(); 
   }
@@ -109,15 +102,12 @@ public class CustomerJpaDao extends JPABOImpl<Customer>  implements Customer, Se
   public void setId(long pid) { 
   	mCustomerImpl.setId(pid); 
   }
+  
   /**
    * getter for orders
    * @return orders
    */
   @OneToMany(targetEntity=OrderJpaDao.class, cascade=CascadeType.ALL, mappedBy="customer")
- /**
-   * getter for orders
-   * @return orders
-   */
   public List<Order> getOrders() { 
   	return mCustomerImpl.getOrders(); 
   }
@@ -129,6 +119,7 @@ public class CustomerJpaDao extends JPABOImpl<Customer>  implements Customer, Se
   public void setOrders(List<Order> porders) { 
   	mCustomerImpl.setOrders(porders); 
   }
+  
 
   /**
    * get the primary key of this business object

@@ -6,7 +6,7 @@
  *
  * http://www.bitplan.com
  * 
- * generated: 2012-11-24 22:31 with smartGENERATOR
+ * generated: 2012-11-25 09:29 with smartGENERATOR
  */
 package com.bitplan.testentity.jpa;
 import java.io.Serializable;
@@ -20,7 +20,7 @@ import com.google.inject.Inject;
 import com.bitplan.testentity.Order;
 import com.bitplan.testentity.OrderImpl;
 import com.bitplan.testentity.Customer;
-import com.bitplan.testentity.CustomerDao;
+import com.bitplan.testentity.CustomerImpl;
 
 /**
  * JPA Data access object for Order
@@ -53,6 +53,7 @@ public class OrderJpaDao extends JPABOImpl<Order>  implements Order, Serializabl
    */
   protected OrderJpaDao() {
     mOrderImpl=new OrderImpl();
+    
   }
   
   /**
@@ -66,17 +67,12 @@ public class OrderJpaDao extends JPABOImpl<Order>  implements Order, Serializabl
 	// no implementation yet !!!
 	// <<<{constructor}{OrderJpaDao}{Order}
   }
-
   /**
    * getter for id
    * @return id
    */
   @Id
   @Column(name="id")
- /**
-   * getter for id
-   * @return id
-   */
   public long getId() { 
   	return mOrderImpl.getId(); 
   }
@@ -88,15 +84,12 @@ public class OrderJpaDao extends JPABOImpl<Order>  implements Order, Serializabl
   public void setId(long pid) { 
   	mOrderImpl.setId(pid); 
   }
+  
   /**
    * getter for shipping address
    * @return address
    */
   @Column(name="SHIPPING_ADDRESS")
- /**
-   * getter for shipping address
-   * @return address
-   */
   public String getAddress() { 
   	return mOrderImpl.getAddress(); 
   }
@@ -108,15 +101,12 @@ public class OrderJpaDao extends JPABOImpl<Order>  implements Order, Serializabl
   public void setAddress(String paddress) { 
   	mOrderImpl.setAddress(paddress); 
   }
+  
   /**
    * getter for customer
    * @return customer
    */
   @ManyToOne(targetEntity=CustomerJpaDao.class)
- /**
-   * getter for customer
-   * @return customer
-   */
   public Customer getCustomer() { 
   	return mOrderImpl.getCustomer(); 
   }
@@ -128,6 +118,7 @@ public class OrderJpaDao extends JPABOImpl<Order>  implements Order, Serializabl
   public void setCustomer(Customer pcustomer) { 
   	mOrderImpl.setCustomer(pcustomer); 
   }
+  
 
   /**
    * get the primary key of this business object

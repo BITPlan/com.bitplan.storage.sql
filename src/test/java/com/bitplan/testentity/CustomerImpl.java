@@ -6,14 +6,14 @@
  *
  * http://www.bitplan.com
  * 
- * generated: 2012-11-24 22:29 with smartGENERATOR
+ * generated: 2012-11-25 09:29 with smartGENERATOR
  */
 package com.bitplan.testentity;
 import java.util.List;
 import com.bitplan.testentity.Customer;
 import com.bitplan.testentity.CustomerImpl;
 import com.bitplan.testentity.Order;
-import com.bitplan.testentity.OrderDao;
+import com.bitplan.testentity.OrderImpl;
 import com.google.inject.Inject;
 	// >>>{implSection}{Customer}{Customer}
 	// no implementation yet !!!
@@ -90,11 +90,11 @@ public class CustomerImpl implements Customer {
  
 
   /**
-   * create a copy of the given CustomerDao
-   * @param CustomerDao - the Data Access Object to copy from
+   * create a copy of the given Customer
+   * @param Customer - the source Object to copy from
    * @return Customer - an implementation fullfilling the Customer interface
    */
-	public static Customer createCopy(CustomerDao pCustomer) {
+	public static Customer createCopy(Customer pCustomer) {
 	  // FIXME need guice injection of interface here
 	  Customer result=new CustomerImpl();
 	  return result;

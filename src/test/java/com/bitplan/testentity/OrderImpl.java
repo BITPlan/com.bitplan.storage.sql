@@ -6,13 +6,13 @@
  *
  * http://www.bitplan.com
  * 
- * generated: 2012-11-24 22:29 with smartGENERATOR
+ * generated: 2012-11-25 09:29 with smartGENERATOR
  */
 package com.bitplan.testentity;
 import com.bitplan.testentity.Order;
 import com.bitplan.testentity.OrderImpl;
 import com.bitplan.testentity.Customer;
-import com.bitplan.testentity.CustomerDao;
+import com.bitplan.testentity.CustomerImpl;
 import com.google.inject.Inject;
 	// >>>{implSection}{Order}{Order}
 	// no implementation yet !!!
@@ -89,11 +89,11 @@ public class OrderImpl implements Order {
  
 
   /**
-   * create a copy of the given OrderDao
-   * @param OrderDao - the Data Access Object to copy from
+   * create a copy of the given Order
+   * @param Order - the source Object to copy from
    * @return Order - an implementation fullfilling the Order interface
    */
-	public static Order createCopy(OrderDao pOrder) {
+	public static Order createCopy(Order pOrder) {
 	  // FIXME need guice injection of interface here
 	  Order result=new OrderImpl();
 	  return result;
