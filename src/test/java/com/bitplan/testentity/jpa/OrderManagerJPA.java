@@ -6,7 +6,7 @@
  *
  * http://www.bitplan.com
  * 
- * generated: 2012-11-23 17:41 with smartGENERATOR
+ * generated: 2012-11-24 18:45 with smartGENERATOR
  */
 package com.bitplan.testentity.jpa;
 // List interface
@@ -44,9 +44,8 @@ public class OrderManagerJPA extends JPAEntityManager<Order>
 	
 	@Override
 	public Order create() {
-		OrderJpaDao OrderDao = new OrderJpaDao();
-		OrderDao.setBOManager(this);
-		Order result=new OrderImpl(OrderDao);
+		OrderJpaDao result = new OrderJpaDao(new OrderImpl());
+		result.setBOManager(this);
 		return result;
 	}
 		

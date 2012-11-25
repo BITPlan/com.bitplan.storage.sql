@@ -6,11 +6,55 @@
  *
  * http://www.bitplan.com
  * 
- * generated: 2012-11-23 17:05 with smartGENERATOR
+ * generated: 2012-11-24 22:29 with smartGENERATOR
  */
 package com.bitplan.testentity;
-public interface Order extends OrderDao {
+import com.bitplan.testentity.Order;
+import com.bitplan.testentity.OrderImpl;
+import com.bitplan.testentity.Customer;
+import com.bitplan.testentity.CustomerDao;
+
+/**
+ * interface for Order
+ */
+public interface Order {
 	// >>>{interface}{Order}{Order}
 	// no implementation yet !!!
 	// <<<{interface}{Order}{Order}
+  /**
+   * getter for id
+   * @return id
+   */
+  public long getId();
+
+  /**
+   * setter for id
+   * @param pid - new value for id
+   */
+  public void setId(long pid);
+
+  /**
+   * getter for shipping address
+   * @return address
+   */
+  public String getAddress();
+
+  /**
+   * setter for shipping address
+   * @param paddress - new value for shipping address
+   */
+  public void setAddress(String paddress);
+
+  /**
+   * getter for customer
+   * @return customer
+   */
+  public Customer getCustomer();
+
+  /**
+   * setter for customer
+   * @param pcustomer - new value for customer
+   */
+  public void setCustomer(Customer pcustomer);
+
 } // Order

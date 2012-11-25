@@ -6,12 +6,12 @@
  *
  * http://www.bitplan.com
  * 
- * generated: 2012-11-24 17:24 with smartGENERATOR
+ * generated: 2012-11-24 22:29 with smartGENERATOR
  */
 package com.bitplan.testentity;
 import java.util.List;
 import com.bitplan.testentity.Customer;
-import com.bitplan.testentity.CustomerDao;
+import com.bitplan.testentity.CustomerImpl;
 import com.bitplan.testentity.Order;
 import com.bitplan.testentity.OrderDao;
 import com.google.inject.Inject;
@@ -23,19 +23,6 @@ import com.google.inject.Inject;
  * Pojo Implementation for Customer
  */
 public class CustomerImpl implements Customer {
- 
-  /**
-   * the data access object
-   */
-  protected CustomerDao mCustomerDao;
-  
-  /**
-   * return the data access object for Customer
-   * @return the CustomerDao 
-   */
-  public CustomerDao getDao() {
-    return mCustomerDao;
-  }
 
 	// >>>{code}{Customer}{Customer}
 	// no implementation yet !!!
@@ -44,72 +31,63 @@ public class CustomerImpl implements Customer {
   /**
    * default constructor for a CustomerImpl 
    */
-  protected CustomerImpl() {
+  public CustomerImpl() {
 	// >>>{defaultConstructor}{Customer}{Customer}
 	// no implementation yet !!!
 	// <<<{defaultConstructor}{Customer}{Customer}
   }
+    
+  /**
+   * name
+   */
+  private String name;
   
   /**
-   * construct a CustomerImpl from a given Data Access Object
-   * @param pCustomerDao the Data Access Object to initialize this class from
+   * id
    */
-  @Inject public CustomerImpl(CustomerDao pCustomer) {
-    super();
-    mCustomerDao=pCustomer;
-	// >>>{constructor}{Customer}{Customer}
-	// no implementation yet !!!
-	// <<<{constructor}{Customer}{Customer}
-  }
-
- 
+  private long id;
+  
+  /**
+   * orders
+   */
+  private List<Order> orders;
+  
   /**
    * getter for name
-   * @return name
+   * @return the value for name
    */
-  public String getName() { 
-  	return mCustomerDao.getName(); 
-  };
+  public String getName() { return name; };
 
   /**
    * setter for name
    * @param pname - new value for name
    */
-  public void setName(String pname) { 
-  	mCustomerDao.setName(pname); 
-  }
+  public void setName(String pname) { name=pname; };
  
   /**
    * getter for id
-   * @return id
+   * @return the value for id
    */
-  public long getId() { 
-  	return mCustomerDao.getId(); 
-  };
+  public long getId() { return id; };
 
   /**
    * setter for id
    * @param pid - new value for id
    */
-  public void setId(long pid) { 
-  	mCustomerDao.setId(pid); 
-  }
+  public void setId(long pid) { id=pid; };
  
   /**
    * getter for orders
-   * @return orders
+   * @return the value for orders
    */
-  public List<Order> getOrders() { 
-  	return mCustomerDao.getOrders(); 
-  };
+  public List<Order> getOrders() { return orders; };
 
   /**
    * setter for orders
    * @param porders - new value for orders
    */
-  public void setOrders(List<Order> porders) { 
-  	mCustomerDao.setOrders(porders); 
-  }
+  public void setOrders(List<Order> porders) { orders=porders; };
+ 
 
   /**
    * create a copy of the given CustomerDao

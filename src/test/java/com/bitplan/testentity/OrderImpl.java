@@ -6,11 +6,11 @@
  *
  * http://www.bitplan.com
  * 
- * generated: 2012-11-24 17:24 with smartGENERATOR
+ * generated: 2012-11-24 22:29 with smartGENERATOR
  */
 package com.bitplan.testentity;
 import com.bitplan.testentity.Order;
-import com.bitplan.testentity.OrderDao;
+import com.bitplan.testentity.OrderImpl;
 import com.bitplan.testentity.Customer;
 import com.bitplan.testentity.CustomerDao;
 import com.google.inject.Inject;
@@ -22,19 +22,6 @@ import com.google.inject.Inject;
  * Pojo Implementation for Order
  */
 public class OrderImpl implements Order {
- 
-  /**
-   * the data access object
-   */
-  protected OrderDao mOrderDao;
-  
-  /**
-   * return the data access object for Order
-   * @return the OrderDao 
-   */
-  public OrderDao getDao() {
-    return mOrderDao;
-  }
 
 	// >>>{code}{Order}{Order}
 	// no implementation yet !!!
@@ -43,72 +30,63 @@ public class OrderImpl implements Order {
   /**
    * default constructor for a OrderImpl 
    */
-  protected OrderImpl() {
+  public OrderImpl() {
 	// >>>{defaultConstructor}{Order}{Order}
 	// no implementation yet !!!
 	// <<<{defaultConstructor}{Order}{Order}
   }
+    
+  /**
+   * id
+   */
+  private long id;
   
   /**
-   * construct a OrderImpl from a given Data Access Object
-   * @param pOrderDao the Data Access Object to initialize this class from
+   * shipping address
    */
-  @Inject public OrderImpl(OrderDao pOrder) {
-    super();
-    mOrderDao=pOrder;
-	// >>>{constructor}{Order}{Order}
-	// no implementation yet !!!
-	// <<<{constructor}{Order}{Order}
-  }
-
- 
+  private String address;
+  
+  /**
+   * customer
+   */
+  private Customer customer;
+  
   /**
    * getter for id
-   * @return id
+   * @return the value for id
    */
-  public long getId() { 
-  	return mOrderDao.getId(); 
-  };
+  public long getId() { return id; };
 
   /**
    * setter for id
    * @param pid - new value for id
    */
-  public void setId(long pid) { 
-  	mOrderDao.setId(pid); 
-  }
+  public void setId(long pid) { id=pid; };
  
   /**
    * getter for shipping address
-   * @return address
+   * @return the value for address
    */
-  public String getAddress() { 
-  	return mOrderDao.getAddress(); 
-  };
+  public String getAddress() { return address; };
 
   /**
    * setter for shipping address
    * @param paddress - new value for shipping address
    */
-  public void setAddress(String paddress) { 
-  	mOrderDao.setAddress(paddress); 
-  }
+  public void setAddress(String paddress) { address=paddress; };
  
   /**
    * getter for customer
-   * @return customer
+   * @return the value for customer
    */
-  public Customer getCustomer() { 
-  	return mOrderDao.getCustomer(); 
-  };
+  public Customer getCustomer() { return customer; };
 
   /**
    * setter for customer
    * @param pcustomer - new value for customer
    */
-  public void setCustomer(Customer pcustomer) { 
-  	mOrderDao.setCustomer(pcustomer); 
-  }
+  public void setCustomer(Customer pcustomer) { customer=pcustomer; };
+ 
 
   /**
    * create a copy of the given OrderDao

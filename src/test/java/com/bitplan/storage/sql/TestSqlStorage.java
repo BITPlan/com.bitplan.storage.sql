@@ -74,8 +74,7 @@ public class TestSqlStorage {
 		Customer customer = injector.getInstance(Customer.class);
 		customer.setId(1);
 		customer.setName("John Doe");
-		CustomerImpl ci=(CustomerImpl)customer;
-		em.persist(ci.getDao());
+		em.persist(customer);
 
 		// Read the existing entries and write to console
 		Query q = em.createQuery("select c from Customer c");
@@ -111,11 +110,11 @@ public class TestSqlStorage {
 		// owning side:
 		order1.setCustomer(customer);
 		// customer.getOrders().add(order1);
-		em.persist(((OrderImpl)order1).getDao());
+		em.persist(order1);
 
 		order2.setCustomer(customer);
 		// customer.getOrders().add(order2);
-		em.persist(((OrderImpl)order2).getDao());
+		em.persist(order2);
 		em.getTransaction().commit();
 		// em.close();
 	}
