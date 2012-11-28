@@ -6,7 +6,7 @@
  *
  * http://www.bitplan.com
  * 
- * generated: 2012-11-25 14:52 with smartGENERATOR
+ * generated: 2012-11-28 18:17 with smartGENERATOR
  */
 package com.bitplan.testentity;
 import java.util.List;
@@ -24,37 +24,37 @@ public interface Customer {
 	// no implementation yet !!!
 	// <<<{interface}{Customer}{Customer}
   /**
-   * getter for name
+   * getter for xsd:string/String name
    * @return name
    */
   public String getName();
 
   /**
-   * setter for name
+   * setter for xsd:string/String name
    * @param pname - new value for name
    */
   public void setName(String pname);
 
   /**
-   * getter for id
+   * getter for xsd:long/long id
    * @return id
    */
   public long getId();
 
   /**
-   * setter for id
+   * setter for xsd:long/long id
    * @param pid - new value for id
    */
   public void setId(long pid);
 
   /**
-   * getter for orders
+   * getter for Order/List<Order> orders
    * @return orders
    */
   public List<Order> getOrders();
 
   /**
-   * setter for orders
+   * setter for Order/List<Order> orders
    * @param porders - new value for orders
    */
   public void setOrders(List<Order> porders);

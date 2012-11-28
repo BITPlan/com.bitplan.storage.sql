@@ -1,3 +1,4 @@
 CREATE TABLE Customer (id BIGINT NOT NULL, name VARCHAR(255), PRIMARY KEY (id))
+CREATE TABLE TypeTest (id BIGINT NOT NULL, tdateVal DATE, tfloatVal FLOAT, tintVal INTEGER, tdoubleVal DOUBLE, tdecimalVal BIGINT, tdateTimeVal DATETIME, tbooleanVal TINYINT(1) default 0, tlongVal BIGINT, tshortVal SMALLINT, tstringVal VARCHAR(255), PRIMARY KEY (id))
 CREATE TABLE order_table (id BIGINT NOT NULL, SHIPPING_ADDRESS VARCHAR(255), CUSTOMER_id BIGINT, PRIMARY KEY (id))
 ALTER TABLE order_table ADD CONSTRAINT FK_order_table_CUSTOMER_id FOREIGN KEY (CUSTOMER_id) REFERENCES Customer (id)

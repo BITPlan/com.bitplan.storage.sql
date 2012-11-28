@@ -6,7 +6,7 @@
  *
  * http://www.bitplan.com
  * 
- * generated: 2012-11-25 12:53 with smartGENERATOR
+ * generated: 2012-11-28 17:58 with smartGENERATOR
  */
 package com.bitplan.testentity;
 // Infrastructure imports
@@ -26,6 +26,11 @@ import com.bitplan.testentity.OrderImpl;
 import com.bitplan.testentity.jpa.OrderJpaDao;
 import com.bitplan.testentity.OrderManager;
 import com.bitplan.testentity.jpa.OrderManagerJPA;
+import com.bitplan.testentity.TypeTest;
+import com.bitplan.testentity.TypeTestImpl;
+import com.bitplan.testentity.jpa.TypeTestJpaDao;
+import com.bitplan.testentity.TypeTestManager;
+import com.bitplan.testentity.jpa.TypeTestManagerJPA;
 
 /**
  * Guice Module for  Testentity
@@ -43,6 +48,9 @@ public class  TestentityJPAModule extends AbstractModule {
     // guice binding for Order
     bind(Order.class).to(OrderJpaDao.class);
     bind(OrderManager.class).to(OrderManagerJPA.class);
+    // guice binding for TypeTest
+    bind(TypeTest.class).to(TypeTestJpaDao.class);
+    bind(TypeTestManager.class).to(TypeTestManagerJPA.class);
   } // configure
 
 } // TestentityModule

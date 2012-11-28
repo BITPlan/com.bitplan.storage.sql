@@ -127,7 +127,7 @@ public class TestSqlStorage {
 	 * @throws Exception
 	 */
 	@Test
-	public void testTemporal() throws Exception {
-		
+	public void testTypes() throws Exception {
+		TestStorage.testGenericTypes(boManagerFactory);
 	}
 }

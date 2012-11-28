@@ -6,7 +6,7 @@
  *
  * http://www.bitplan.com
  * 
- * generated: 2012-11-25 14:52 with smartGENERATOR
+ * generated: 2012-11-28 18:34 with smartGENERATOR
  */
 package com.bitplan.testentity.jpa;
 import java.io.Serializable;
@@ -70,7 +70,7 @@ public class OrderJpaDao extends JPABOImpl<Order>  implements Order, Serializabl
 	// <<<{constructor}{OrderJpaDao}{Order}
   }
   /**
-   * getter for id
+   * getter for xsd:long/long id
    * @return id
    */
   @Id
@@ -80,7 +80,7 @@ public class OrderJpaDao extends JPABOImpl<Order>  implements Order, Serializabl
   }
 
   /**
-   * setter for id
+   * setter for xsd:long/long id
    * @param pid - new value for id
    */
   public void setId(long pid) { 
@@ -88,7 +88,7 @@ public class OrderJpaDao extends JPABOImpl<Order>  implements Order, Serializabl
   }
   
   /**
-   * getter for shipping address
+   * getter for xsd:string/String shipping address
    * @return address
    */
   @Column(name="SHIPPING_ADDRESS")
@@ -97,7 +97,7 @@ public class OrderJpaDao extends JPABOImpl<Order>  implements Order, Serializabl
   }
 
   /**
-   * setter for shipping address
+   * setter for xsd:string/String shipping address
    * @param paddress - new value for shipping address
    */
   public void setAddress(String paddress) { 
@@ -105,7 +105,7 @@ public class OrderJpaDao extends JPABOImpl<Order>  implements Order, Serializabl
   }
   
   /**
-   * getter for customer
+   * getter for Customer/Customer customer
    * @return customer
    */
   @ManyToOne(targetEntity=CustomerJpaDao.class)
@@ -114,7 +114,7 @@ public class OrderJpaDao extends JPABOImpl<Order>  implements Order, Serializabl
   }
 
   /**
-   * setter for customer
+   * setter for Customer/Customer customer
    * @param pcustomer - new value for customer
    */
   public void setCustomer(Customer pcustomer) { 

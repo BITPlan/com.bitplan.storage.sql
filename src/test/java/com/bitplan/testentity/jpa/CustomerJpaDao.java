@@ -6,7 +6,7 @@
  *
  * http://www.bitplan.com
  * 
- * generated: 2012-11-25 14:52 with smartGENERATOR
+ * generated: 2012-11-28 18:17 with smartGENERATOR
  */
 package com.bitplan.testentity.jpa;
 import java.io.Serializable;
@@ -71,7 +71,7 @@ public class CustomerJpaDao extends JPABOImpl<Customer>  implements Customer, Se
 	// <<<{constructor}{CustomerJpaDao}{Customer}
   }
   /**
-   * getter for name
+   * getter for xsd:string/String name
    * @return name
    */
   @Column(name="name")
@@ -80,7 +80,7 @@ public class CustomerJpaDao extends JPABOImpl<Customer>  implements Customer, Se
   }
 
   /**
-   * setter for name
+   * setter for xsd:string/String name
    * @param pname - new value for name
    */
   public void setName(String pname) { 
@@ -88,7 +88,7 @@ public class CustomerJpaDao extends JPABOImpl<Customer>  implements Customer, Se
   }
   
   /**
-   * getter for id
+   * getter for xsd:long/long id
    * @return id
    */
   @Id
@@ -98,7 +98,7 @@ public class CustomerJpaDao extends JPABOImpl<Customer>  implements Customer, Se
   }
 
   /**
-   * setter for id
+   * setter for xsd:long/long id
    * @param pid - new value for id
    */
   public void setId(long pid) { 
@@ -106,7 +106,7 @@ public class CustomerJpaDao extends JPABOImpl<Customer>  implements Customer, Se
   }
   
   /**
-   * getter for orders
+   * getter for Order/List<Order> orders
    * @return orders
    */
   @OneToMany(targetEntity=OrderJpaDao.class, cascade=CascadeType.ALL, mappedBy="customer")
@@ -115,7 +115,7 @@ public class CustomerJpaDao extends JPABOImpl<Customer>  implements Customer, Se
   }
 
   /**
-   * setter for orders
+   * setter for Order/List<Order> orders
    * @param porders - new value for orders
    */
   public void setOrders(List<Order> porders) { 
