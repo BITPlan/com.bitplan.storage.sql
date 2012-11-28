@@ -49,19 +49,7 @@ public class TestSqlStorage {
 		injector = Guice.createInjector(new TestentityJPAModule());
 		boManagerFactory=injector.getInstance(BOManagerFactory.class);
 		boManagerFactory.setInjector(injector);
-		Map<String, String> props = new HashMap<String, String>();
-		props.put("eclipselink.target-database", "MYSQL");
-		props.put("javax.persistence.jdbc.driver", "com.mysql.jdbc.Driver");
-		props.put("javax.persistence.jdbc.url",
-				"jdbc:mysql://localhost:3306/testsqlstorage");
-		props.put("javax.persistence.jdbc.user", "cm");
-		props.put("javax.persistence.jdbc.password", "secret");
-		//props.put("eclipselink.ddl-generation","create-tables");
-		props.put("eclipselink.ddl-generation", "drop-and-create-tables");
-		// http://wiki.eclipse.org/EclipseLink/UserGuide/JPA/Advanced_JPA_Development/Schema_Generation/Appending_strings_to_CREATE_TABLE_statements
-		props.put("eclipselink.ddl.default-table-suffix", "engine=InnoDB");
-		// props.put("eclipselink.ddl-generation.output-mode", "database");
-		props.put("eclipselink.ddl-generation.output-mode", "both");
+		Map<String, String> props = JPAEntityManagerFactory.getMySQLProps("testsqlstorage","localhost","cm", "secret");
 		boManagerFactory.setContext(props);
 	}
 
