@@ -121,6 +121,14 @@ public class TestSqlStorage {
 		TestStorage.testGenericRead(boManagerFactory);
 	}
 	
+	@Test
+	/**
+	 * Test find by Id
+	 */
+	public void testFindById() throws Exception {
+		TestStorage.testGenericFindById(boManagerFactory);
+	}
+
 	/**
 	 * Test Temporal issue
 	 * http://stackoverflow.com/questions/6744195/is-temporal-preferred-to-column-columndefinition
