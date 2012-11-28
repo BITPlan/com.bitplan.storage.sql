@@ -6,7 +6,7 @@
  *
  * http://www.bitplan.com
  * 
- * generated: 2012-11-14 17:05 with smartGENERATOR
+ * generated: 2012-11-28 16:46 with smartGENERATOR
  */
 package com.bitplan.testentity;
 // List interface
@@ -14,11 +14,17 @@ import java.util.List;
 
 // restinterface imports
 import com.bitplan.restinterface.BOManager;
-
+	// >>>{ManagerImportSection}{Customer}{Customer}
+	// no implementation yet !!!
+	// <<<{ManagerImportSection}{Customer}{Customer}
 /**
  * Manager for Restful access to Customer
  */
 public interface CustomerManager extends BOManager<Customer> {
+	// >>>{ManagerImplSection}{Customer}{Customer}
+	// no implementation yet !!!
+	// <<<{ManagerImplSection}{Customer}{Customer}
+
 	/**
 	 * set the customers
 	 * @param pCustomers

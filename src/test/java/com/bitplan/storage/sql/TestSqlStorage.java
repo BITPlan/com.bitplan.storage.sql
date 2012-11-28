@@ -15,6 +15,7 @@ import static org.junit.Assert.*;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import com.bitplan.resthelper.BOManagerFactoryImpl;
 import com.bitplan.restinterface.BOManagerFactory;
 import com.bitplan.storage.TestStorage;
 import com.bitplan.testentity.Customer;
@@ -41,14 +42,11 @@ import javax.persistence.Query;
 public class TestSqlStorage {
 
 	boolean debug = false;
-	private static Injector injector;
 	static BOManagerFactory boManagerFactory;
 
 	@BeforeClass
 	public static void prepareGuice() throws Exception {
-		injector = Guice.createInjector(new TestentityJPAModule());
-		boManagerFactory=injector.getInstance(BOManagerFactory.class);
-		boManagerFactory.setInjector(injector);
+		boManagerFactory=BOManagerFactoryImpl.create(new TestentityJPAModule());
 		Map<String, String> props = JPAEntityManagerFactory.getMySQLProps("testsqlstorage","localhost","cm", "secret");
 		boManagerFactory.setContext(props);
 	}
@@ -57,7 +55,7 @@ public class TestSqlStorage {
 	public void testEclipseLink() throws Exception {
 		EntityManager em=(EntityManager) boManagerFactory.getContext();
 		em.getTransaction().begin();
-		Customer customer = injector.getInstance(Customer.class);
+		Customer customer = boManagerFactory.getInstance(Customer.class);
 		customer.setId(1);
 		customer.setName("John Doe");
 		em.persist(customer);
@@ -79,11 +77,11 @@ public class TestSqlStorage {
 		}
 
 		// Create 2 orders
-		Order order1 = injector.getInstance(Order.class);
+		Order order1 = boManagerFactory.getInstance(Order.class);
 		order1.setId(100);
 		order1.setAddress("123 Main St. Anytown, USA");
 
-		Order order2 = injector.getInstance(Order.class);
+		Order order2 = boManagerFactory.getInstance(Order.class);
 		;
 		order2.setId(200);
 		order2.setAddress("567 1st St. Random City, USA");
@@ -121,5 +119,15 @@ public class TestSqlStorage {
 	@Test
 	public void testRead() throws Exception {
 		TestStorage.testGenericRead(boManagerFactory);
+	}
+	
+	/**
+	 * Test Temporal issue
+	 * http://stackoverflow.com/questions/6744195/is-temporal-preferred-to-column-columndefinition
+	 * @throws Exception
+	 */
+	@Test
+	public void testTemporal() throws Exception {
+		
 	}
 }
