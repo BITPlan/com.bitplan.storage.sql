@@ -19,6 +19,8 @@ import com.bitplan.storage.sql.JPAEntityManager;
 import com.bitplan.testentity.Customer;
 import com.bitplan.testentity.CustomerImpl;
 import com.bitplan.testentity.CustomerManager;
+import javax.persistence.Query;
+
 /**
  * JPA EntityManager implementation for interface Customer
  * Entity: Customer for container testentity
@@ -52,12 +54,12 @@ public class CustomerManagerJPA extends JPAEntityManager<Customer>
 	@Override
 	public void purge() {
 	  super.bolist.clear();
+	  
 	}
+	
 	@Override
 	public Class<? extends BO<?>> getEntityType() {
 		return CustomerJpaDao.class;
 	}
-	
-
 
 } // CustomerManagerJPA

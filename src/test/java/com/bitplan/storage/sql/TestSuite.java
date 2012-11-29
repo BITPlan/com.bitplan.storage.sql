@@ -14,7 +14,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
-@Suite.SuiteClasses({ TestSqlStorage.class})
+@Suite.SuiteClasses({ TestEclipseLink.class, TestSqlStorage.class})
 /**
  * TestSuite
  * @author wf
