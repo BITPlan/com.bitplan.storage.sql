@@ -64,4 +64,8 @@ public abstract class JPAEntityManager<BO> extends BOManagerImpl<BO>  implements
 		T result = this.getEntityManager().find(entityClass, primaryKey);
 		return result;
 	}
+	
+	public void findAll() {
+		// FIXME - implement and test
+	}
 }

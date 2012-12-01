@@ -6,7 +6,7 @@
  *
  * http://www.bitplan.com
  * 
- * generated: 2012-11-28 18:17 with smartGENERATOR
+ * generated: 2012-12-01 05:48 with smartGENERATOR
  */
 package com.bitplan.testentity;
 import com.bitplan.testentity.Order;
@@ -58,4 +58,9 @@ public interface Order {
    */
   public void setCustomer(Customer pcustomer);
 
+ /**
+   * copy me from the given Order
+   * @param Order - the source Object to copy from
+   */
+  public void copyFrom(Order pOrder);
 } // Order

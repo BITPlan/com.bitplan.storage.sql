@@ -6,7 +6,7 @@
  *
  * http://www.bitplan.com
  * 
- * generated: 2012-11-28 18:31 with smartGENERATOR
+ * generated: 2012-12-01 05:48 with smartGENERATOR
  */
 package com.bitplan.testentity.jpa;
 import java.io.Serializable;
@@ -19,6 +19,8 @@ import com.google.inject.Inject;
 
 import com.bitplan.testentity.TypeTest;
 import com.bitplan.testentity.TypeTestImpl;
+// restinterface
+import com.bitplan.restinterface.BO;
 	// >>>{implSection}{TypeTest}{TypeTest}
 	// no implementation yet !!!
 	// <<<{implSection}{TypeTest}{TypeTest}
@@ -258,7 +260,13 @@ public class TypeTestJpaDao extends JPABOImpl<TypeTest>  implements TypeTest, Se
   	mTypeTestImpl.setTdateTimeVal(ptdateTimeVal); 
   }
   
-
+ /**
+   * copy me from the given TypeTest
+   * @param TypeTest - the source Object to copy from
+   */
+  public void copyFrom(TypeTest pTypeTest) {
+    mTypeTestImpl.copyFrom(pTypeTest);
+  }
   /**
    * get the primary key of this business object
    */

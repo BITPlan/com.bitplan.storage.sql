@@ -6,7 +6,7 @@
  *
  * http://www.bitplan.com
  * 
- * generated: 2012-11-28 18:31 with smartGENERATOR
+ * generated: 2012-12-01 05:48 with smartGENERATOR
  */
 package com.bitplan.testentity;
 import com.bitplan.testentity.TypeTest;
@@ -153,4 +153,9 @@ public interface TypeTest {
    */
   public void setTdateTimeVal(java.util.Date ptdateTimeVal);
 
+ /**
+   * copy me from the given TypeTest
+   * @param TypeTest - the source Object to copy from
+   */
+  public void copyFrom(TypeTest pTypeTest);
 } // TypeTest

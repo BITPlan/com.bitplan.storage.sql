@@ -6,7 +6,7 @@
  *
  * http://www.bitplan.com
  * 
- * generated: 2012-11-28 18:34 with smartGENERATOR
+ * generated: 2012-12-01 05:48 with smartGENERATOR
  */
 package com.bitplan.testentity.jpa;
 import java.io.Serializable;
@@ -19,6 +19,8 @@ import com.google.inject.Inject;
 
 import com.bitplan.testentity.Order;
 import com.bitplan.testentity.OrderImpl;
+// restinterface
+import com.bitplan.restinterface.BO;
 import com.bitplan.testentity.Customer;
 	// >>>{implSection}{Order}{Order}
 	// no implementation yet !!!
@@ -121,7 +123,13 @@ public class OrderJpaDao extends JPABOImpl<Order>  implements Order, Serializabl
   	mOrderImpl.setCustomer(pcustomer); 
   }
   
-
+ /**
+   * copy me from the given Order
+   * @param Order - the source Object to copy from
+   */
+  public void copyFrom(Order pOrder) {
+    mOrderImpl.copyFrom(pOrder);
+  }
   /**
    * get the primary key of this business object
    */

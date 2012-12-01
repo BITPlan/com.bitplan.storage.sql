@@ -6,7 +6,7 @@
  *
  * http://www.bitplan.com
  * 
- * generated: 2012-11-25 14:52 with smartGENERATOR
+ * generated: 2012-12-01 05:48 with smartGENERATOR
  */
 package com.bitplan.testentity;
 import java.util.List;
@@ -89,14 +89,13 @@ public class CustomerImpl implements Customer {
  
 
   /**
-   * create a copy of the given Customer
+   * copy me from the given Customer
    * @param Customer - the source Object to copy from
-   * @return Customer - an implementation fullfilling the Customer interface
    */
-	public static Customer createCopy(Customer pCustomer) {
-	  // FIXME need guice injection of interface here
-	  Customer result=new CustomerImpl();
-	  return result;
-	} // createCopy
+  public void copyFrom(Customer pCustomer) {
+		setName(pCustomer.getName());
+		setId(pCustomer.getId());
+		setOrders(pCustomer.getOrders());
+	} // copyFrom
 	
 } // CustomerImpl

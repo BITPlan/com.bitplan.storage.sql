@@ -6,7 +6,7 @@
  *
  * http://www.bitplan.com
  * 
- * generated: 2012-11-28 18:17 with smartGENERATOR
+ * generated: 2012-12-01 05:48 with smartGENERATOR
  */
 package com.bitplan.testentity;
 import java.util.List;
@@ -59,4 +59,9 @@ public interface Customer {
    */
   public void setOrders(List<Order> porders);
 
+ /**
+   * copy me from the given Customer
+   * @param Customer - the source Object to copy from
+   */
+  public void copyFrom(Customer pCustomer);
 } // Customer

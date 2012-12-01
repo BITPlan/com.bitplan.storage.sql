@@ -6,7 +6,7 @@
  *
  * http://www.bitplan.com
  * 
- * generated: 2012-11-25 14:52 with smartGENERATOR
+ * generated: 2012-12-01 05:48 with smartGENERATOR
  */
 package com.bitplan.testentity;
 import com.bitplan.testentity.Order;
@@ -87,14 +87,13 @@ public class OrderImpl implements Order {
  
 
   /**
-   * create a copy of the given Order
+   * copy me from the given Order
    * @param Order - the source Object to copy from
-   * @return Order - an implementation fullfilling the Order interface
    */
-	public static Order createCopy(Order pOrder) {
-	  // FIXME need guice injection of interface here
-	  Order result=new OrderImpl();
-	  return result;
-	} // createCopy
+  public void copyFrom(Order pOrder) {
+		setId(pOrder.getId());
+		setAddress(pOrder.getAddress());
+		setCustomer(pOrder.getCustomer());
+	} // copyFrom
 	
 } // OrderImpl

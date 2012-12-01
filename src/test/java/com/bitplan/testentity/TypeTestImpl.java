@@ -6,7 +6,7 @@
  *
  * http://www.bitplan.com
  * 
- * generated: 2012-11-28 18:31 with smartGENERATOR
+ * generated: 2012-12-01 05:48 with smartGENERATOR
  */
 package com.bitplan.testentity;
 import com.bitplan.testentity.TypeTest;
@@ -222,14 +222,21 @@ public class TypeTestImpl implements TypeTest {
  
 
   /**
-   * create a copy of the given TypeTest
+   * copy me from the given TypeTest
    * @param TypeTest - the source Object to copy from
-   * @return TypeTest - an implementation fullfilling the TypeTest interface
    */
-	public static TypeTest createCopy(TypeTest pTypeTest) {
-	  // FIXME need guice injection of interface here
-	  TypeTest result=new TypeTestImpl();
-	  return result;
-	} // createCopy
+  public void copyFrom(TypeTest pTypeTest) {
+		setId(pTypeTest.getId());
+		setTstringVal(pTypeTest.getTstringVal());
+		setTbooleanVal(pTypeTest.isTbooleanVal());
+		setTlongVal(pTypeTest.getTlongVal());
+		setTintVal(pTypeTest.getTintVal());
+		setTshortVal(pTypeTest.getTshortVal());
+		setTdecimalVal(pTypeTest.getTdecimalVal());
+		setTfloatVal(pTypeTest.getTfloatVal());
+		setTdoubleVal(pTypeTest.getTdoubleVal());
+		setTdateVal(pTypeTest.getTdateVal());
+		setTdateTimeVal(pTypeTest.getTdateTimeVal());
+	} // copyFrom
 	
 } // TypeTestImpl
