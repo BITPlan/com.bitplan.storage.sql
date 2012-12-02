@@ -6,7 +6,7 @@
  *
  * http://www.bitplan.com
  * 
- * generated: 2012-12-01 05:48 with smartGENERATOR
+ * generated: 2012-12-02 09:08 with smartGENERATOR
  */
 package com.bitplan.testentity.jpa;
 import java.io.Serializable;
@@ -47,6 +47,7 @@ public class TypeTestJpaDao extends JPABOImpl<TypeTest>  implements TypeTest, Se
    * return the implementation for TypeTest
    * @return the TypeTest implementation 
    */
+  @Transient
   public TypeTest getImpl() {
     return mTypeTestImpl;
   }
