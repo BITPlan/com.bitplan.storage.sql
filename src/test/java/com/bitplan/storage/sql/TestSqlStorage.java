@@ -35,7 +35,7 @@ public class TestSqlStorage extends TestStorage {
 	public static void prepareGuice() throws Exception {
 		if (boManagerFactory==null) {
 		  boManagerFactory=BOManagerFactoryImpl.create(new TestentityJPAModule());
-		  Map<String, String> props = JPAEntityManagerFactory.getMySQLProps("testsqlstorage","localhost","cm", "secret");
+		  Map<String, String> props = JPAEntityManagerFactory.getMySQLProps("testsqlstorage","localhost","cm", "secret",true);
 		  boManagerFactory.setContext(props);
 		}
 	}

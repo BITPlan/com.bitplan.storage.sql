@@ -1,6 +1,10 @@
 package com.bitplan.storage.sql;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
+
 import com.bitplan.resthelper.BOManagerImpl;
 import com.bitplan.restinterface.BOManager;
 
@@ -65,7 +69,14 @@ public abstract class JPAEntityManager<BO> extends BOManagerImpl<BO>  implements
 		return result;
 	}
 	
+	@Override
 	public void findAll() {
-		// FIXME - implement and test
+		// http://stackoverflow.com/questions/2401129/hql-equivalent-query-to-this-sql-query
+	  Query query = getEntityManager().createNativeQuery("SELECT * FROM "+this.getEntityName(),this.getEntityType());
+		// debug only
+		// query.setMaxResults(1000);
+    bolist = query.getResultList();
 	}
+
+	
 }

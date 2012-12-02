@@ -1,6 +1,7 @@
 package com.bitplan.storage.sql;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.persistence.EntityManager;
@@ -25,9 +26,10 @@ public class JPAEntityManagerFactory extends BOManagerFactoryImpl {
 	 * @param host
 	 * @param username
 	 * @param password
+	 * @param reCreateDatabase
 	 * @return
 	 */
-	public static Map<String, String>  getMySQLProps(String database,String host, String username, String password) {
+	public static Map<String, String>  getMySQLProps(String database,String host, String username, String password, boolean reCreateDatabase) {
 		/**
 		 * properties
 		 */
@@ -39,7 +41,8 @@ public class JPAEntityManagerFactory extends BOManagerFactoryImpl {
 		props.put("javax.persistence.jdbc.user", username);
 		props.put("javax.persistence.jdbc.password", password);
 		//props.put("eclipselink.ddl-generation","create-tables");
-		props.put("eclipselink.ddl-generation", "drop-and-create-tables");
+		if (reCreateDatabase)
+			props.put("eclipselink.ddl-generation", "drop-and-create-tables");
 		// http://wiki.eclipse.org/EclipseLink/UserGuide/JPA/Advanced_JPA_Development/Schema_Generation/Appending_strings_to_CREATE_TABLE_statements
 		props.put("eclipselink.ddl.default-table-suffix", "engine=InnoDB");
 		// props.put("eclipselink.ddl-generation.output-mode", "database");
