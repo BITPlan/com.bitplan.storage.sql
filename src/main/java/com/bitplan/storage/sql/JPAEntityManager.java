@@ -64,6 +64,15 @@ public abstract class JPAEntityManager<BO> extends BOManagerImpl<BO>  implements
 	}
 	
 	@Override
+	public BO findById(Object id) throws Exception {
+		if (firstSearch) {
+			this.findAll();
+			firstSearch=false;
+		}
+		return super.findById(id);
+	}
+	
+	@Override
 	public <T> T find(Class<T> entityClass, Object primaryKey) throws Exception {
 		T result = this.getEntityManager().find(entityClass, primaryKey);
 		return result;
