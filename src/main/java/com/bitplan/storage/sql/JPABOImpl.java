@@ -6,14 +6,13 @@ import org.simpleframework.xml.Transient;
 
 import com.bitplan.restinterface.BO;
 import com.bitplan.restinterface.BOManager;
-import com.bitplan.restinterface.Copyable;
 
 /**
  * XML based Implementation for a Business object of Type BO_T 
  * @author wf
  * @param <BO_T>
  */
-public abstract class JPABOImpl<BO_T> implements BO<BO_T>, Copyable<BO_T> {
+public abstract class JPABOImpl<BO_T> implements BO<BO_T> {
 
 	@Transient
 	@XmlTransient

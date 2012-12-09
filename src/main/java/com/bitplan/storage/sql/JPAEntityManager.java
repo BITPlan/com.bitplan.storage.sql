@@ -14,10 +14,26 @@ import com.bitplan.restinterface.BOManager;
  *
  */
 public abstract class JPAEntityManager<BO> extends BOManagerImpl<BO>  implements BOManager<BO>{
+	public static int MAX_RESULTS=100000;
 	// for examples
 	// http://www.winstonprakash.com/articles/netbeans/JPA_Add_Update_Delete.html
 	EntityManager entityManager;
+	String tableName;
 	
+	/**
+	 * @return the tableName
+	 */
+	public String getTableName() {
+		return tableName;
+	}
+
+	/**
+	 * @param tableName the tableName to set
+	 */
+	public void setTableName(String tableName) {
+		this.tableName = tableName;
+	}
+
 	/**
 	 * @return the entityManager
 	 */
@@ -52,6 +68,13 @@ public abstract class JPAEntityManager<BO> extends BOManagerImpl<BO>  implements
 		assert(this.getEntityManager().isOpen());
 		this.getEntityManager().getTransaction().begin();
 	}
+	
+	@Override
+	public void purge() {
+    bolist.clear();
+    Query query = getEntityManager().createQuery("DELETE FROM "+this.getEntityName());
+    query.executeUpdate();
+	}
 
 	@Override
 	public void persist(BO entity) {
@@ -66,7 +89,7 @@ public abstract class JPAEntityManager<BO> extends BOManagerImpl<BO>  implements
 	@Override
 	public BO findById(Object id) throws Exception {
 		if (firstSearch) {
-			this.findAll();
+			this.findAll(MAX_RESULTS);
 			firstSearch=false;
 		}
 		return super.findById(id);
@@ -79,11 +102,10 @@ public abstract class JPAEntityManager<BO> extends BOManagerImpl<BO>  implements
 	}
 	
 	@Override
-	public void findAll() {
+	public void findAll(int maxResults) {
 		// http://stackoverflow.com/questions/2401129/hql-equivalent-query-to-this-sql-query
-	  Query query = getEntityManager().createNativeQuery("SELECT * FROM "+this.getEntityName(),this.getEntityType());
-		// debug only
-		// query.setMaxResults(1000);
+	  Query query = getEntityManager().createNativeQuery("SELECT * FROM "+this.getTableName(),this.getEntityType());
+		query.setMaxResults(maxResults);
     bolist = query.getResultList();
 	}
 

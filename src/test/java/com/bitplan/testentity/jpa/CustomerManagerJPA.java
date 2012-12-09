@@ -6,7 +6,7 @@
  *
  * http://www.bitplan.com
  * 
- * generated: 2012-12-01 05:48 with smartGENERATOR
+ * generated: 2012-12-09 15:24 with smartGENERATOR
  */
 package com.bitplan.testentity.jpa;
 // List interface
@@ -25,6 +25,14 @@ import com.bitplan.testentity.CustomerManager;
  */
 public class CustomerManagerJPA extends JPAEntityManager<Customer>
 	implements CustomerManager {
+	
+	public CustomerManagerJPA() {
+		this.setTableName("Customer");
+	}
+	// >>>{Managercode}{CustomerJpaDao}{Customer}
+	// no implementation yet !!!
+	// <<<{Managercode}{CustomerJpaDao}{Customer}
+
   /**
 	 * set the customers
 	 * @param pCustomers
@@ -49,10 +57,6 @@ public class CustomerManagerJPA extends JPAEntityManager<Customer>
 		return result;
 	}
 		
-	@Override
-	public void purge() {
-	  super.bolist.clear();
-	}
 	@Override
 	public Class<? extends BO<?>> getEntityType() {
 		return CustomerJpaDao.class;

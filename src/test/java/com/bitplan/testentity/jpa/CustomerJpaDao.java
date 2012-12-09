@@ -6,7 +6,7 @@
  *
  * http://www.bitplan.com
  * 
- * generated: 2012-12-02 09:08 with smartGENERATOR
+ * generated: 2012-12-09 14:19 with smartGENERATOR
  */
 package com.bitplan.testentity.jpa;
 import java.io.Serializable;
@@ -17,11 +17,15 @@ import com.bitplan.storage.sql.JPABOImpl;
 // Guice
 import com.google.inject.Inject;
 
-import java.util.List;
 import com.bitplan.testentity.Customer;
 import com.bitplan.testentity.CustomerImpl;
+// utility imports
+import java.util.Map;
+import java.util.HashMap;
+
 // restinterface
 import com.bitplan.restinterface.BO;
+import java.util.List;
 import com.bitplan.testentity.Order;
 	// >>>{implSection}{Customer}{Customer}
 	// no implementation yet !!!
@@ -138,5 +142,28 @@ public class CustomerJpaDao extends JPABOImpl<Customer>  implements Customer, Se
 	@Transient
   public Object getPrimaryKey() {
   	return getId();
-  }
+  } // getPrimaryKey
+
+  @Override
+	public Object getField(String fieldName) {
+		Object result=null;
+    if (fieldName.equals("name")) result=getName();
+    if (fieldName.equals("id")) result=getId();
+    if (fieldName.equals("orders")) result=getOrders();
+		return result;
+	} // getField
+
+	@Override
+	public Map<String, Object> toMap() {
+	  Map<String, Object> result=new HashMap<String,Object>();
+    result.put("name",getName());
+    result.put("id",getId());
+		return result;
+	} // toMap
+
+	@Override
+	public void fromMap(Map<String, Object> pMap) {
+    setName((String)pMap.get("name"));
+    setId((Long)pMap.get("id"));
+	} // fromMap
 } // CustomerJpaDao

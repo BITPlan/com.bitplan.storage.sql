@@ -6,7 +6,7 @@
  *
  * http://www.bitplan.com
  * 
- * generated: 2012-12-02 09:08 with smartGENERATOR
+ * generated: 2012-12-09 14:19 with smartGENERATOR
  */
 package com.bitplan.testentity.jpa;
 import java.io.Serializable;
@@ -19,6 +19,10 @@ import com.google.inject.Inject;
 
 import com.bitplan.testentity.Order;
 import com.bitplan.testentity.OrderImpl;
+// utility imports
+import java.util.Map;
+import java.util.HashMap;
+
 // restinterface
 import com.bitplan.restinterface.BO;
 import com.bitplan.testentity.Customer;
@@ -137,5 +141,28 @@ public class OrderJpaDao extends JPABOImpl<Order>  implements Order, Serializabl
 	@Transient
   public Object getPrimaryKey() {
   	return getId();
-  }
+  } // getPrimaryKey
+
+  @Override
+	public Object getField(String fieldName) {
+		Object result=null;
+    if (fieldName.equals("id")) result=getId();
+    if (fieldName.equals("shipping address")) result=getAddress();
+    if (fieldName.equals("customer")) result=getCustomer();
+		return result;
+	} // getField
+
+	@Override
+	public Map<String, Object> toMap() {
+	  Map<String, Object> result=new HashMap<String,Object>();
+    result.put("id",getId());
+    result.put("shipping address",getAddress());
+		return result;
+	} // toMap
+
+	@Override
+	public void fromMap(Map<String, Object> pMap) {
+    setId((Long)pMap.get("id"));
+    setAddress((String)pMap.get("shipping address"));
+	} // fromMap
 } // OrderJpaDao

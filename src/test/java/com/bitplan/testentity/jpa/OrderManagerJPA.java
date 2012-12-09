@@ -6,7 +6,7 @@
  *
  * http://www.bitplan.com
  * 
- * generated: 2012-11-24 18:45 with smartGENERATOR
+ * generated: 2012-12-09 15:24 with smartGENERATOR
  */
 package com.bitplan.testentity.jpa;
 // List interface
@@ -25,6 +25,14 @@ import com.bitplan.testentity.OrderManager;
  */
 public class OrderManagerJPA extends JPAEntityManager<Order>
 	implements OrderManager {
+	
+	public OrderManagerJPA() {
+		this.setTableName("order_table");
+	}
+	// >>>{Managercode}{OrderJpaDao}{Order}
+	// no implementation yet !!!
+	// <<<{Managercode}{OrderJpaDao}{Order}
+
   /**
 	 * set the orders
 	 * @param pOrders
@@ -49,10 +57,6 @@ public class OrderManagerJPA extends JPAEntityManager<Order>
 		return result;
 	}
 		
-	@Override
-	public void purge() {
-	  super.bolist.clear();
-	}
 	@Override
 	public Class<? extends BO<?>> getEntityType() {
 		return OrderJpaDao.class;

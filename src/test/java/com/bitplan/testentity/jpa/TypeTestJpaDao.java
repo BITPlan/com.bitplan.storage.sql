@@ -6,7 +6,7 @@
  *
  * http://www.bitplan.com
  * 
- * generated: 2012-12-02 09:08 with smartGENERATOR
+ * generated: 2012-12-09 14:19 with smartGENERATOR
  */
 package com.bitplan.testentity.jpa;
 import java.io.Serializable;
@@ -19,6 +19,10 @@ import com.google.inject.Inject;
 
 import com.bitplan.testentity.TypeTest;
 import com.bitplan.testentity.TypeTestImpl;
+// utility imports
+import java.util.Map;
+import java.util.HashMap;
+
 // restinterface
 import com.bitplan.restinterface.BO;
 	// >>>{implSection}{TypeTest}{TypeTest}
@@ -274,5 +278,54 @@ public class TypeTestJpaDao extends JPABOImpl<TypeTest>  implements TypeTest, Se
 	@Transient
   public Object getPrimaryKey() {
   	return getId();
-  }
+  } // getPrimaryKey
+
+  @Override
+	public Object getField(String fieldName) {
+		Object result=null;
+    if (fieldName.equals("id")) result=getId();
+    if (fieldName.equals("tstringVal")) result=getTstringVal();
+    if (fieldName.equals("tbooleanVal")) result=isTbooleanVal();
+    if (fieldName.equals("tlongVal")) result=getTlongVal();
+    if (fieldName.equals("tintVal")) result=getTintVal();
+    if (fieldName.equals("tshortVal")) result=getTshortVal();
+    if (fieldName.equals("tdecimalVal")) result=getTdecimalVal();
+    if (fieldName.equals("tfloatVal")) result=getTfloatVal();
+    if (fieldName.equals("tdoubleVal")) result=getTdoubleVal();
+    if (fieldName.equals("tdateVal")) result=getTdateVal();
+    if (fieldName.equals("tdateTimeVal")) result=getTdateTimeVal();
+		return result;
+	} // getField
+
+	@Override
+	public Map<String, Object> toMap() {
+	  Map<String, Object> result=new HashMap<String,Object>();
+    result.put("id",getId());
+    result.put("tstringVal",getTstringVal());
+    result.put("tbooleanVal",isTbooleanVal());
+    result.put("tlongVal",getTlongVal());
+    result.put("tintVal",getTintVal());
+    result.put("tshortVal",getTshortVal());
+    result.put("tdecimalVal",getTdecimalVal());
+    result.put("tfloatVal",getTfloatVal());
+    result.put("tdoubleVal",getTdoubleVal());
+    result.put("tdateVal",getTdateVal());
+    result.put("tdateTimeVal",getTdateTimeVal());
+		return result;
+	} // toMap
+
+	@Override
+	public void fromMap(Map<String, Object> pMap) {
+    setId((Long)pMap.get("id"));
+    setTstringVal((String)pMap.get("tstringVal"));
+    setTbooleanVal((Boolean)pMap.get("tbooleanVal"));
+    setTlongVal((Long)pMap.get("tlongVal"));
+    setTintVal((Integer)pMap.get("tintVal"));
+    setTshortVal((Short)pMap.get("tshortVal"));
+    setTdecimalVal((Long)pMap.get("tdecimalVal"));
+    setTfloatVal((Float)pMap.get("tfloatVal"));
+    setTdoubleVal((Double)pMap.get("tdoubleVal"));
+    setTdateVal((java.util.Date)pMap.get("tdateVal"));
+    setTdateTimeVal((java.util.Date)pMap.get("tdateTimeVal"));
+	} // fromMap
 } // TypeTestJpaDao
