@@ -14,7 +14,7 @@ import com.bitplan.restinterface.BOManager;
  *
  */
 public abstract class JPAEntityManager<BO> extends BOManagerImpl<BO>  implements BOManager<BO>{
-	public static int MAX_RESULTS=100000;
+
 	// for examples
 	// http://www.winstonprakash.com/articles/netbeans/JPA_Add_Update_Delete.html
 	EntityManager entityManager;
