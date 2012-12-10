@@ -39,14 +39,14 @@
 		</dependency>
 		<!-- RestHelper Interface -->
 		<dependency>
-			<artifactId>com.bitplan.resthelperinterface</artifactId>
+			<artifactId>com.bitplan.resthelper-api</artifactId>
 			<groupId>${project.groupId}</groupId>
 			<version>${project.version}</version>
 			<scope>compile</scope>
 		</dependency>
 		<!-- and tests for the RestHelper Interface -->
 		<dependency>
-			<artifactId>com.bitplan.resthelperinterface</artifactId>
+			<artifactId>com.bitplan.resthelper-api</artifactId>
 			<groupId>${project.groupId}</groupId>
 			<version>${project.version}</version>
 			<type>test-jar</type>
