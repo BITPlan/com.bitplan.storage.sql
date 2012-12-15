@@ -6,7 +6,7 @@
  *
  * http://www.bitplan.com
  * 
- * generated: 2012-12-09 14:19 with smartGENERATOR
+ * generated: 2012-12-14 12:42 with smartGENERATOR
  */
 package com.bitplan.testentity;
 import com.bitplan.testentity.Customer;
@@ -47,6 +47,11 @@ public class CustomerImpl implements Customer {
   private long id;
   
   /**
+   * city
+   */
+  private String city;
+  
+  /**
    * orders
    */
   private List<Order> orders=new ArrayList<Order>();
@@ -76,6 +81,18 @@ public class CustomerImpl implements Customer {
   public void setId(long pid) { id=pid; };
  
   /**
+   * getter for city
+   * @return the value for city
+   */
+  public String getCity() { return city; };
+
+  /**
+   * setter for city
+   * @param pcity - new value for city
+   */
+  public void setCity(String pcity) { city=pcity; };
+ 
+  /**
    * getter for orders
    * @return the value for orders
    */
@@ -95,6 +112,7 @@ public class CustomerImpl implements Customer {
   public void copyFrom(Customer pCustomer) {
 		setName(pCustomer.getName());
 		setId(pCustomer.getId());
+		setCity(pCustomer.getCity());
 		setOrders(pCustomer.getOrders());
 	} // copyFrom
 	

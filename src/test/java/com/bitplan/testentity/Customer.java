@@ -6,7 +6,7 @@
  *
  * http://www.bitplan.com
  * 
- * generated: 2012-12-09 14:19 with smartGENERATOR
+ * generated: 2012-12-14 12:42 with smartGENERATOR
  */
 package com.bitplan.testentity;
 import com.bitplan.testentity.Customer;
@@ -46,6 +46,18 @@ public interface Customer {
    * @param pid - new value for id
    */
   public void setId(long pid);
+
+  /**
+   * getter for xsd:string/String city
+   * @return city
+   */
+  public String getCity();
+
+  /**
+   * setter for xsd:string/String city
+   * @param pcity - new value for city
+   */
+  public void setCity(String pcity);
 
   /**
    * getter for Order/List<Order> orders

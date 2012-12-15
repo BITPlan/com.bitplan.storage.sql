@@ -6,19 +6,26 @@
  *
  * http://www.bitplan.com
  * 
- * generated: 2012-12-09 15:24 with smartGENERATOR
+ * generated: 2012-12-14 12:42 with smartGENERATOR
  */
 package com.bitplan.testentity.jpa;
-// List interface
-import java.util.List;
-// BO interface
-import com.bitplan.restinterface.BO;
 // base Entity Manager
 import com.bitplan.storage.sql.JPAEntityManager;
+// List
+import java.util.List;
+import java.util.ArrayList;
+
+// BO interface
+import com.bitplan.restinterface.BO;
+
+
 // Entity interfaces
 import com.bitplan.testentity.TypeTest;
 import com.bitplan.testentity.TypeTestImpl;
 import com.bitplan.testentity.TypeTestManager;
+	// >>>{ManagerImports}{TypeTestjpa}{TypeTest}
+	// no implementation yet !!!
+	// <<<{ManagerImports}{TypeTestjpa}{TypeTest}
 /**
  * JPA EntityManager implementation for interface TypeTest
  * Entity: TypeTest for container testentity
@@ -56,6 +63,7 @@ public class TypeTestManagerJPA extends JPAEntityManager<TypeTest>
 		result.setBOManager(this);
 		return result;
 	}
+	
 		
 	@Override
 	public Class<? extends BO<?>> getEntityType() {

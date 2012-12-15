@@ -6,7 +6,7 @@
  *
  * http://www.bitplan.com
  * 
- * generated: 2012-12-09 14:19 with smartGENERATOR
+ * generated: 2012-12-14 12:42 with smartGENERATOR
  */
 package com.bitplan.testentity.jpa;
 import java.io.Serializable;
@@ -113,6 +113,23 @@ public class CustomerJpaDao extends JPABOImpl<Customer>  implements Customer, Se
   }
   
   /**
+   * getter for xsd:string/String city
+   * @return city
+   */
+  @Column(name="city")
+  public String getCity() { 
+  	return mCustomerImpl.getCity(); 
+  }
+
+  /**
+   * setter for xsd:string/String city
+   * @param pcity - new value for city
+   */
+  public void setCity(String pcity) { 
+  	mCustomerImpl.setCity(pcity); 
+  }
+  
+  /**
    * getter for Order/List<Order> orders
    * @return orders
    */
@@ -149,6 +166,7 @@ public class CustomerJpaDao extends JPABOImpl<Customer>  implements Customer, Se
 		Object result=null;
     if (fieldName.equals("name")) result=getName();
     if (fieldName.equals("id")) result=getId();
+    if (fieldName.equals("city")) result=getCity();
     if (fieldName.equals("orders")) result=getOrders();
 		return result;
 	} // getField
@@ -158,6 +176,7 @@ public class CustomerJpaDao extends JPABOImpl<Customer>  implements Customer, Se
 	  Map<String, Object> result=new HashMap<String,Object>();
     result.put("name",getName());
     result.put("id",getId());
+    result.put("city",getCity());
 		return result;
 	} // toMap
 
@@ -165,5 +184,6 @@ public class CustomerJpaDao extends JPABOImpl<Customer>  implements Customer, Se
 	public void fromMap(Map<String, Object> pMap) {
     setName((String)pMap.get("name"));
     setId((Long)pMap.get("id"));
+    setCity((String)pMap.get("city"));
 	} // fromMap
 } // CustomerJpaDao
