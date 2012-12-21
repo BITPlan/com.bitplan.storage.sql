@@ -35,18 +35,4 @@ public abstract class JPABOImpl<BO_T> implements BO<BO_T> {
 		return mBO;
 	}
 	
-	@Transient
-	@XmlTransient
-	protected String ref;
-
-	@Override
-	public String getRef() {
-		return ref;
-	}
-
-	@Override
-	public void setRef(String pRef) {
-		this.ref=pRef;
-	}
-
 }
