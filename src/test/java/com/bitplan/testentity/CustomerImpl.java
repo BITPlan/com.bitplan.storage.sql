@@ -6,7 +6,7 @@
  *
  * http://www.bitplan.com
  * 
- * generated: 2012-12-14 12:42 with smartGENERATOR
+ * generated: 2012-12-21 23:17 with smartGENERATOR
  */
 package com.bitplan.testentity;
 import com.bitplan.testentity.Customer;
@@ -44,7 +44,7 @@ public class CustomerImpl implements Customer {
   /**
    * id
    */
-  private long id;
+  private String id;
   
   /**
    * city
@@ -72,13 +72,13 @@ public class CustomerImpl implements Customer {
    * getter for id
    * @return the value for id
    */
-  public long getId() { return id; };
+  public String getId() { return id; };
 
   /**
    * setter for id
    * @param pid - new value for id
    */
-  public void setId(long pid) { id=pid; };
+  public void setId(String pid) { id=pid; };
  
   /**
    * getter for city

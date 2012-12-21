@@ -6,7 +6,7 @@
  *
  * http://www.bitplan.com
  * 
- * generated: 2012-12-14 12:42 with smartGENERATOR
+ * generated: 2012-12-21 23:17 with smartGENERATOR
  */
 package com.bitplan.testentity.jpa;
 import java.io.Serializable;
@@ -95,20 +95,20 @@ public class CustomerJpaDao extends JPABOImpl<Customer>  implements Customer, Se
   }
   
   /**
-   * getter for xsd:long/long id
+   * getter for xsd:string/String id
    * @return id
    */
   @Id
   @Column(name="id")
-  public long getId() { 
+  public String getId() { 
   	return mCustomerImpl.getId(); 
   }
 
   /**
-   * setter for xsd:long/long id
+   * setter for xsd:string/String id
    * @param pid - new value for id
    */
-  public void setId(long pid) { 
+  public void setId(String pid) { 
   	mCustomerImpl.setId(pid); 
   }
   
@@ -183,7 +183,7 @@ public class CustomerJpaDao extends JPABOImpl<Customer>  implements Customer, Se
 	@Override
 	public void fromMap(Map<String, Object> pMap) {
     setName((String)pMap.get("name"));
-    setId((Long)pMap.get("id"));
+    setId((String)pMap.get("id"));
     setCity((String)pMap.get("city"));
 	} // fromMap
 } // CustomerJpaDao

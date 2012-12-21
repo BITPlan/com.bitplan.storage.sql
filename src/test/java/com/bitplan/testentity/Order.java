@@ -6,7 +6,7 @@
  *
  * http://www.bitplan.com
  * 
- * generated: 2012-12-01 05:48 with smartGENERATOR
+ * generated: 2012-12-21 23:17 with smartGENERATOR
  */
 package com.bitplan.testentity;
 import com.bitplan.testentity.Order;
@@ -23,16 +23,16 @@ public interface Order {
 	// no implementation yet !!!
 	// <<<{interface}{Order}{Order}
   /**
-   * getter for xsd:long/long id
+   * getter for xsd:string/String id
    * @return id
    */
-  public long getId();
+  public String getId();
 
   /**
-   * setter for xsd:long/long id
+   * setter for xsd:string/String id
    * @param pid - new value for id
    */
-  public void setId(long pid);
+  public void setId(String pid);
 
   /**
    * getter for xsd:string/String shipping address

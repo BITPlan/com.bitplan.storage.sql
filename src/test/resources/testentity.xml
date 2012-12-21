@@ -75,231 +75,231 @@
                <!-- java.lang.String -->
                <fieldname ref="28"/>
                <!-- java.lang.String -->
-               <typename id="32">xsd:long</typename>
-               <!-- com.bitplan.restmeta.Attribute$BaseType -->
-               <type id="33">tlong</type>
-               <!-- java.lang.Boolean -->
-               <specialization id="34">false</specialization>
-               <!-- java.lang.String -->
-               <fieldtype id="35">long</fieldtype>
-               <!-- java.lang.String -->
-               <jdbcGetter id="36">getLong</jdbcGetter>
-               <!-- java.lang.String -->
-               <javaGetter id="37">getId</javaGetter>
-               <!-- java.lang.String -->
-               <javaSetter id="38">setId</javaSetter>
-               <!-- java.lang.Boolean -->
-               <multiple id="39">false</multiple>
-            </attribute>
-            <!-- com.bitplan.restmeta.Attribute -->
-            <attribute id="40">
-               <!-- java.lang.String -->
-               <name id="41">city</name>
-               <!-- java.lang.String -->
-               <columnname ref="41"/>
-               <!-- java.lang.Boolean -->
-               <primaryKey id="42">false</primaryKey>
-               <!-- java.lang.Boolean -->
-               <memo id="43">false</memo>
-               <!-- java.lang.Boolean -->
-               <mapAsXmlAttribute id="44">false</mapAsXmlAttribute>
-               <!-- java.lang.String -->
-               <fieldname ref="41"/>
-               <!-- java.lang.String -->
                <typename ref="19"/>
                <!-- com.bitplan.restmeta.Attribute$BaseType -->
                <type ref="20"/>
                <!-- java.lang.Boolean -->
-               <specialization id="45">false</specialization>
+               <specialization id="32">false</specialization>
                <!-- java.lang.String -->
                <fieldtype ref="22"/>
                <!-- java.lang.String -->
                <jdbcGetter ref="23"/>
                <!-- java.lang.String -->
-               <javaGetter id="46">getCity</javaGetter>
+               <javaGetter id="33">getId</javaGetter>
                <!-- java.lang.String -->
-               <javaSetter id="47">setCity</javaSetter>
+               <javaSetter id="34">setId</javaSetter>
                <!-- java.lang.Boolean -->
-               <multiple id="48">false</multiple>
+               <multiple id="35">false</multiple>
             </attribute>
             <!-- com.bitplan.restmeta.Attribute -->
-            <attribute id="49">
+            <attribute id="36">
                <!-- java.lang.String -->
-               <name id="50">orders</name>
+               <name id="37">city</name>
                <!-- java.lang.String -->
-               <columnname ref="50"/>
+               <columnname ref="37"/>
                <!-- java.lang.Boolean -->
-               <primaryKey id="51">false</primaryKey>
+               <primaryKey id="38">false</primaryKey>
                <!-- java.lang.Boolean -->
-               <memo id="52">false</memo>
+               <memo id="39">false</memo>
                <!-- java.lang.Boolean -->
-               <mapAsXmlAttribute id="53">false</mapAsXmlAttribute>
+               <mapAsXmlAttribute id="40">false</mapAsXmlAttribute>
                <!-- java.lang.String -->
-               <fieldname ref="50"/>
+               <fieldname ref="37"/>
                <!-- java.lang.String -->
-               <typename id="54">Order</typename>
+               <typename ref="19"/>
+               <!-- com.bitplan.restmeta.Attribute$BaseType -->
+               <type ref="20"/>
+               <!-- java.lang.Boolean -->
+               <specialization id="41">false</specialization>
+               <!-- java.lang.String -->
+               <fieldtype ref="22"/>
+               <!-- java.lang.String -->
+               <jdbcGetter ref="23"/>
+               <!-- java.lang.String -->
+               <javaGetter id="42">getCity</javaGetter>
+               <!-- java.lang.String -->
+               <javaSetter id="43">setCity</javaSetter>
+               <!-- java.lang.Boolean -->
+               <multiple id="44">false</multiple>
+            </attribute>
+            <!-- com.bitplan.restmeta.Attribute -->
+            <attribute id="45">
+               <!-- java.lang.String -->
+               <name id="46">orders</name>
+               <!-- java.lang.String -->
+               <columnname ref="46"/>
+               <!-- java.lang.Boolean -->
+               <primaryKey id="47">false</primaryKey>
+               <!-- java.lang.Boolean -->
+               <memo id="48">false</memo>
+               <!-- java.lang.Boolean -->
+               <mapAsXmlAttribute id="49">false</mapAsXmlAttribute>
+               <!-- java.lang.String -->
+               <fieldname ref="46"/>
+               <!-- java.lang.String -->
+               <typename id="50">Order</typename>
                <!-- com.bitplan.restmeta.Entity -->
-               <entityType id="55">
+               <entityType id="51">
                   <!-- java.lang.String -->
-                  <name ref="54"/>
+                  <name ref="50"/>
                   <!-- java.lang.String -->
-                  <tablename id="56">order_table</tablename>
+                  <tablename id="52">order_table</tablename>
                   <!-- java.lang.String -->
-                  <classname id="57">Order</classname>
+                  <classname id="53">Order</classname>
                   <!-- com.bitplan.restmeta.InstanceList -->
-                  <attributes id="58">
+                  <attributes id="54">
                      <!-- com.bitplan.restmeta.Attribute -->
-                     <attribute id="59">
+                     <attribute id="55">
                         <!-- java.lang.String -->
                         <name ref="28"/>
                         <!-- java.lang.String -->
                         <columnname ref="28"/>
                         <!-- java.lang.Boolean -->
-                        <primaryKey id="60">true</primaryKey>
+                        <primaryKey id="56">true</primaryKey>
                         <!-- java.lang.Boolean -->
-                        <memo id="61">false</memo>
+                        <memo id="57">false</memo>
                         <!-- java.lang.Boolean -->
-                        <mapAsXmlAttribute id="62">false</mapAsXmlAttribute>
+                        <mapAsXmlAttribute id="58">false</mapAsXmlAttribute>
                         <!-- java.lang.String -->
                         <fieldname ref="28"/>
-                        <!-- java.lang.String -->
-                        <typename ref="32"/>
-                        <!-- com.bitplan.restmeta.Attribute$BaseType -->
-                        <type ref="33"/>
-                        <!-- java.lang.Boolean -->
-                        <specialization id="63">false</specialization>
-                        <!-- java.lang.String -->
-                        <fieldtype ref="35"/>
-                        <!-- java.lang.String -->
-                        <jdbcGetter ref="36"/>
-                        <!-- java.lang.String -->
-                        <javaGetter id="64">getId</javaGetter>
-                        <!-- java.lang.String -->
-                        <javaSetter id="65">setId</javaSetter>
-                        <!-- java.lang.Boolean -->
-                        <multiple id="66">false</multiple>
-                     </attribute>
-                     <!-- com.bitplan.restmeta.Attribute -->
-                     <attribute id="67">
-                        <!-- java.lang.String -->
-                        <name id="68">shipping address</name>
-                        <!-- java.lang.String -->
-                        <columnname id="69">SHIPPING_ADDRESS</columnname>
-                        <!-- java.lang.Boolean -->
-                        <primaryKey id="70">false</primaryKey>
-                        <!-- java.lang.Boolean -->
-                        <memo id="71">false</memo>
-                        <!-- java.lang.Boolean -->
-                        <mapAsXmlAttribute id="72">false</mapAsXmlAttribute>
-                        <!-- java.lang.String -->
-                        <fieldname id="73">address</fieldname>
                         <!-- java.lang.String -->
                         <typename ref="19"/>
                         <!-- com.bitplan.restmeta.Attribute$BaseType -->
                         <type ref="20"/>
                         <!-- java.lang.Boolean -->
-                        <specialization id="74">false</specialization>
+                        <specialization id="59">false</specialization>
                         <!-- java.lang.String -->
                         <fieldtype ref="22"/>
                         <!-- java.lang.String -->
                         <jdbcGetter ref="23"/>
                         <!-- java.lang.String -->
-                        <javaGetter id="75">getAddress</javaGetter>
+                        <javaGetter id="60">getId</javaGetter>
                         <!-- java.lang.String -->
-                        <javaSetter id="76">setAddress</javaSetter>
-                        <!-- java.lang.String -->
-                        <columntype id="77">VARCHAR(500)</columntype>
+                        <javaSetter id="61">setId</javaSetter>
                         <!-- java.lang.Boolean -->
-                        <multiple id="78">false</multiple>
+                        <multiple id="62">false</multiple>
                      </attribute>
                      <!-- com.bitplan.restmeta.Attribute -->
-                     <attribute id="79">
+                     <attribute id="63">
                         <!-- java.lang.String -->
-                        <name id="80">customer</name>
+                        <name id="64">shipping address</name>
                         <!-- java.lang.String -->
-                        <columnname ref="80"/>
+                        <columnname id="65">SHIPPING_ADDRESS</columnname>
                         <!-- java.lang.Boolean -->
-                        <primaryKey id="81">false</primaryKey>
+                        <primaryKey id="66">false</primaryKey>
                         <!-- java.lang.Boolean -->
-                        <memo id="82">false</memo>
+                        <memo id="67">false</memo>
                         <!-- java.lang.Boolean -->
-                        <mapAsXmlAttribute id="83">false</mapAsXmlAttribute>
+                        <mapAsXmlAttribute id="68">false</mapAsXmlAttribute>
                         <!-- java.lang.String -->
-                        <fieldname ref="80"/>
+                        <fieldname id="69">address</fieldname>
+                        <!-- java.lang.String -->
+                        <typename ref="19"/>
+                        <!-- com.bitplan.restmeta.Attribute$BaseType -->
+                        <type ref="20"/>
+                        <!-- java.lang.Boolean -->
+                        <specialization id="70">false</specialization>
+                        <!-- java.lang.String -->
+                        <fieldtype ref="22"/>
+                        <!-- java.lang.String -->
+                        <jdbcGetter ref="23"/>
+                        <!-- java.lang.String -->
+                        <javaGetter id="71">getAddress</javaGetter>
+                        <!-- java.lang.String -->
+                        <javaSetter id="72">setAddress</javaSetter>
+                        <!-- java.lang.String -->
+                        <columntype id="73">VARCHAR(500)</columntype>
+                        <!-- java.lang.Boolean -->
+                        <multiple id="74">false</multiple>
+                     </attribute>
+                     <!-- com.bitplan.restmeta.Attribute -->
+                     <attribute id="75">
+                        <!-- java.lang.String -->
+                        <name id="76">customer</name>
+                        <!-- java.lang.String -->
+                        <columnname ref="76"/>
+                        <!-- java.lang.Boolean -->
+                        <primaryKey id="77">false</primaryKey>
+                        <!-- java.lang.Boolean -->
+                        <memo id="78">false</memo>
+                        <!-- java.lang.Boolean -->
+                        <mapAsXmlAttribute id="79">false</mapAsXmlAttribute>
+                        <!-- java.lang.String -->
+                        <fieldname ref="76"/>
                         <!-- java.lang.String -->
                         <typename ref="11"/>
                         <!-- com.bitplan.restmeta.Entity -->
                         <entityType ref="10"/>
                         <!-- java.lang.String -->
-                        <relationName id="84">clients</relationName>
+                        <relationName id="80">clients</relationName>
                         <!-- com.bitplan.restmeta.Attribute -->
-                        <otherAttribute ref="49"/>
+                        <otherAttribute ref="45"/>
                         <!-- java.lang.Boolean -->
-                        <specialization id="85">false</specialization>
+                        <specialization id="81">false</specialization>
                         <!-- java.lang.String -->
                         <fieldtype ref="12"/>
                         <!-- java.lang.String -->
-                        <javaGetter id="86">getCustomer</javaGetter>
+                        <javaGetter id="82">getCustomer</javaGetter>
                         <!-- java.lang.String -->
-                        <javaSetter id="87">setCustomer</javaSetter>
+                        <javaSetter id="83">setCustomer</javaSetter>
                         <!-- java.lang.Boolean -->
-                        <multiple id="88">false</multiple>
+                        <multiple id="84">false</multiple>
                      </attribute>
                   </attributes>
                </entityType>
                <!-- java.lang.String -->
-               <relationName ref="84"/>
+               <relationName ref="80"/>
                <!-- com.bitplan.restmeta.Attribute -->
-               <otherAttribute ref="79"/>
+               <otherAttribute ref="75"/>
                <!-- java.lang.Boolean -->
-               <specialization id="89">false</specialization>
+               <specialization id="85">false</specialization>
                <!-- java.lang.String -->
-               <fieldtype id="90">List&lt;Order&gt;</fieldtype>
+               <fieldtype id="86">List&lt;Order&gt;</fieldtype>
                <!-- java.lang.String -->
-               <javaGetter id="91">getOrders</javaGetter>
+               <javaGetter id="87">getOrders</javaGetter>
                <!-- java.lang.String -->
-               <javaSetter id="92">setOrders</javaSetter>
+               <javaSetter id="88">setOrders</javaSetter>
                <!-- java.lang.Boolean -->
-               <multiple id="93">true</multiple>
+               <multiple id="89">true</multiple>
             </attribute>
          </attributes>
       </entity>
       <!-- com.bitplan.restmeta.Entity -->
-      <entity ref="55"/>
+      <entity ref="51"/>
       <!-- com.bitplan.restmeta.Entity -->
-      <entity id="94">
+      <entity id="90">
          <!-- java.lang.String -->
-         <name id="95">TypeTest</name>
+         <name id="91">TypeTest</name>
          <!-- java.lang.String -->
-         <tablename ref="95"/>
+         <tablename ref="91"/>
          <!-- java.lang.String -->
-         <classname id="96">TypeTest</classname>
+         <classname id="92">TypeTest</classname>
          <!-- com.bitplan.restmeta.InstanceList -->
-         <attributes id="97">
+         <attributes id="93">
             <!-- com.bitplan.restmeta.Attribute -->
-            <attribute id="98">
+            <attribute id="94">
                <!-- java.lang.String -->
                <name ref="28"/>
                <!-- java.lang.String -->
                <columnname ref="28"/>
                <!-- java.lang.Boolean -->
-               <primaryKey id="99">true</primaryKey>
+               <primaryKey id="95">true</primaryKey>
                <!-- java.lang.Boolean -->
-               <memo id="100">false</memo>
+               <memo id="96">false</memo>
                <!-- java.lang.Boolean -->
-               <mapAsXmlAttribute id="101">true</mapAsXmlAttribute>
+               <mapAsXmlAttribute id="97">true</mapAsXmlAttribute>
                <!-- java.lang.String -->
                <fieldname ref="28"/>
                <!-- java.lang.String -->
-               <typename ref="32"/>
+               <typename id="98">xsd:long</typename>
                <!-- com.bitplan.restmeta.Attribute$BaseType -->
-               <type ref="33"/>
+               <type id="99">tlong</type>
                <!-- java.lang.Boolean -->
-               <specialization id="102">false</specialization>
+               <specialization id="100">false</specialization>
                <!-- java.lang.String -->
-               <fieldtype ref="35"/>
+               <fieldtype id="101">long</fieldtype>
                <!-- java.lang.String -->
-               <jdbcGetter ref="36"/>
+               <jdbcGetter id="102">getLong</jdbcGetter>
                <!-- java.lang.String -->
                <javaGetter id="103">getId</javaGetter>
                <!-- java.lang.String -->
@@ -384,15 +384,15 @@
                <!-- java.lang.String -->
                <fieldname ref="129"/>
                <!-- java.lang.String -->
-               <typename ref="32"/>
+               <typename ref="98"/>
                <!-- com.bitplan.restmeta.Attribute$BaseType -->
-               <type ref="33"/>
+               <type ref="99"/>
                <!-- java.lang.Boolean -->
                <specialization id="133">false</specialization>
                <!-- java.lang.String -->
-               <fieldtype ref="35"/>
+               <fieldtype ref="101"/>
                <!-- java.lang.String -->
-               <jdbcGetter ref="36"/>
+               <jdbcGetter ref="102"/>
                <!-- java.lang.String -->
                <javaGetter id="134">getTlongVal</javaGetter>
                <!-- java.lang.String -->
@@ -483,9 +483,9 @@
                <!-- java.lang.Boolean -->
                <specialization id="170">false</specialization>
                <!-- java.lang.String -->
-               <fieldtype ref="35"/>
+               <fieldtype ref="101"/>
                <!-- java.lang.String -->
-               <jdbcGetter ref="36"/>
+               <jdbcGetter ref="102"/>
                <!-- java.lang.String -->
                <javaGetter id="171">getTdecimalVal</javaGetter>
                <!-- java.lang.String -->

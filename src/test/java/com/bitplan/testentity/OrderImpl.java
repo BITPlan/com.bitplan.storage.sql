@@ -6,7 +6,7 @@
  *
  * http://www.bitplan.com
  * 
- * generated: 2012-12-01 05:48 with smartGENERATOR
+ * generated: 2012-12-21 23:17 with smartGENERATOR
  */
 package com.bitplan.testentity;
 import com.bitplan.testentity.Order;
@@ -37,7 +37,7 @@ public class OrderImpl implements Order {
   /**
    * id
    */
-  private long id;
+  private String id;
   
   /**
    * shipping address
@@ -53,13 +53,13 @@ public class OrderImpl implements Order {
    * getter for id
    * @return the value for id
    */
-  public long getId() { return id; };
+  public String getId() { return id; };
 
   /**
    * setter for id
    * @param pid - new value for id
    */
-  public void setId(long pid) { id=pid; };
+  public void setId(String pid) { id=pid; };
  
   /**
    * getter for shipping address

@@ -6,7 +6,7 @@
  *
  * http://www.bitplan.com
  * 
- * generated: 2012-12-09 14:19 with smartGENERATOR
+ * generated: 2012-12-21 23:17 with smartGENERATOR
  */
 package com.bitplan.testentity.jpa;
 import java.io.Serializable;
@@ -77,20 +77,20 @@ public class OrderJpaDao extends JPABOImpl<Order>  implements Order, Serializabl
 	// <<<{constructor}{OrderJpaDao}{Order}
   }
   /**
-   * getter for xsd:long/long id
+   * getter for xsd:string/String id
    * @return id
    */
   @Id
   @Column(name="id")
-  public long getId() { 
+  public String getId() { 
   	return mOrderImpl.getId(); 
   }
 
   /**
-   * setter for xsd:long/long id
+   * setter for xsd:string/String id
    * @param pid - new value for id
    */
-  public void setId(long pid) { 
+  public void setId(String pid) { 
   	mOrderImpl.setId(pid); 
   }
   
@@ -162,7 +162,7 @@ public class OrderJpaDao extends JPABOImpl<Order>  implements Order, Serializabl
 
 	@Override
 	public void fromMap(Map<String, Object> pMap) {
-    setId((Long)pMap.get("id"));
+    setId((String)pMap.get("id"));
     setAddress((String)pMap.get("shipping address"));
 	} // fromMap
 } // OrderJpaDao

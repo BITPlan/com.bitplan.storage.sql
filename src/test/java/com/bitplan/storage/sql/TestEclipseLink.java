@@ -42,7 +42,7 @@ public class TestEclipseLink {
 		EntityManager em=(EntityManager) boManagerFactory.getContext();
 		em.getTransaction().begin();
 		Customer customer = boManagerFactory.getInstance(Customer.class);
-		customer.setId(1);
+		customer.setId("1");
 		customer.setName("John Doe");
 		em.persist(customer);
 
@@ -64,12 +64,12 @@ public class TestEclipseLink {
 
 		// Create 2 orders
 		Order order1 = boManagerFactory.getInstance(Order.class);
-		order1.setId(100);
+		order1.setId("100");
 		order1.setAddress("123 Main St. Anytown, USA");
 
 		Order order2 = boManagerFactory.getInstance(Order.class);
 		;
-		order2.setId(200);
+		order2.setId("200");
 		order2.setAddress("567 1st St. Random City, USA");
 
 		// Associate orders with the customer.
