@@ -6,7 +6,7 @@
  *
  * http://www.bitplan.com
  * 
- * generated: 2012-12-21 23:17 with smartGENERATOR
+ * generated: 2012-12-24 09:41 with smartGENERATOR
  */
 package com.bitplan.testentity.jpa;
 import java.io.Serializable;
@@ -78,6 +78,24 @@ public class CustomerJpaDao extends JPABOImpl<Customer>  implements Customer, Se
 	// <<<{constructor}{CustomerJpaDao}{Customer}
   }
   /**
+   * getter for xsd:string/String id
+   * @return id
+   */
+  @Id
+  @Column(name="id")
+  public String getId() { 
+  	return mCustomerImpl.getId(); 
+  }
+
+  /**
+   * setter for xsd:string/String id
+   * @param pid - new value for id
+   */
+  public void setId(String pid) { 
+  	mCustomerImpl.setId(pid); 
+  }
+  
+  /**
    * getter for xsd:string/String name
    * @return name
    */
@@ -95,21 +113,20 @@ public class CustomerJpaDao extends JPABOImpl<Customer>  implements Customer, Se
   }
   
   /**
-   * getter for xsd:string/String id
-   * @return id
+   * getter for xsd:string/String statusgroup
+   * @return statusgroup
    */
-  @Id
-  @Column(name="id")
-  public String getId() { 
-  	return mCustomerImpl.getId(); 
+  @Column(name="statusgroup")
+  public String getStatusgroup() { 
+  	return mCustomerImpl.getStatusgroup(); 
   }
 
   /**
-   * setter for xsd:string/String id
-   * @param pid - new value for id
+   * setter for xsd:string/String statusgroup
+   * @param pstatusgroup - new value for statusgroup
    */
-  public void setId(String pid) { 
-  	mCustomerImpl.setId(pid); 
+  public void setStatusgroup(String pstatusgroup) { 
+  	mCustomerImpl.setStatusgroup(pstatusgroup); 
   }
   
   /**
@@ -164,8 +181,9 @@ public class CustomerJpaDao extends JPABOImpl<Customer>  implements Customer, Se
   @Override
 	public Object getField(String fieldName) {
 		Object result=null;
-    if (fieldName.equals("name")) result=getName();
     if (fieldName.equals("id")) result=getId();
+    if (fieldName.equals("name")) result=getName();
+    if (fieldName.equals("statusgroup")) result=getStatusgroup();
     if (fieldName.equals("city")) result=getCity();
     if (fieldName.equals("orders")) result=getOrders();
 		return result;
@@ -174,16 +192,18 @@ public class CustomerJpaDao extends JPABOImpl<Customer>  implements Customer, Se
 	@Override
 	public Map<String, Object> toMap() {
 	  Map<String, Object> result=new HashMap<String,Object>();
-    result.put("name",getName());
     result.put("id",getId());
+    result.put("name",getName());
+    result.put("statusgroup",getStatusgroup());
     result.put("city",getCity());
 		return result;
 	} // toMap
 
 	@Override
 	public void fromMap(Map<String, Object> pMap) {
-    setName((String)pMap.get("name"));
     setId((String)pMap.get("id"));
+    setName((String)pMap.get("name"));
+    setStatusgroup((String)pMap.get("statusgroup"));
     setCity((String)pMap.get("city"));
 	} // fromMap
 } // CustomerJpaDao

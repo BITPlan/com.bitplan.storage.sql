@@ -6,7 +6,7 @@
  *
  * http://www.bitplan.com
  * 
- * generated: 2012-12-21 23:17 with smartGENERATOR
+ * generated: 2012-12-24 09:41 with smartGENERATOR
  */
 package com.bitplan.testentity;
 import com.bitplan.testentity.Customer;
@@ -37,14 +37,19 @@ public class CustomerImpl implements Customer {
   }
     
   /**
+   * id
+   */
+  private String id;
+  
+  /**
    * name
    */
   private String name;
   
   /**
-   * id
+   * statusgroup
    */
-  private String id;
+  private String statusgroup;
   
   /**
    * city
@@ -56,6 +61,18 @@ public class CustomerImpl implements Customer {
    */
   private List<Order> orders=new ArrayList<Order>();
   
+  /**
+   * getter for id
+   * @return the value for id
+   */
+  public String getId() { return id; };
+
+  /**
+   * setter for id
+   * @param pid - new value for id
+   */
+  public void setId(String pid) { id=pid; };
+ 
   /**
    * getter for name
    * @return the value for name
@@ -69,16 +86,16 @@ public class CustomerImpl implements Customer {
   public void setName(String pname) { name=pname; };
  
   /**
-   * getter for id
-   * @return the value for id
+   * getter for statusgroup
+   * @return the value for statusgroup
    */
-  public String getId() { return id; };
+  public String getStatusgroup() { return statusgroup; };
 
   /**
-   * setter for id
-   * @param pid - new value for id
+   * setter for statusgroup
+   * @param pstatusgroup - new value for statusgroup
    */
-  public void setId(String pid) { id=pid; };
+  public void setStatusgroup(String pstatusgroup) { statusgroup=pstatusgroup; };
  
   /**
    * getter for city
@@ -110,8 +127,9 @@ public class CustomerImpl implements Customer {
    * @param Customer - the source Object to copy from
    */
   public void copyFrom(Customer pCustomer) {
-		setName(pCustomer.getName());
 		setId(pCustomer.getId());
+		setName(pCustomer.getName());
+		setStatusgroup(pCustomer.getStatusgroup());
 		setCity(pCustomer.getCity());
 		setOrders(pCustomer.getOrders());
 	} // copyFrom

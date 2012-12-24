@@ -101,10 +101,6 @@ public abstract class JPAEntityManager<BO> extends BOManagerImpl<BO> implements
 
 	@Override
 	public BO findById(Object id) throws Exception {
-		if (firstSearch) {
-			this.findAll(MAX_RESULTS);
-			firstSearch = false;
-		}
 		return super.findById(id);
 	}
 
