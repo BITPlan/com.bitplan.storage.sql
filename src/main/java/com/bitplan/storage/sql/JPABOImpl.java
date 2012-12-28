@@ -20,6 +20,23 @@ public abstract class JPABOImpl<BO_T> implements BO<BO_T> {
 	
 	protected BO_T mBO;
 	
+	/**
+	 * the true implementation
+	 */
+	protected BO_T mBOImpl;
+
+	/**
+	 * return the implementation for Customer
+	 * 
+	 * @return the Customer implementation
+	 */
+	@Transient
+	@XmlTransient
+	public BO_T getImpl() {
+		return mBOImpl;
+	}
+
+	
 	@Override
 	public BOManager<BO_T> getBOManager() {
 		return boManager;
