@@ -1,7 +1,15 @@
+/**
+ * Copyright (C) 2011-2012 BITPlan GmbH
+ *
+ * Pater-Delp-Str. 1
+ * D-47877 Willich-Schiefbahn
+ *
+ * http://www.bitplan.com
+ *
+ */
 package com.bitplan.storage.sql;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.persistence.EntityManager;
