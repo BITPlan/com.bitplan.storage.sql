@@ -6,7 +6,7 @@
  *
  * http://www.bitplan.com
  * 
- * generated: 2012-12-24 09:41 with smartGENERATOR
+ * generated: 2012-12-29 09:04 with smartGENERATOR
  */
 package com.bitplan.testentity.jpa;
 import java.io.Serializable;
@@ -44,25 +44,12 @@ public class CustomerJpaDao extends JPABOImpl<Customer>  implements Customer, Se
    * make Serializable happy ...   
    */  
   private static final long serialVersionUID = 1L;  
-  /**
-   * the true implementation
-   */
-  protected Customer mCustomerImpl;
-  
-  /**
-   * return the implementation for Customer
-   * @return the Customer implementation 
-   */
-  @Transient
-  public Customer getImpl() {
-    return mCustomerImpl;
-  }
   
   /**
    * default constructor for Customer
    */
   public CustomerJpaDao() {
-    mCustomerImpl=new CustomerImpl();
+    mBOImpl=new CustomerImpl();
     
   }
   
@@ -72,7 +59,7 @@ public class CustomerJpaDao extends JPABOImpl<Customer>  implements Customer, Se
    */
   public CustomerJpaDao(Customer pCustomer) {
     super();
-    mCustomerImpl=pCustomer;
+    mBOImpl=pCustomer;
 	// >>>{constructor}{CustomerJpaDao}{Customer}
 	// no implementation yet !!!
 	// <<<{constructor}{CustomerJpaDao}{Customer}
@@ -84,7 +71,7 @@ public class CustomerJpaDao extends JPABOImpl<Customer>  implements Customer, Se
   @Id
   @Column(name="id")
   public String getId() { 
-  	return mCustomerImpl.getId(); 
+  	return getImpl().getId(); 
   }
 
   /**
@@ -92,7 +79,7 @@ public class CustomerJpaDao extends JPABOImpl<Customer>  implements Customer, Se
    * @param pid - new value for id
    */
   public void setId(String pid) { 
-  	mCustomerImpl.setId(pid); 
+  	getImpl().setId(pid); 
   }
   
   /**
@@ -101,7 +88,7 @@ public class CustomerJpaDao extends JPABOImpl<Customer>  implements Customer, Se
    */
   @Column(name="name")
   public String getName() { 
-  	return mCustomerImpl.getName(); 
+  	return getImpl().getName(); 
   }
 
   /**
@@ -109,7 +96,7 @@ public class CustomerJpaDao extends JPABOImpl<Customer>  implements Customer, Se
    * @param pname - new value for name
    */
   public void setName(String pname) { 
-  	mCustomerImpl.setName(pname); 
+  	getImpl().setName(pname); 
   }
   
   /**
@@ -118,7 +105,7 @@ public class CustomerJpaDao extends JPABOImpl<Customer>  implements Customer, Se
    */
   @Column(name="statusgroup")
   public String getStatusgroup() { 
-  	return mCustomerImpl.getStatusgroup(); 
+  	return getImpl().getStatusgroup(); 
   }
 
   /**
@@ -126,7 +113,7 @@ public class CustomerJpaDao extends JPABOImpl<Customer>  implements Customer, Se
    * @param pstatusgroup - new value for statusgroup
    */
   public void setStatusgroup(String pstatusgroup) { 
-  	mCustomerImpl.setStatusgroup(pstatusgroup); 
+  	getImpl().setStatusgroup(pstatusgroup); 
   }
   
   /**
@@ -135,7 +122,7 @@ public class CustomerJpaDao extends JPABOImpl<Customer>  implements Customer, Se
    */
   @Column(name="city")
   public String getCity() { 
-  	return mCustomerImpl.getCity(); 
+  	return getImpl().getCity(); 
   }
 
   /**
@@ -143,7 +130,7 @@ public class CustomerJpaDao extends JPABOImpl<Customer>  implements Customer, Se
    * @param pcity - new value for city
    */
   public void setCity(String pcity) { 
-  	mCustomerImpl.setCity(pcity); 
+  	getImpl().setCity(pcity); 
   }
   
   /**
@@ -152,7 +139,7 @@ public class CustomerJpaDao extends JPABOImpl<Customer>  implements Customer, Se
    */
   @OneToMany(targetEntity=OrderJpaDao.class, cascade=CascadeType.ALL, mappedBy="customer")
   public List<Order> getOrders() { 
-  	return mCustomerImpl.getOrders(); 
+  	return getImpl().getOrders(); 
   }
 
   /**
@@ -160,7 +147,7 @@ public class CustomerJpaDao extends JPABOImpl<Customer>  implements Customer, Se
    * @param porders - new value for orders
    */
   public void setOrders(List<Order> porders) { 
-  	mCustomerImpl.setOrders(porders); 
+  	getImpl().setOrders(porders); 
   }
   
  /**
@@ -168,7 +155,7 @@ public class CustomerJpaDao extends JPABOImpl<Customer>  implements Customer, Se
    * @param Customer - the source Object to copy from
    */
   public void copyFrom(Customer pCustomer) {
-    mCustomerImpl.copyFrom(pCustomer);
+    mBOImpl.copyFrom(pCustomer);
   }
   /**
    * get the primary key of this business object

@@ -6,7 +6,7 @@
  *
  * http://www.bitplan.com
  * 
- * generated: 2012-12-21 23:17 with smartGENERATOR
+ * generated: 2012-12-29 09:04 with smartGENERATOR
  */
 package com.bitplan.testentity;
 import com.bitplan.testentity.Order;
@@ -93,7 +93,6 @@ public class OrderImpl implements Order {
   public void copyFrom(Order pOrder) {
 		setId(pOrder.getId());
 		setAddress(pOrder.getAddress());
-		setCustomer(pOrder.getCustomer());
 	} // copyFrom
 	
 } // OrderImpl

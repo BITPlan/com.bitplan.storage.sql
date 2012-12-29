@@ -1,4 +1,4 @@
 ALTER TABLE order_table DROP FOREIGN KEY FK_order_table_CUSTOMER_id
 DROP TABLE Customer
-DROP TABLE TypeTest
 DROP TABLE order_table
+DROP TABLE TypeTest

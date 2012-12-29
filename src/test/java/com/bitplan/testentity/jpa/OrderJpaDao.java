@@ -6,7 +6,7 @@
  *
  * http://www.bitplan.com
  * 
- * generated: 2012-12-21 23:17 with smartGENERATOR
+ * generated: 2012-12-29 09:04 with smartGENERATOR
  */
 package com.bitplan.testentity.jpa;
 import java.io.Serializable;
@@ -43,25 +43,12 @@ public class OrderJpaDao extends JPABOImpl<Order>  implements Order, Serializabl
    * make Serializable happy ...   
    */  
   private static final long serialVersionUID = 1L;  
-  /**
-   * the true implementation
-   */
-  protected Order mOrderImpl;
-  
-  /**
-   * return the implementation for Order
-   * @return the Order implementation 
-   */
-  @Transient
-  public Order getImpl() {
-    return mOrderImpl;
-  }
   
   /**
    * default constructor for Order
    */
   public OrderJpaDao() {
-    mOrderImpl=new OrderImpl();
+    mBOImpl=new OrderImpl();
     
   }
   
@@ -71,7 +58,7 @@ public class OrderJpaDao extends JPABOImpl<Order>  implements Order, Serializabl
    */
   public OrderJpaDao(Order pOrder) {
     super();
-    mOrderImpl=pOrder;
+    mBOImpl=pOrder;
 	// >>>{constructor}{OrderJpaDao}{Order}
 	// no implementation yet !!!
 	// <<<{constructor}{OrderJpaDao}{Order}
@@ -83,7 +70,7 @@ public class OrderJpaDao extends JPABOImpl<Order>  implements Order, Serializabl
   @Id
   @Column(name="id")
   public String getId() { 
-  	return mOrderImpl.getId(); 
+  	return getImpl().getId(); 
   }
 
   /**
@@ -91,7 +78,7 @@ public class OrderJpaDao extends JPABOImpl<Order>  implements Order, Serializabl
    * @param pid - new value for id
    */
   public void setId(String pid) { 
-  	mOrderImpl.setId(pid); 
+  	getImpl().setId(pid); 
   }
   
   /**
@@ -100,7 +87,7 @@ public class OrderJpaDao extends JPABOImpl<Order>  implements Order, Serializabl
    */
   @Column(name="SHIPPING_ADDRESS")
   public String getAddress() { 
-  	return mOrderImpl.getAddress(); 
+  	return getImpl().getAddress(); 
   }
 
   /**
@@ -108,7 +95,7 @@ public class OrderJpaDao extends JPABOImpl<Order>  implements Order, Serializabl
    * @param paddress - new value for shipping address
    */
   public void setAddress(String paddress) { 
-  	mOrderImpl.setAddress(paddress); 
+  	getImpl().setAddress(paddress); 
   }
   
   /**
@@ -117,7 +104,7 @@ public class OrderJpaDao extends JPABOImpl<Order>  implements Order, Serializabl
    */
   @ManyToOne(targetEntity=CustomerJpaDao.class)
   public Customer getCustomer() { 
-  	return mOrderImpl.getCustomer(); 
+  	return getImpl().getCustomer(); 
   }
 
   /**
@@ -125,7 +112,7 @@ public class OrderJpaDao extends JPABOImpl<Order>  implements Order, Serializabl
    * @param pcustomer - new value for customer
    */
   public void setCustomer(Customer pcustomer) { 
-  	mOrderImpl.setCustomer(pcustomer); 
+  	getImpl().setCustomer(pcustomer); 
   }
   
  /**
@@ -133,7 +120,7 @@ public class OrderJpaDao extends JPABOImpl<Order>  implements Order, Serializabl
    * @param Order - the source Object to copy from
    */
   public void copyFrom(Order pOrder) {
-    mOrderImpl.copyFrom(pOrder);
+    mBOImpl.copyFrom(pOrder);
   }
   /**
    * get the primary key of this business object

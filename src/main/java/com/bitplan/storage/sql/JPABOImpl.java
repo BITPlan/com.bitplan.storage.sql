@@ -1,55 +1,21 @@
+/**
+ * Copyright (C) 2012 BITPlan GmbH
+ *
+ * Pater-Delp-Str. 1
+ * D-47877 Willich-Schiefbahn
+ *
+ * http://www.bitplan.com
+ */
 package com.bitplan.storage.sql;
 
-import javax.xml.bind.annotation.XmlTransient;
+import com.bitplan.resthelper.BOImpl;
 
-import org.simpleframework.xml.Transient;
-
-import com.bitplan.restinterface.BO;
-import com.bitplan.restinterface.BOManager;
 
 /**
- * XML based Implementation for a Business object of Type BO_T 
+ * JPA based Implementation for a Business object of Type BO_T 
  * @author wf
  * @param <BO_T>
  */
-public abstract class JPABOImpl<BO_T> implements BO<BO_T> {
+public abstract class JPABOImpl<BO_T> extends BOImpl<BO_T> {
 
-	@Transient
-	@XmlTransient
-	BOManager<BO_T> boManager;
-	
-	protected BO_T mBO;
-	
-	/**
-	 * the true implementation
-	 */
-	protected BO_T mBOImpl;
-
-	/**
-	 * return the implementation for Customer
-	 * 
-	 * @return the Customer implementation
-	 */
-	@Transient
-	@XmlTransient
-	public BO_T getImpl() {
-		return mBOImpl;
-	}
-
-	
-	@Override
-	public BOManager<BO_T> getBOManager() {
-		return boManager;
-	}
-
-	@Override
-	public void setBOManager(BOManager<BO_T> pBOManager) {
-		boManager=pBOManager;
-	}
-	
-	@Override
-	public  BO_T getBO() {
-		return mBO;
-	}
-	
 }

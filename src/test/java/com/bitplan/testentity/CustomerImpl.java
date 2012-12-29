@@ -6,7 +6,7 @@
  *
  * http://www.bitplan.com
  * 
- * generated: 2012-12-24 09:41 with smartGENERATOR
+ * generated: 2012-12-29 09:04 with smartGENERATOR
  */
 package com.bitplan.testentity;
 import com.bitplan.testentity.Customer;
@@ -131,7 +131,6 @@ public class CustomerImpl implements Customer {
 		setName(pCustomer.getName());
 		setStatusgroup(pCustomer.getStatusgroup());
 		setCity(pCustomer.getCity());
-		setOrders(pCustomer.getOrders());
 	} // copyFrom
 	
 } // CustomerImpl
