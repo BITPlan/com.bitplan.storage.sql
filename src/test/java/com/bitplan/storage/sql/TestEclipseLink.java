@@ -9,6 +9,9 @@
 package com.bitplan.storage.sql;
 
 import static org.junit.Assert.*;
+
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import com.bitplan.restinterface.BOManagerFactory;

@@ -8,6 +8,8 @@
  */
 package com.bitplan.storage.sql;
 
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 import org.junit.BeforeClass;
 import com.bitplan.resthelper.BOManagerFactoryImpl;
 import com.bitplan.restinterface.BOManagerFactory;
@@ -37,6 +39,8 @@ public class TestSqlStorage extends TestStorage {
 		  boManagerFactory=BOManagerFactoryImpl.create(new TestentityJPAModule());
 		  Map<String, String> props = JPAEntityManagerFactory.getMySQLProps("testsqlstorage","localhost","cm", "secret",true);
 		  boManagerFactory.setContext(props);
+			Logger.getRootLogger().setLevel(Level.ERROR);
+
 		}
 	}
 
