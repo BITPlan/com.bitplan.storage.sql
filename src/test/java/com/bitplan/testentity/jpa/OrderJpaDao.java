@@ -6,7 +6,7 @@
  *
  * http://www.bitplan.com
  * 
- * generated: 2012-12-29 09:04 with smartGENERATOR
+ * generated: 2012-12-29 13:01 with smartGENERATOR
  */
 package com.bitplan.testentity.jpa;
 import java.io.Serializable;
@@ -45,6 +45,12 @@ public class OrderJpaDao extends JPABOImpl<Order>  implements Order, Serializabl
   private static final long serialVersionUID = 1L;  
   
   /**
+   * access to my Implementation
+   */
+  public Order getOrderImpl() {
+     return (Order)getImpl();
+  }
+  /**
    * default constructor for Order
    */
   public OrderJpaDao() {
@@ -70,7 +76,7 @@ public class OrderJpaDao extends JPABOImpl<Order>  implements Order, Serializabl
   @Id
   @Column(name="id")
   public String getId() { 
-  	return getImpl().getId(); 
+  	return getOrderImpl().getId(); 
   }
 
   /**
@@ -78,7 +84,7 @@ public class OrderJpaDao extends JPABOImpl<Order>  implements Order, Serializabl
    * @param pid - new value for id
    */
   public void setId(String pid) { 
-  	getImpl().setId(pid); 
+  	getOrderImpl().setId(pid); 
   }
   
   /**
@@ -87,7 +93,7 @@ public class OrderJpaDao extends JPABOImpl<Order>  implements Order, Serializabl
    */
   @Column(name="SHIPPING_ADDRESS")
   public String getAddress() { 
-  	return getImpl().getAddress(); 
+  	return getOrderImpl().getAddress(); 
   }
 
   /**
@@ -95,7 +101,7 @@ public class OrderJpaDao extends JPABOImpl<Order>  implements Order, Serializabl
    * @param paddress - new value for shipping address
    */
   public void setAddress(String paddress) { 
-  	getImpl().setAddress(paddress); 
+  	getOrderImpl().setAddress(paddress); 
   }
   
   /**
@@ -104,7 +110,7 @@ public class OrderJpaDao extends JPABOImpl<Order>  implements Order, Serializabl
    */
   @ManyToOne(targetEntity=CustomerJpaDao.class)
   public Customer getCustomer() { 
-  	return getImpl().getCustomer(); 
+  	return getOrderImpl().getCustomer(); 
   }
 
   /**
@@ -112,7 +118,7 @@ public class OrderJpaDao extends JPABOImpl<Order>  implements Order, Serializabl
    * @param pcustomer - new value for customer
    */
   public void setCustomer(Customer pcustomer) { 
-  	getImpl().setCustomer(pcustomer); 
+  	getOrderImpl().setCustomer(pcustomer); 
   }
   
  /**

@@ -6,7 +6,7 @@
  *
  * http://www.bitplan.com
  * 
- * generated: 2012-12-29 09:04 with smartGENERATOR
+ * generated: 2012-12-29 13:01 with smartGENERATOR
  */
 package com.bitplan.testentity.jpa;
 import java.io.Serializable;
@@ -46,6 +46,12 @@ public class CustomerJpaDao extends JPABOImpl<Customer>  implements Customer, Se
   private static final long serialVersionUID = 1L;  
   
   /**
+   * access to my Implementation
+   */
+  public Customer getCustomerImpl() {
+     return (Customer)getImpl();
+  }
+  /**
    * default constructor for Customer
    */
   public CustomerJpaDao() {
@@ -71,7 +77,7 @@ public class CustomerJpaDao extends JPABOImpl<Customer>  implements Customer, Se
   @Id
   @Column(name="id")
   public String getId() { 
-  	return getImpl().getId(); 
+  	return getCustomerImpl().getId(); 
   }
 
   /**
@@ -79,7 +85,7 @@ public class CustomerJpaDao extends JPABOImpl<Customer>  implements Customer, Se
    * @param pid - new value for id
    */
   public void setId(String pid) { 
-  	getImpl().setId(pid); 
+  	getCustomerImpl().setId(pid); 
   }
   
   /**
@@ -88,7 +94,7 @@ public class CustomerJpaDao extends JPABOImpl<Customer>  implements Customer, Se
    */
   @Column(name="name")
   public String getName() { 
-  	return getImpl().getName(); 
+  	return getCustomerImpl().getName(); 
   }
 
   /**
@@ -96,7 +102,7 @@ public class CustomerJpaDao extends JPABOImpl<Customer>  implements Customer, Se
    * @param pname - new value for name
    */
   public void setName(String pname) { 
-  	getImpl().setName(pname); 
+  	getCustomerImpl().setName(pname); 
   }
   
   /**
@@ -105,7 +111,7 @@ public class CustomerJpaDao extends JPABOImpl<Customer>  implements Customer, Se
    */
   @Column(name="statusgroup")
   public String getStatusgroup() { 
-  	return getImpl().getStatusgroup(); 
+  	return getCustomerImpl().getStatusgroup(); 
   }
 
   /**
@@ -113,7 +119,7 @@ public class CustomerJpaDao extends JPABOImpl<Customer>  implements Customer, Se
    * @param pstatusgroup - new value for statusgroup
    */
   public void setStatusgroup(String pstatusgroup) { 
-  	getImpl().setStatusgroup(pstatusgroup); 
+  	getCustomerImpl().setStatusgroup(pstatusgroup); 
   }
   
   /**
@@ -122,7 +128,7 @@ public class CustomerJpaDao extends JPABOImpl<Customer>  implements Customer, Se
    */
   @Column(name="city")
   public String getCity() { 
-  	return getImpl().getCity(); 
+  	return getCustomerImpl().getCity(); 
   }
 
   /**
@@ -130,7 +136,7 @@ public class CustomerJpaDao extends JPABOImpl<Customer>  implements Customer, Se
    * @param pcity - new value for city
    */
   public void setCity(String pcity) { 
-  	getImpl().setCity(pcity); 
+  	getCustomerImpl().setCity(pcity); 
   }
   
   /**
@@ -139,7 +145,7 @@ public class CustomerJpaDao extends JPABOImpl<Customer>  implements Customer, Se
    */
   @OneToMany(targetEntity=OrderJpaDao.class, cascade=CascadeType.ALL, mappedBy="customer")
   public List<Order> getOrders() { 
-  	return getImpl().getOrders(); 
+  	return getCustomerImpl().getOrders(); 
   }
 
   /**
@@ -147,7 +153,7 @@ public class CustomerJpaDao extends JPABOImpl<Customer>  implements Customer, Se
    * @param porders - new value for orders
    */
   public void setOrders(List<Order> porders) { 
-  	getImpl().setOrders(porders); 
+  	getCustomerImpl().setOrders(porders); 
   }
   
  /**

@@ -6,7 +6,7 @@
  *
  * http://www.bitplan.com
  * 
- * generated: 2012-12-21 23:17 with smartGENERATOR
+ * generated: 2012-12-29 13:01 with smartGENERATOR
  */
 package com.bitplan.testentity;
 // Infrastructure imports
@@ -30,6 +30,18 @@ import com.bitplan.testentity.TypeTest;
 import com.bitplan.testentity.jpa.TypeTestJpaDao;
 import com.bitplan.testentity.TypeTestManager;
 import com.bitplan.testentity.jpa.TypeTestManagerJPA;
+import com.bitplan.testentity.Person;
+import com.bitplan.testentity.jpa.PersonJpaDao;
+import com.bitplan.testentity.PersonManager;
+import com.bitplan.testentity.jpa.PersonManagerJPA;
+import com.bitplan.testentity.Contact;
+import com.bitplan.testentity.jpa.ContactJpaDao;
+import com.bitplan.testentity.ContactManager;
+import com.bitplan.testentity.jpa.ContactManagerJPA;
+import com.bitplan.testentity.PhoneContact;
+import com.bitplan.testentity.jpa.PhoneContactJpaDao;
+import com.bitplan.testentity.EMailContact;
+import com.bitplan.testentity.jpa.EMailContactJpaDao;
 	// >>>{imports_JPAModule}{TestentityJPAModule}{Testentity}
 	// no implementation yet !!!
 	// <<<{imports_JPAModule}{TestentityJPAModule}{Testentity}
@@ -55,6 +67,16 @@ public class  TestentityJPAModule extends AbstractModule {
     // guice binding for TypeTest
     bind(TypeTest.class).to(TypeTestJpaDao.class);
     bind(TypeTestManager.class).to(TypeTestManagerJPA.class);
+    // guice binding for Person
+    bind(Person.class).to(PersonJpaDao.class);
+    bind(PersonManager.class).to(PersonManagerJPA.class);
+    // guice binding for Contact
+    bind(Contact.class).to(ContactJpaDao.class);
+    bind(ContactManager.class).to(ContactManagerJPA.class);
+    // guice binding for PhoneContact
+    bind(PhoneContact.class).to(PhoneContactJpaDao.class);
+    // guice binding for EMailContact
+    bind(EMailContact.class).to(EMailContactJpaDao.class);
   } // configure
 
 } // TestentityModule

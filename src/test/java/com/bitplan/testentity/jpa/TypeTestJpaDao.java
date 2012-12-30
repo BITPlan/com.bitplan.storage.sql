@@ -6,7 +6,7 @@
  *
  * http://www.bitplan.com
  * 
- * generated: 2012-12-29 09:04 with smartGENERATOR
+ * generated: 2012-12-29 13:01 with smartGENERATOR
  */
 package com.bitplan.testentity.jpa;
 import java.io.Serializable;
@@ -44,6 +44,12 @@ public class TypeTestJpaDao extends JPABOImpl<TypeTest>  implements TypeTest, Se
   private static final long serialVersionUID = 1L;  
   
   /**
+   * access to my Implementation
+   */
+  public TypeTest getTypeTestImpl() {
+     return (TypeTest)getImpl();
+  }
+  /**
    * default constructor for TypeTest
    */
   public TypeTestJpaDao() {
@@ -69,7 +75,7 @@ public class TypeTestJpaDao extends JPABOImpl<TypeTest>  implements TypeTest, Se
   @Id
   @Column(name="id")
   public long getId() { 
-  	return getImpl().getId(); 
+  	return getTypeTestImpl().getId(); 
   }
 
   /**
@@ -77,7 +83,7 @@ public class TypeTestJpaDao extends JPABOImpl<TypeTest>  implements TypeTest, Se
    * @param pid - new value for id
    */
   public void setId(long pid) { 
-  	getImpl().setId(pid); 
+  	getTypeTestImpl().setId(pid); 
   }
   
   /**
@@ -86,7 +92,7 @@ public class TypeTestJpaDao extends JPABOImpl<TypeTest>  implements TypeTest, Se
    */
   @Column(name="tstringVal")
   public String getTstringVal() { 
-  	return getImpl().getTstringVal(); 
+  	return getTypeTestImpl().getTstringVal(); 
   }
 
   /**
@@ -94,7 +100,7 @@ public class TypeTestJpaDao extends JPABOImpl<TypeTest>  implements TypeTest, Se
    * @param ptstringVal - new value for tstringVal
    */
   public void setTstringVal(String ptstringVal) { 
-  	getImpl().setTstringVal(ptstringVal); 
+  	getTypeTestImpl().setTstringVal(ptstringVal); 
   }
   
   /**
@@ -103,7 +109,7 @@ public class TypeTestJpaDao extends JPABOImpl<TypeTest>  implements TypeTest, Se
    */
   @Column(name="tbooleanVal")
   public boolean isTbooleanVal() { 
-  	return getImpl().isTbooleanVal(); 
+  	return getTypeTestImpl().isTbooleanVal(); 
   }
 
   /**
@@ -111,7 +117,7 @@ public class TypeTestJpaDao extends JPABOImpl<TypeTest>  implements TypeTest, Se
    * @param ptbooleanVal - new value for tbooleanVal
    */
   public void setTbooleanVal(boolean ptbooleanVal) { 
-  	getImpl().setTbooleanVal(ptbooleanVal); 
+  	getTypeTestImpl().setTbooleanVal(ptbooleanVal); 
   }
   
   /**
@@ -120,7 +126,7 @@ public class TypeTestJpaDao extends JPABOImpl<TypeTest>  implements TypeTest, Se
    */
   @Column(name="tlongVal")
   public long getTlongVal() { 
-  	return getImpl().getTlongVal(); 
+  	return getTypeTestImpl().getTlongVal(); 
   }
 
   /**
@@ -128,7 +134,7 @@ public class TypeTestJpaDao extends JPABOImpl<TypeTest>  implements TypeTest, Se
    * @param ptlongVal - new value for tlongVal
    */
   public void setTlongVal(long ptlongVal) { 
-  	getImpl().setTlongVal(ptlongVal); 
+  	getTypeTestImpl().setTlongVal(ptlongVal); 
   }
   
   /**
@@ -137,7 +143,7 @@ public class TypeTestJpaDao extends JPABOImpl<TypeTest>  implements TypeTest, Se
    */
   @Column(name="tintVal")
   public int getTintVal() { 
-  	return getImpl().getTintVal(); 
+  	return getTypeTestImpl().getTintVal(); 
   }
 
   /**
@@ -145,7 +151,7 @@ public class TypeTestJpaDao extends JPABOImpl<TypeTest>  implements TypeTest, Se
    * @param ptintVal - new value for tintVal
    */
   public void setTintVal(int ptintVal) { 
-  	getImpl().setTintVal(ptintVal); 
+  	getTypeTestImpl().setTintVal(ptintVal); 
   }
   
   /**
@@ -154,7 +160,7 @@ public class TypeTestJpaDao extends JPABOImpl<TypeTest>  implements TypeTest, Se
    */
   @Column(name="tshortVal")
   public short getTshortVal() { 
-  	return getImpl().getTshortVal(); 
+  	return getTypeTestImpl().getTshortVal(); 
   }
 
   /**
@@ -162,7 +168,7 @@ public class TypeTestJpaDao extends JPABOImpl<TypeTest>  implements TypeTest, Se
    * @param ptshortVal - new value for tshortVal
    */
   public void setTshortVal(short ptshortVal) { 
-  	getImpl().setTshortVal(ptshortVal); 
+  	getTypeTestImpl().setTshortVal(ptshortVal); 
   }
   
   /**
@@ -171,7 +177,7 @@ public class TypeTestJpaDao extends JPABOImpl<TypeTest>  implements TypeTest, Se
    */
   @Column(name="tdecimalVal")
   public long getTdecimalVal() { 
-  	return getImpl().getTdecimalVal(); 
+  	return getTypeTestImpl().getTdecimalVal(); 
   }
 
   /**
@@ -179,7 +185,7 @@ public class TypeTestJpaDao extends JPABOImpl<TypeTest>  implements TypeTest, Se
    * @param ptdecimalVal - new value for tdecimalVal
    */
   public void setTdecimalVal(long ptdecimalVal) { 
-  	getImpl().setTdecimalVal(ptdecimalVal); 
+  	getTypeTestImpl().setTdecimalVal(ptdecimalVal); 
   }
   
   /**
@@ -188,7 +194,7 @@ public class TypeTestJpaDao extends JPABOImpl<TypeTest>  implements TypeTest, Se
    */
   @Column(name="tfloatVal")
   public float getTfloatVal() { 
-  	return getImpl().getTfloatVal(); 
+  	return getTypeTestImpl().getTfloatVal(); 
   }
 
   /**
@@ -196,7 +202,7 @@ public class TypeTestJpaDao extends JPABOImpl<TypeTest>  implements TypeTest, Se
    * @param ptfloatVal - new value for tfloatVal
    */
   public void setTfloatVal(float ptfloatVal) { 
-  	getImpl().setTfloatVal(ptfloatVal); 
+  	getTypeTestImpl().setTfloatVal(ptfloatVal); 
   }
   
   /**
@@ -205,7 +211,7 @@ public class TypeTestJpaDao extends JPABOImpl<TypeTest>  implements TypeTest, Se
    */
   @Column(name="tdoubleVal")
   public double getTdoubleVal() { 
-  	return getImpl().getTdoubleVal(); 
+  	return getTypeTestImpl().getTdoubleVal(); 
   }
 
   /**
@@ -213,7 +219,7 @@ public class TypeTestJpaDao extends JPABOImpl<TypeTest>  implements TypeTest, Se
    * @param ptdoubleVal - new value for tdoubleVal
    */
   public void setTdoubleVal(double ptdoubleVal) { 
-  	getImpl().setTdoubleVal(ptdoubleVal); 
+  	getTypeTestImpl().setTdoubleVal(ptdoubleVal); 
   }
   
   /**
@@ -223,7 +229,7 @@ public class TypeTestJpaDao extends JPABOImpl<TypeTest>  implements TypeTest, Se
   @Column(name="tdateVal")
   @Temporal(TemporalType.DATE)
   public java.util.Date getTdateVal() { 
-  	return getImpl().getTdateVal(); 
+  	return getTypeTestImpl().getTdateVal(); 
   }
 
   /**
@@ -231,7 +237,7 @@ public class TypeTestJpaDao extends JPABOImpl<TypeTest>  implements TypeTest, Se
    * @param ptdateVal - new value for tdateVal
    */
   public void setTdateVal(java.util.Date ptdateVal) { 
-  	getImpl().setTdateVal(ptdateVal); 
+  	getTypeTestImpl().setTdateVal(ptdateVal); 
   }
   
   /**
@@ -241,7 +247,7 @@ public class TypeTestJpaDao extends JPABOImpl<TypeTest>  implements TypeTest, Se
   @Column(name="tdateTimeVal")
   @Temporal(TemporalType.TIMESTAMP)
   public java.util.Date getTdateTimeVal() { 
-  	return getImpl().getTdateTimeVal(); 
+  	return getTypeTestImpl().getTdateTimeVal(); 
   }
 
   /**
@@ -249,7 +255,7 @@ public class TypeTestJpaDao extends JPABOImpl<TypeTest>  implements TypeTest, Se
    * @param ptdateTimeVal - new value for tdateTimeVal
    */
   public void setTdateTimeVal(java.util.Date ptdateTimeVal) { 
-  	getImpl().setTdateTimeVal(ptdateTimeVal); 
+  	getTypeTestImpl().setTdateTimeVal(ptdateTimeVal); 
   }
   
  /**

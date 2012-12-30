@@ -14,6 +14,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import com.bitplan.resthelper.BOManagerImpl;
+import com.bitplan.restinterface.BO;
 import com.bitplan.restinterface.BOManager;
 
 /**
@@ -101,7 +102,9 @@ public abstract class JPAEntityManager<BO> extends BOManagerImpl<BO> implements
 
 	@Override
 	public BO findById(Object id) throws Exception {
-		return super.findById(id);
+		@SuppressWarnings("unchecked")
+		BO result = (BO) getEntityManager().find(this.getEntityType(), id);
+		return result;
 	}
 
 	@Override
