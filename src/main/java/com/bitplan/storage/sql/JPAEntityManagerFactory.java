@@ -63,7 +63,11 @@ public class JPAEntityManagerFactory extends BOManagerFactoryImpl {
 	public void setContext(Object pContext) {
 		@SuppressWarnings("rawtypes")
 		Map props=(Map) pContext;
-		factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME,
+		String puName=PERSISTENCE_UNIT_NAME;
+		if (props.containsKey("persistence.unit.name")) {
+			puName=(String) props.get("persistence.unit.name");
+		}
+		factory = Persistence.createEntityManagerFactory(puName,
 				props);
 		em = factory.createEntityManager();
 	}
