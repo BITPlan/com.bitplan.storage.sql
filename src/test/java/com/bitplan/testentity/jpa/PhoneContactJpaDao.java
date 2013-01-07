@@ -6,7 +6,7 @@
  *
  * http://www.bitplan.com
  * 
- * generated: 2012-12-31 10:14 with smartGENERATOR
+ * generated: 2013-01-07 09:08 with smartGENERATOR
  */
 package com.bitplan.testentity.jpa;
 import java.io.Serializable;
@@ -117,6 +117,6 @@ public class PhoneContactJpaDao extends ContactJpaDao implements PhoneContact,Se
 
 	@Override
 	public void fromMap(Map<String, Object> pMap) {
-    setNumber((String)pMap.get("number"));
+    if (pMap.containsKey("number"))	setNumber(getTypeConverter().getString(pMap.get("number")));
 	} // fromMap
 } // PhoneContactJpaDao

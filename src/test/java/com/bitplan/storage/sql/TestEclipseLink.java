@@ -10,8 +10,6 @@ package com.bitplan.storage.sql;
 
 import static org.junit.Assert.*;
 
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import com.bitplan.restinterface.BOManagerFactory;
@@ -90,6 +88,15 @@ public class TestEclipseLink {
 		em.persist(order2);
 		em.getTransaction().commit();
 		// em.close();
+	}
+	
+	@Test
+	public void testMaxQuery() {
+		EntityManager em=(EntityManager) boManagerFactory.getContext();
+		String maxCustomerId=em.createQuery("select max(c.id) from Customer c",String.class).getSingleResult();
+		assertEquals("1",maxCustomerId);
+		String maxOrderId=em.createQuery("select max(o.id) from Order o",String.class).getSingleResult();
+	  assertEquals("200",maxOrderId);
 	}
 
 	

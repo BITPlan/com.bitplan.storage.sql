@@ -6,7 +6,7 @@
  *
  * http://www.bitplan.com
  * 
- * generated: 2012-12-29 13:01 with smartGENERATOR
+ * generated: 2013-01-07 09:08 with smartGENERATOR
  */
 package com.bitplan.testentity;
 import com.bitplan.testentity.Contact;
@@ -35,16 +35,16 @@ public interface Contact {
   public void setId(String pid);
 
   /**
-   * getter for xsd:dateTime/java.util.Date when
-   * @return when
+   * getter for xsd:dateTime/java.util.Date timeOfContact
+   * @return timeOfContact
    */
-  public java.util.Date getWhen();
+  public java.util.Date getTimeOfContact();
 
   /**
-   * setter for xsd:dateTime/java.util.Date when
-   * @param pwhen - new value for when
+   * setter for xsd:dateTime/java.util.Date timeOfContact
+   * @param ptimeOfContact - new value for timeOfContact
    */
-  public void setWhen(java.util.Date pwhen);
+  public void setTimeOfContact(java.util.Date ptimeOfContact);
 
   /**
    * getter for xsd:string/String why

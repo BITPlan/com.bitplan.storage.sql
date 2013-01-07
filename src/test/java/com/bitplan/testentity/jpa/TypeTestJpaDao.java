@@ -6,7 +6,7 @@
  *
  * http://www.bitplan.com
  * 
- * generated: 2012-12-31 10:14 with smartGENERATOR
+ * generated: 2013-01-07 09:08 with smartGENERATOR
  */
 package com.bitplan.testentity.jpa;
 import java.io.Serializable;
@@ -309,16 +309,16 @@ public class TypeTestJpaDao extends JPABOImpl<TypeTest> implements TypeTest,Seri
 
 	@Override
 	public void fromMap(Map<String, Object> pMap) {
-    setId((Long)pMap.get("id"));
-    setTstringVal((String)pMap.get("tstringVal"));
-    setTbooleanVal((Boolean)pMap.get("tbooleanVal"));
-    setTlongVal((Long)pMap.get("tlongVal"));
-    setTintVal((Integer)pMap.get("tintVal"));
-    setTshortVal((Short)pMap.get("tshortVal"));
-    setTdecimalVal((Long)pMap.get("tdecimalVal"));
-    setTfloatVal((Float)pMap.get("tfloatVal"));
-    setTdoubleVal((Double)pMap.get("tdoubleVal"));
-    setTdateVal((java.util.Date)pMap.get("tdateVal"));
-    setTdateTimeVal((java.util.Date)pMap.get("tdateTimeVal"));
+    if (pMap.containsKey("id"))	setId(getTypeConverter().getLong(pMap.get("id")));
+    if (pMap.containsKey("tstringVal"))	setTstringVal(getTypeConverter().getString(pMap.get("tstringVal")));
+    if (pMap.containsKey("tbooleanVal"))	setTbooleanVal(getTypeConverter().getBoolean(pMap.get("tbooleanVal")));
+    if (pMap.containsKey("tlongVal"))	setTlongVal(getTypeConverter().getLong(pMap.get("tlongVal")));
+    if (pMap.containsKey("tintVal"))	setTintVal(getTypeConverter().getInteger(pMap.get("tintVal")));
+    if (pMap.containsKey("tshortVal"))	setTshortVal(getTypeConverter().getShort(pMap.get("tshortVal")));
+    if (pMap.containsKey("tdecimalVal"))	setTdecimalVal(getTypeConverter().getLong(pMap.get("tdecimalVal")));
+    if (pMap.containsKey("tfloatVal"))	setTfloatVal(getTypeConverter().getFloat(pMap.get("tfloatVal")));
+    if (pMap.containsKey("tdoubleVal"))	setTdoubleVal(getTypeConverter().getDouble(pMap.get("tdoubleVal")));
+    if (pMap.containsKey("tdateVal"))	setTdateVal(getTypeConverter().getDate(pMap.get("tdateVal")));
+    if (pMap.containsKey("tdateTimeVal"))	setTdateTimeVal(getTypeConverter().getDate(pMap.get("tdateTimeVal")));
 	} // fromMap
 } // TypeTestJpaDao

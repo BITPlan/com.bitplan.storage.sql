@@ -6,7 +6,7 @@
  *
  * http://www.bitplan.com
  * 
- * generated: 2012-12-31 10:14 with smartGENERATOR
+ * generated: 2013-01-07 09:08 with smartGENERATOR
  */
 package com.bitplan.testentity.jpa;
 import java.io.Serializable;
@@ -194,9 +194,9 @@ public class CustomerJpaDao extends JPABOImpl<Customer> implements Customer,Seri
 
 	@Override
 	public void fromMap(Map<String, Object> pMap) {
-    setId((String)pMap.get("id"));
-    setName((String)pMap.get("name"));
-    setStatusgroup((String)pMap.get("statusgroup"));
-    setCity((String)pMap.get("city"));
+    if (pMap.containsKey("id"))	setId(getTypeConverter().getString(pMap.get("id")));
+    if (pMap.containsKey("name"))	setName(getTypeConverter().getString(pMap.get("name")));
+    if (pMap.containsKey("statusgroup"))	setStatusgroup(getTypeConverter().getString(pMap.get("statusgroup")));
+    if (pMap.containsKey("city"))	setCity(getTypeConverter().getString(pMap.get("city")));
 	} // fromMap
 } // CustomerJpaDao

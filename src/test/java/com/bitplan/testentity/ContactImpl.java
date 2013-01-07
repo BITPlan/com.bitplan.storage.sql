@@ -6,7 +6,7 @@
  *
  * http://www.bitplan.com
  * 
- * generated: 2012-12-29 13:01 with smartGENERATOR
+ * generated: 2013-01-07 09:08 with smartGENERATOR
  */
 package com.bitplan.testentity;
 import com.bitplan.testentity.Contact;
@@ -40,9 +40,9 @@ public class ContactImpl implements Contact {
   private String id;
   
   /**
-   * when
+   * timeOfContact
    */
-  private java.util.Date when;
+  private java.util.Date timeOfContact;
   
   /**
    * why
@@ -67,16 +67,16 @@ public class ContactImpl implements Contact {
   public void setId(String pid) { id=pid; };
  
   /**
-   * getter for when
-   * @return the value for when
+   * getter for timeOfContact
+   * @return the value for timeOfContact
    */
-  public java.util.Date getWhen() { return when; };
+  public java.util.Date getTimeOfContact() { return timeOfContact; };
 
   /**
-   * setter for when
-   * @param pwhen - new value for when
+   * setter for timeOfContact
+   * @param ptimeOfContact - new value for timeOfContact
    */
-  public void setWhen(java.util.Date pwhen) { when=pwhen; };
+  public void setTimeOfContact(java.util.Date ptimeOfContact) { timeOfContact=ptimeOfContact; };
  
   /**
    * getter for why
@@ -109,7 +109,7 @@ public class ContactImpl implements Contact {
    */
   public void copyFrom(Contact pContact) {
 		setId(pContact.getId());
-		setWhen(pContact.getWhen());
+		setTimeOfContact(pContact.getTimeOfContact());
 		setWhy(pContact.getWhy());
 	} // copyFrom
 	

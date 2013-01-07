@@ -6,7 +6,7 @@
  *
  * http://www.bitplan.com
  * 
- * generated: 2012-12-31 10:14 with smartGENERATOR
+ * generated: 2013-01-07 09:08 with smartGENERATOR
  */
 package com.bitplan.testentity.jpa;
 import java.io.Serializable;
@@ -155,7 +155,7 @@ public class OrderJpaDao extends JPABOImpl<Order> implements Order,Serializable 
 
 	@Override
 	public void fromMap(Map<String, Object> pMap) {
-    setId((String)pMap.get("id"));
-    setAddress((String)pMap.get("shipping address"));
+    if (pMap.containsKey("id"))	setId(getTypeConverter().getString(pMap.get("id")));
+    if (pMap.containsKey("shipping address"))	setAddress(getTypeConverter().getString(pMap.get("shipping address")));
 	} // fromMap
 } // OrderJpaDao

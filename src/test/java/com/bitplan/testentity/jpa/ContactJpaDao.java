@@ -6,7 +6,7 @@
  *
  * http://www.bitplan.com
  * 
- * generated: 2012-12-31 10:14 with smartGENERATOR
+ * generated: 2013-01-07 09:08 with smartGENERATOR
  */
 package com.bitplan.testentity.jpa;
 import java.io.Serializable;
@@ -88,21 +88,21 @@ public class ContactJpaDao extends JPABOImpl<Contact> implements Contact,Seriali
   }
   
   /**
-   * getter for xsd:dateTime/java.util.Date when
-   * @return when
+   * getter for xsd:dateTime/java.util.Date timeOfContact
+   * @return timeOfContact
    */
-  @Column(name="when")
+  @Column(name="timeOfContact")
   @Temporal(TemporalType.TIMESTAMP)
-  public java.util.Date getWhen() { 
-  	return getContactImpl().getWhen(); 
+  public java.util.Date getTimeOfContact() { 
+  	return getContactImpl().getTimeOfContact(); 
   }
 
   /**
-   * setter for xsd:dateTime/java.util.Date when
-   * @param pwhen - new value for when
+   * setter for xsd:dateTime/java.util.Date timeOfContact
+   * @param ptimeOfContact - new value for timeOfContact
    */
-  public void setWhen(java.util.Date pwhen) { 
-  	getContactImpl().setWhen(pwhen); 
+  public void setTimeOfContact(java.util.Date ptimeOfContact) { 
+  	getContactImpl().setTimeOfContact(ptimeOfContact); 
   }
   
   /**
@@ -158,7 +158,7 @@ public class ContactJpaDao extends JPABOImpl<Contact> implements Contact,Seriali
 	public Object getField(String fieldName) {
 		Object result=null;
     if (fieldName.equals("id")) result=getId();
-    if (fieldName.equals("when")) result=getWhen();
+    if (fieldName.equals("timeOfContact")) result=getTimeOfContact();
     if (fieldName.equals("why")) result=getWhy();
     if (fieldName.equals("person")) result=getPerson();
 		return result;
@@ -168,15 +168,15 @@ public class ContactJpaDao extends JPABOImpl<Contact> implements Contact,Seriali
 	public Map<String, Object> toMap() {
 	  Map<String, Object> result=new HashMap<String,Object>();
     result.put("id",getId());
-    result.put("when",getWhen());
+    result.put("timeOfContact",getTimeOfContact());
     result.put("why",getWhy());
 		return result;
 	} // toMap
 
 	@Override
 	public void fromMap(Map<String, Object> pMap) {
-    setId((String)pMap.get("id"));
-    setWhen((java.util.Date)pMap.get("when"));
-    setWhy((String)pMap.get("why"));
+    if (pMap.containsKey("id"))	setId(getTypeConverter().getString(pMap.get("id")));
+    if (pMap.containsKey("timeOfContact"))	setTimeOfContact(getTypeConverter().getDate(pMap.get("timeOfContact")));
+    if (pMap.containsKey("why"))	setWhy(getTypeConverter().getString(pMap.get("why")));
 	} // fromMap
 } // ContactJpaDao
