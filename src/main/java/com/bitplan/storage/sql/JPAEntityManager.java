@@ -12,7 +12,17 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.ParameterExpression;
+import javax.persistence.criteria.Path;
+import javax.persistence.criteria.Root;
 
+import org.eclipse.persistence.jpa.JpaQuery;
+
+import com.bitplan.rest.jqgrid.JqGridRule;
+import com.bitplan.rest.jqgrid.JqGridSearch;
 import com.bitplan.resthelper.BOManagerImpl;
 import com.bitplan.restinterface.BO;
 import com.bitplan.restinterface.BOManager;
@@ -111,7 +121,8 @@ public abstract class JPAEntityManager<BO> extends BOManagerImpl<BO> implements
 	public List<BO> findBy(String attributeName, Object attributeValue,
 			int maxResults) throws Exception {
 		Query query = getEntityManager().createNativeQuery(
-				"SELECT * FROM " + this.getTableName()+" WHERE "+attributeName+"='"+attributeValue.toString()+"'", this.getEntityType());
+				"SELECT * FROM " + this.getTableName() + " WHERE " + attributeName
+						+ "='" + attributeValue.toString() + "'", this.getEntityType());
 		query.setMaxResults(maxResults);
 		@SuppressWarnings("unchecked")
 		List<BO> result = query.getResultList();
@@ -132,6 +143,51 @@ public abstract class JPAEntityManager<BO> extends BOManagerImpl<BO> implements
 				"SELECT * FROM " + this.getTableName(), this.getEntityType());
 		query.setMaxResults(maxResults);
 		bolist = query.getResultList();
+	}
+
+	/**
+	 * find by the given JqGridFilters
+	 * 
+	 * @param <T>
+	 * @param filters
+	 * @param sortOrder
+	 * @param sortIndex
+	 */
+	@SuppressWarnings("unchecked")
+	public List<BO> findByJqGridFilter(JqGridSearch search) {
+		CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
+
+		CriteriaQuery<BO> q = (CriteriaQuery<BO>) cb.createQuery(this
+				.getEntityType());
+		Root<BO> c = (Root<BO>) q.from(this.getEntityType());
+		if (search.getSortIndex() != null) {
+			Path<Object> sortPath = c.get(search.getSortIndex());
+			switch (search.getSortOrder()) {
+			case asc:
+				q.orderBy(cb.asc(sortPath));
+				break;
+			case desc:
+				q.orderBy(cb.desc(sortPath));
+				break;
+			}
+		}
+		for (JqGridRule rule:search.getFilter().getRules()) {
+			switch (rule.getOp()) {
+				case eq:
+				  q.where(cb.equal(c.get(rule.getField()), rule.getData()));
+				break;
+				case bw:
+					q.where(cb.like(c.<String>get(rule.getField()), rule.getData()));
+				break;
+			}
+		}
+		q.select(c);
+		TypedQuery<BO> query = getEntityManager().createQuery(q);
+		query.setMaxResults(search.getMaxResults());
+		List<BO> results = query.getResultList();
+		String sql=query.unwrap(JpaQuery.class).getDatabaseQuery().getSQLString();
+		System.out.println(sql);
+		return results;
 	}
 
 }
