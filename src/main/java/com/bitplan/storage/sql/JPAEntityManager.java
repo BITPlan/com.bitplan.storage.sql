@@ -15,7 +15,6 @@ import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.ParameterExpression;
 import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Root;
 
@@ -24,6 +23,7 @@ import org.eclipse.persistence.jpa.JpaQuery;
 import com.bitplan.rest.jqgrid.JqGridRule;
 import com.bitplan.rest.jqgrid.JqGridSearch;
 import com.bitplan.resthelper.BOManagerImpl;
+import com.bitplan.resthelper.FieldHelper;
 import com.bitplan.restinterface.BO;
 import com.bitplan.restinterface.BOManager;
 
@@ -160,8 +160,9 @@ public abstract class JPAEntityManager<BO> extends BOManagerImpl<BO> implements
 		CriteriaQuery<BO> q = (CriteriaQuery<BO>) cb.createQuery(this
 				.getEntityType());
 		Root<BO> c = (Root<BO>) q.from(this.getEntityType());
-		if (search.getSortIndex() != null) {
-			Path<Object> sortPath = c.get(search.getSortIndex());
+		if (search.getSortIndex() != null && (!search.getSortIndex().trim().equals(""))) {
+			String beanField=FieldHelper.firstToLower(search.getSortIndex());
+			Path<Object> sortPath = c.get(beanField);
 			switch (search.getSortOrder()) {
 			case asc:
 				q.orderBy(cb.asc(sortPath));
@@ -172,12 +173,13 @@ public abstract class JPAEntityManager<BO> extends BOManagerImpl<BO> implements
 			}
 		}
 		for (JqGridRule rule:search.getFilter().getRules()) {
+			String beanField=FieldHelper.firstToLower(rule.getField());
 			switch (rule.getOp()) {
 				case eq:
-				  q.where(cb.equal(c.get(rule.getField()), rule.getData()));
+				  q.where(cb.equal(c.get(beanField), rule.getData()));
 				break;
 				case bw:
-					q.where(cb.like(c.<String>get(rule.getField()), rule.getData()));
+					q.where(cb.like(c.<String>get(beanField), rule.getData()));
 				break;
 			}
 		}
