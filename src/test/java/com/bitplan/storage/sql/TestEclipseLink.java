@@ -140,6 +140,7 @@ public class TestEclipseLink {
 
 	/**
 	 * parameterized test routine
+	 * 
 	 * @param personManager
 	 * @param sortOrder
 	 * @param searchStr
@@ -191,21 +192,27 @@ public class TestEclipseLink {
 				",{\"field\" : \"name\", \"op\" : \"cn\", \"data\" : \"Doe\" }",
 				",{\"field\" : \"name\", \"op\" : \"cn\", \"data\" : \"Doe\" }", };
 		for (int oindex = 0; oindex < ops.length; oindex++) {
-			this.testJqGridSearch(personManager,sortOrder[oindex], searchStr[oindex], ops[oindex],
-					groupOps[oindex],more[oindex],expectedSize[oindex],expectedFirst[oindex]);
+			this.testJqGridSearch(personManager, sortOrder[oindex],
+					searchStr[oindex], ops[oindex], groupOps[oindex], more[oindex],
+					expectedSize[oindex], expectedFirst[oindex]);
 		}
-		int expectedSize2[] = { 1, 2, 1, 2, 2, 2, 1,1,2 };
+		int expectedSize2[] = { 1, 2, 1, 2, 2, 2, 1, 1, 2, 1, 1,1 ,2,1};
 		String searchStr2[] = { "John Doe", "John Doe", "John", "John Doe", "Joh",
-				"John Doe", "Heat","Jo","John Doe, John Smith" };
+				"John Doe", "Heat", "Jo", "John Doe,John Smith", "John Smith,John Doe",
+				"Doe", "e","ohn","th" };
 		String expectedFirst2[] = { "John Doe", "Heather Bourne", "Heather Bourne",
-				"Heather Bourne", "John Doe", "John Doe", "Heather Bourne","Heather Bourne","John Doe" };
-		
-		int oindex=0;
-		for (Operations op:JqGridFilter.Operations.values()) {
+				"Heather Bourne", "John Doe", "John Doe", "Heather Bourne",
+				"Heather Bourne", "John Doe", "Heather Bourne","John Doe","John Smith","John Doe","John Doe" };
+
+		int oindex = 0;
+		for (Operations op : JqGridFilter.Operations.values()) {
 			if (debug)
-				System.out.println(""+(oindex)+": name "+op.name()+" "+searchStr2[oindex]+"=>"+expectedSize2[oindex]+","+expectedFirst2[oindex]);
-			this.testJqGridSearch(personManager, "asc", searchStr2[oindex], op.name(), "AND", "", expectedSize2[oindex],expectedFirst2[oindex]);
-		  oindex++;
+				System.out.println("" + (oindex) + ": name " + op.name() + " "
+						+ searchStr2[oindex] + "=>" + expectedSize2[oindex] + ","
+						+ expectedFirst2[oindex]);
+			this.testJqGridSearch(personManager, "asc", searchStr2[oindex],
+					op.name(), "AND", "", expectedSize2[oindex], expectedFirst2[oindex]);
+			oindex++;
 		}
 	}
 

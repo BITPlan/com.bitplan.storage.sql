@@ -149,6 +149,20 @@ public abstract class JPAEntityManager<BO> extends BOManagerImpl<BO> implements
 	}
 
 	/**
+	 * split a comma separated in List
+	 * @param inClause
+	 * @return
+	 */
+	public List<String> getInMemberList(String inClause) {
+		List<String> inMemberList = new ArrayList<String> ();
+	  String[] inMembers = inClause.split(",");
+		for (String member : inMembers) {
+		    inMemberList.add(member);
+		}
+		return inMemberList;
+	}
+	
+	/**
 	 * find by the given JqGridFilters
 	 * 
 	 * @param <T>
@@ -180,17 +194,23 @@ public abstract class JPAEntityManager<BO> extends BOManagerImpl<BO> implements
 		List<Predicate> predicates = new ArrayList<Predicate>();
 		for (JqGridRule rule : filter.getRules()) {
 			String beanField = FieldHelper.firstToLower(rule.getField());
-			Predicate expr;
 			Path<String> beanValue = c.<String> get(beanField);
+			Predicate expr;
 			switch (rule.getOp()) {
 			case eq: // equals
-				expr = cb.equal(c.get(beanField), rule.getData());
+				expr = cb.equal(beanValue, rule.getData());
 				break;
 			case ne: // not equals
 				expr = cb.not(cb.equal(c.get(beanField), rule.getData()));
 				break;
 			case bw: // begins with
 				expr = cb.like(beanValue, rule.getData() + "%");
+				break;
+			case ew: // ends with
+				expr = cb.like(beanValue, "%" + rule.getData() );
+				break;
+			case en: // does not end with
+				expr = cb.not(cb.like(beanValue, "%" + rule.getData()));
 				break;
 			case bn: // does not begin with
 				expr = cb.not(cb.like(beanValue, rule.getData() + "%"));
@@ -202,9 +222,12 @@ public abstract class JPAEntityManager<BO> extends BOManagerImpl<BO> implements
 				expr = cb.not(cb.like(beanValue, "%" + rule.getData()
 						+ "%"));
 				break;
-			//case in: // in
-				// expr = cb.in(beanValue,"1");
-			//break; 
+			case in: // in
+				expr= beanValue.in(this.getInMemberList(rule.getData()));
+			break; 
+			case ni: // not in
+				expr= cb.not(beanValue.in(this.getInMemberList(rule.getData())));
+			break; 
 			case lt: // less than
 				expr = cb.lessThan(beanValue, rule.getData());
 				break;
