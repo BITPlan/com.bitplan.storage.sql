@@ -150,18 +150,19 @@ public abstract class JPAEntityManager<BO> extends BOManagerImpl<BO> implements
 
 	/**
 	 * split a comma separated in List
+	 * 
 	 * @param inClause
 	 * @return
 	 */
 	public List<String> getInMemberList(String inClause) {
-		List<String> inMemberList = new ArrayList<String> ();
-	  String[] inMembers = inClause.split(",");
+		List<String> inMemberList = new ArrayList<String>();
+		String[] inMembers = inClause.split(",");
 		for (String member : inMembers) {
-		    inMemberList.add(member);
+			inMemberList.add(member);
 		}
 		return inMemberList;
 	}
-	
+
 	/**
 	 * find by the given JqGridFilters
 	 * 
@@ -191,74 +192,76 @@ public abstract class JPAEntityManager<BO> extends BOManagerImpl<BO> implements
 			}
 		}
 		JqGridFilter filter = search.getFilter();
-		List<Predicate> predicates = new ArrayList<Predicate>();
-		for (JqGridRule rule : filter.getRules()) {
-			String beanField = FieldHelper.firstToLower(rule.getField());
-			Path<String> beanValue = c.<String> get(beanField);
-			Predicate expr;
-			switch (rule.getOp()) {
-			case eq: // equals
-				expr = cb.equal(beanValue, rule.getData());
+		if (filter != null) {
+			List<Predicate> predicates = new ArrayList<Predicate>();
+			for (JqGridRule rule : filter.getRules()) {
+				String beanField = FieldHelper.firstToLower(rule.getField());
+				Path<String> beanValue = c.<String> get(beanField);
+				Predicate expr;
+				switch (rule.getOp()) {
+				case eq: // equals
+					expr = cb.equal(beanValue, rule.getData());
+					break;
+				case ne: // not equals
+					expr = cb.not(cb.equal(c.get(beanField), rule.getData()));
+					break;
+				case bw: // begins with
+					expr = cb.like(beanValue, rule.getData() + "%");
+					break;
+				case ew: // ends with
+					expr = cb.like(beanValue, "%" + rule.getData());
+					break;
+				case en: // does not end with
+					expr = cb.not(cb.like(beanValue, "%" + rule.getData()));
+					break;
+				case bn: // does not begin with
+					expr = cb.not(cb.like(beanValue, rule.getData() + "%"));
+					break;
+				case cn: // contains
+					expr = cb.like(beanValue, "%" + rule.getData() + "%");
+					break;
+				case nc: // does not contain
+					expr = cb.not(cb.like(beanValue, "%" + rule.getData() + "%"));
+					break;
+				case in: // in
+					expr = beanValue.in(this.getInMemberList(rule.getData()));
+					break;
+				case ni: // not in
+					expr = cb.not(beanValue.in(this.getInMemberList(rule.getData())));
+					break;
+				case lt: // less than
+					expr = cb.lessThan(beanValue, rule.getData());
+					break;
+				case le: // less than or equal
+					expr = cb.lessThanOrEqualTo(beanValue, rule.getData());
+					break;
+				case gt: // greater than
+					expr = cb.greaterThan(beanValue, rule.getData());
+					break;
+				case ge: // greater than or equal
+					expr = cb.greaterThanOrEqualTo(beanValue, rule.getData());
+					break;
+				default:
+					throw new IllegalArgumentException("unsupported operation "
+							+ rule.getOp());
+				} // switch
+				predicates.add(expr);
+			} // for
+			Predicate whereExpr = null;
+			switch (filter.getGroupOp()) {
+			case AND:
+				whereExpr = cb.conjunction();
+				whereExpr = cb
+						.and(predicates.toArray(new Predicate[predicates.size()]));
 				break;
-			case ne: // not equals
-				expr = cb.not(cb.equal(c.get(beanField), rule.getData()));
+			case OR:
+				whereExpr = cb.disjunction();
+				whereExpr = cb.or(predicates.toArray(new Predicate[predicates.size()]));
 				break;
-			case bw: // begins with
-				expr = cb.like(beanValue, rule.getData() + "%");
-				break;
-			case ew: // ends with
-				expr = cb.like(beanValue, "%" + rule.getData() );
-				break;
-			case en: // does not end with
-				expr = cb.not(cb.like(beanValue, "%" + rule.getData()));
-				break;
-			case bn: // does not begin with
-				expr = cb.not(cb.like(beanValue, rule.getData() + "%"));
-				break;	
-			case cn: // contains
-				expr = cb.like(beanValue, "%" + rule.getData() + "%");
-				break;	
-			case nc: // does not contain
-				expr = cb.not(cb.like(beanValue, "%" + rule.getData()
-						+ "%"));
-				break;
-			case in: // in
-				expr= beanValue.in(this.getInMemberList(rule.getData()));
-			break; 
-			case ni: // not in
-				expr= cb.not(beanValue.in(this.getInMemberList(rule.getData())));
-			break; 
-			case lt: // less than
-				expr = cb.lessThan(beanValue, rule.getData());
-				break;
-			case le: // less than or equal
-				expr = cb.lessThanOrEqualTo(beanValue, rule.getData());
-        break;				
-			case gt: // greater than
-				expr = cb.greaterThan(beanValue, rule.getData());
-				break;
-			case ge: // greater than or equal
-				expr = cb.greaterThanOrEqualTo(beanValue, rule.getData());
-        break;				
-			default:
-				throw new IllegalArgumentException("unsupported operation "
-						+ rule.getOp());
 			} // switch
-			predicates.add(expr);
-		} // for
-		Predicate whereExpr = null;
-		switch (filter.getGroupOp()) {
-		case AND:
-			whereExpr = cb.conjunction();
-			whereExpr = cb.and(predicates.toArray(new Predicate[predicates.size()]));
-			break;
-		case OR:
-			whereExpr = cb.disjunction();
-			whereExpr = cb.or(predicates.toArray(new Predicate[predicates.size()]));
-			break;
-		} // switch
 
-		q.where(whereExpr);
+			q.where(whereExpr);
+		} // if filter
 		q.select(c);
 		TypedQuery<BO> query = getEntityManager().createQuery(q);
 		query.setMaxResults(search.getMaxResults());

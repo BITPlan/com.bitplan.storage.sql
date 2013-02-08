@@ -127,15 +127,47 @@ public class TestEclipseLink {
 	 * @param sortIndex
 	 * @param sortOrder
 	 * @param jsonFilters
+	 * @param firstResult
 	 * @param maxResults
 	 * @return
 	 * @throws Exception
 	 */
 	public JqGridSearch getSearch(String sortIndex, String sortOrder,
-			String jsonFilters, int maxResults) throws Exception {
+			String jsonFilters, int firstResult,int maxResults) throws Exception {
 		JqGridSearch search = new JqGridSearchImpl();
-		search.fromJqGrid(sortIndex, sortOrder, jsonFilters, maxResults);
+		search.fromJqGrid(sortIndex, sortOrder, jsonFilters, firstResult,maxResults);
 		return search;
+	}
+
+	/**
+	 * parameterized test
+	 * @param personManager
+	 * @param sortOrder
+	 * @param json
+	 * @param expectedSize
+	 * @param expectedFirst
+	 * @throws Exception
+	 */
+	public void testJqGridSearch(CustomerManagerJPA personManager,
+			String sortOrder, String json, int expectedSize, String expectedFirst)
+			throws Exception {
+		JqGridSearch search = this.getSearch("name", sortOrder, json, 1,10);
+		if (debug) {
+			JqGridFilter filter = search.getFilter();
+			if (filter!=null)
+				System.out.println("filter:"+filter.asJson());
+			else
+				System.out.println("filter:null");
+		}
+		List<Customer> customers = personManager.findByJqGridFilter(search);
+		assertEquals(expectedSize, customers.size());
+		if (debug)
+			System.out.println(customers.size());
+		for (Customer customer : customers) {
+			if (debug)
+				System.out.println(customer.getId() + ", " + customer.getName());
+		}
+		assertEquals(expectedFirst, customers.get(0).getName());
 	}
 
 	/**
@@ -158,19 +190,7 @@ public class TestEclipseLink {
 				+ "  \"rules\" : [ {\n" + "    \"field\" : \"name\",\n"
 				+ "    \"op\" : \"" + ops + "\",\n" + "    \"data\" : \"" + searchStr
 				+ "\"\n" + "  }" + more + " ]\n" + "}";
-		JqGridSearch search = this.getSearch("name", sortOrder, json, 10);
-		if (debug)
-			System.out.println(search.getFilter().asJson());
-		List<Customer> customers = personManager.findByJqGridFilter(search);
-		assertEquals(expectedSize, customers.size());
-		if (debug)
-			System.out.println(customers.size());
-		for (Customer customer : customers) {
-			if (debug)
-				System.out.println(customer.getId() + ", " + customer.getName());
-		}
-		assertEquals(expectedFirst, customers.get(0).getName());
-
+		this.testJqGridSearch(personManager, sortOrder, json, expectedSize, expectedFirst);
 	}
 
 	@Test
@@ -196,13 +216,14 @@ public class TestEclipseLink {
 					searchStr[oindex], ops[oindex], groupOps[oindex], more[oindex],
 					expectedSize[oindex], expectedFirst[oindex]);
 		}
-		int expectedSize2[] = { 1, 2, 1, 2, 2, 2, 1, 1, 2, 1, 1,1 ,2,1};
+		int expectedSize2[] = { 1, 2, 1, 2, 2, 2, 1, 1, 2, 1, 1, 1, 2, 1 };
 		String searchStr2[] = { "John Doe", "John Doe", "John", "John Doe", "Joh",
 				"John Doe", "Heat", "Jo", "John Doe,John Smith", "John Smith,John Doe",
-				"Doe", "e","ohn","th" };
+				"Doe", "e", "ohn", "th" };
 		String expectedFirst2[] = { "John Doe", "Heather Bourne", "Heather Bourne",
 				"Heather Bourne", "John Doe", "John Doe", "Heather Bourne",
-				"Heather Bourne", "John Doe", "Heather Bourne","John Doe","John Smith","John Doe","John Doe" };
+				"Heather Bourne", "John Doe", "Heather Bourne", "John Doe",
+				"John Smith", "John Doe", "John Doe" };
 
 		int oindex = 0;
 		for (Operations op : JqGridFilter.Operations.values()) {
@@ -214,6 +235,7 @@ public class TestEclipseLink {
 					op.name(), "AND", "", expectedSize2[oindex], expectedFirst2[oindex]);
 			oindex++;
 		}
+		this.testJqGridSearch(personManager, "asc", null, 3, "Heather Bourne");
 	}
 
 }
