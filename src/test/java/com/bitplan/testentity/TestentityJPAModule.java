@@ -10,6 +10,7 @@
  */
 package com.bitplan.testentity;
 // Infrastructure imports
+
 import com.bitplan.restinterface.BOManagerFactory;
 import com.bitplan.restinterface.Frame;
 import com.bitplan.restinterface.Configuration;
@@ -43,7 +44,8 @@ import com.bitplan.testentity.jpa.PhoneContactJpaDao;
 import com.bitplan.testentity.EMailContact;
 import com.bitplan.testentity.jpa.EMailContactJpaDao;
 	// >>>{imports_JPAModule}{TestentityJPAModule}{Testentity}
-	// no implementation yet !!!
+import com.bitplan.rest.jqgrid.JqGridSearch;
+import com.bitplan.rest.jqgrid.JqGridSearchImpl;
 	// <<<{imports_JPAModule}{TestentityJPAModule}{Testentity}
 /**
  * Guice Module for  Testentity
@@ -52,7 +54,7 @@ public class  TestentityJPAModule extends AbstractModule {
   @Override 
   protected void configure() {
 	// >>>{configure_JPAModule}{TestentityJPAModule}{Testentity}
-	// no implementation yet !!!
+	bind(JqGridSearch.class).to(JqGridSearchImpl.class);
 	// <<<{configure_JPAModule}{TestentityJPAModule}{Testentity}
     // Infrastructure bindings
     // guice binding for BOManagerFactory

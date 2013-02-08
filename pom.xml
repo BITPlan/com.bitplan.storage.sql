@@ -53,6 +53,12 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 			<type>test-jar</type>
 			<scope>test</scope>
 		</dependency>
+		<!-- Rest JqGrid -->
+		<dependency>
+			<artifactId>com.bitplan.rest.jqgrid</artifactId>
+			<groupId>${project.groupId}</groupId>
+			<version>${project.version}</version>
+		</dependency>
 		<!--  Eclipse Link persistence -->
 		<dependency>
 			<groupId>org.eclipse.persistence</groupId>

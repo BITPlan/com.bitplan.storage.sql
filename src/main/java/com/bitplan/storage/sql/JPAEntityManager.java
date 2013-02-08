@@ -8,6 +8,7 @@
  */
 package com.bitplan.storage.sql;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -16,10 +17,12 @@ import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Path;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import org.eclipse.persistence.jpa.JpaQuery;
 
+import com.bitplan.rest.jqgrid.JqGridFilter;
 import com.bitplan.rest.jqgrid.JqGridRule;
 import com.bitplan.rest.jqgrid.JqGridSearch;
 import com.bitplan.resthelper.BOManagerImpl;
@@ -160,8 +163,9 @@ public abstract class JPAEntityManager<BO> extends BOManagerImpl<BO> implements
 		CriteriaQuery<BO> q = (CriteriaQuery<BO>) cb.createQuery(this
 				.getEntityType());
 		Root<BO> c = (Root<BO>) q.from(this.getEntityType());
-		if (search.getSortIndex() != null && (!search.getSortIndex().trim().equals(""))) {
-			String beanField=FieldHelper.firstToLower(search.getSortIndex());
+		if (search.getSortIndex() != null
+				&& (!search.getSortIndex().trim().equals(""))) {
+			String beanField = FieldHelper.firstToLower(search.getSortIndex());
 			Path<Object> sortPath = c.get(beanField);
 			switch (search.getSortOrder()) {
 			case asc:
@@ -172,22 +176,52 @@ public abstract class JPAEntityManager<BO> extends BOManagerImpl<BO> implements
 				break;
 			}
 		}
-		for (JqGridRule rule:search.getFilter().getRules()) {
-			String beanField=FieldHelper.firstToLower(rule.getField());
+		JqGridFilter filter = search.getFilter();
+		List<Predicate> predicates = new ArrayList<Predicate>();
+		for (JqGridRule rule : filter.getRules()) {
+			String beanField = FieldHelper.firstToLower(rule.getField());
+			Predicate expr;
 			switch (rule.getOp()) {
-				case eq:
-				  q.where(cb.equal(c.get(beanField), rule.getData()));
+			case eq: // equals
+				expr = cb.equal(c.get(beanField), rule.getData());
 				break;
-				case bw:
-					q.where(cb.like(c.<String>get(beanField), rule.getData()));
+			case ne: // not equals
+				expr = cb.not(cb.equal(c.get(beanField), rule.getData()));
 				break;
-			}
-		}
+			case bw: // begins with
+				expr = cb.like(c.<String> get(beanField), rule.getData() + "%");
+				break;
+			case cn: // contains
+				expr = cb.like(c.<String> get(beanField), "%" + rule.getData() + "%");
+				break;
+			case nc: // does not contain
+				expr = cb.not(cb.like(c.<String> get(beanField), "%" + rule.getData()
+						+ "%"));
+				break;
+			default:
+				throw new IllegalArgumentException("unsupported operation "
+						+ rule.getOp());
+			} // switch
+			predicates.add(expr);
+		} // for
+		Predicate whereExpr = null;
+		switch (filter.getGroupOp()) {
+		case AND:
+			whereExpr = cb.conjunction();
+			whereExpr = cb.and(predicates.toArray(new Predicate[predicates.size()]));
+			break;
+		case OR:
+			whereExpr = cb.disjunction();
+			whereExpr = cb.or(predicates.toArray(new Predicate[predicates.size()]));
+			break;
+		} // switch
+
+		q.where(whereExpr);
 		q.select(c);
 		TypedQuery<BO> query = getEntityManager().createQuery(q);
 		query.setMaxResults(search.getMaxResults());
 		List<BO> results = query.getResultList();
-		String sql=query.unwrap(JpaQuery.class).getDatabaseQuery().getSQLString();
+		String sql = query.unwrap(JpaQuery.class).getDatabaseQuery().getSQLString();
 		System.out.println(sql);
 		return results;
 	}
