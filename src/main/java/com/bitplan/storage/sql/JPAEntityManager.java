@@ -181,6 +181,7 @@ public abstract class JPAEntityManager<BO> extends BOManagerImpl<BO> implements
 		for (JqGridRule rule : filter.getRules()) {
 			String beanField = FieldHelper.firstToLower(rule.getField());
 			Predicate expr;
+			Path<String> beanValue = c.<String> get(beanField);
 			switch (rule.getOp()) {
 			case eq: // equals
 				expr = cb.equal(c.get(beanField), rule.getData());
@@ -189,15 +190,33 @@ public abstract class JPAEntityManager<BO> extends BOManagerImpl<BO> implements
 				expr = cb.not(cb.equal(c.get(beanField), rule.getData()));
 				break;
 			case bw: // begins with
-				expr = cb.like(c.<String> get(beanField), rule.getData() + "%");
+				expr = cb.like(beanValue, rule.getData() + "%");
 				break;
+			case bn: // does not begin with
+				expr = cb.not(cb.like(beanValue, rule.getData() + "%"));
+				break;	
 			case cn: // contains
-				expr = cb.like(c.<String> get(beanField), "%" + rule.getData() + "%");
-				break;
+				expr = cb.like(beanValue, "%" + rule.getData() + "%");
+				break;	
 			case nc: // does not contain
-				expr = cb.not(cb.like(c.<String> get(beanField), "%" + rule.getData()
+				expr = cb.not(cb.like(beanValue, "%" + rule.getData()
 						+ "%"));
 				break;
+			//case in: // in
+				// expr = cb.in(beanValue,"1");
+			//break; 
+			case lt: // less than
+				expr = cb.lessThan(beanValue, rule.getData());
+				break;
+			case le: // less than or equal
+				expr = cb.lessThanOrEqualTo(beanValue, rule.getData());
+        break;				
+			case gt: // greater than
+				expr = cb.greaterThan(beanValue, rule.getData());
+				break;
+			case ge: // greater than or equal
+				expr = cb.greaterThanOrEqualTo(beanValue, rule.getData());
+        break;				
 			default:
 				throw new IllegalArgumentException("unsupported operation "
 						+ rule.getOp());
