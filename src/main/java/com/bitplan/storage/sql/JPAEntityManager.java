@@ -264,6 +264,7 @@ public abstract class JPAEntityManager<BO> extends BOManagerImpl<BO> implements
 		} // if filter
 		q.select(c);
 		TypedQuery<BO> query = getEntityManager().createQuery(q);
+		query.setFirstResult(search.getFirstResult());
 		query.setMaxResults(search.getMaxResults());
 		List<BO> results = query.getResultList();
 		String sql = query.unwrap(JpaQuery.class).getDatabaseQuery().getSQLString();
