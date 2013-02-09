@@ -53,6 +53,7 @@ public class TestEclipseLink {
 
 	/**
 	 * get the CustomerManager
+	 * 
 	 * @return
 	 * @throws Exception
 	 */
@@ -71,7 +72,8 @@ public class TestEclipseLink {
 	 * @param name
 	 * @return
 	 */
-	public Customer addCustomer(String id, String name, String city, String statusGroup) {
+	public Customer addCustomer(String id, String name, String city,
+			String statusGroup) {
 		Customer customer = boManagerFactory.getInstance(Customer.class);
 		customer.setId(id);
 		customer.setName(name);
@@ -90,7 +92,7 @@ public class TestEclipseLink {
 		Customer customer1 = null;
 		em.getTransaction().begin();
 		for (int i = 0; i < ids.length; i++) {
-			Customer customer = addCustomer(ids[i], names[i],"New York","regular");
+			Customer customer = addCustomer(ids[i], names[i], "New York", "regular");
 			if (i == 0)
 				customer1 = customer;
 		}
@@ -169,20 +171,21 @@ public class TestEclipseLink {
 	}
 
 	/**
-	 * parameterized test
-	 * 
+	 * parameterized search
 	 * @param customerManager
 	 * @param sortOrder
 	 * @param json
-	 * @param expectedSize
+	 * @param expectedTotalRowCount
+	 * @param expectedResultRowCount
 	 * @param expectedFirst
 	 * @param firstResult
 	 * @param maxResult
 	 * @throws Exception
 	 */
 	public void testJqGridSearch(CustomerManagerJPA customerManager,
-			String sortOrder, String json, int expectedSize, String expectedFirst,
-			int firstResult, int maxResult) throws Exception {
+			String sortOrder, String json, int expectedTotalRowCount,
+			int expectedResultRowCount, String expectedFirst, int firstResult,
+			int maxResult) throws Exception {
 		JqGridSearch search = this.getSearch("name", sortOrder, json, firstResult,
 				maxResult);
 		if (debug) {
@@ -193,7 +196,9 @@ public class TestEclipseLink {
 				System.out.println("filter:null");
 		}
 		List<Customer> customers = customerManager.findByJqGridFilter(search);
-		assertEquals(expectedSize, customers.size());
+		assertEquals("totalRowCount",expectedTotalRowCount,search.getTotalRowCount());
+		assertEquals(expectedResultRowCount,search.getResultRowCount());
+		assertEquals(expectedResultRowCount, customers.size());
 		if (debug)
 			System.out.println(customers.size());
 		for (Customer customer : customers) {
@@ -204,7 +209,7 @@ public class TestEclipseLink {
 	}
 
 	/**
-	 * parameterized search
+	 * parameterized Search
 	 * 
 	 * @param customerManager
 	 * @param sortOrder
@@ -212,7 +217,8 @@ public class TestEclipseLink {
 	 * @param ops
 	 * @param groupOps
 	 * @param more
-	 * @param expectedSize
+	 * @param expectedTotalRowCount
+	 * @param expectedResultRowCount
 	 * @param expectedFirst
 	 * @param firstResult
 	 * @param maxResult
@@ -220,23 +226,25 @@ public class TestEclipseLink {
 	 */
 	public void testJqGridSearch(CustomerManagerJPA customerManager,
 			String sortOrder, String searchStr, String ops, String groupOps,
-			String more, int expectedSize, String expectedFirst, int firstResult,
-			int maxResult) throws Exception {
+			String more, int expectedTotalRowCount, int expectedResultRowCount,
+			String expectedFirst, int firstResult, int maxResult) throws Exception {
 		String json = "{\n" + "  \"groupOp\" : \"" + groupOps + "\",\n"
 				+ "  \"rules\" : [ {\n" + "    \"field\" : \"name\",\n"
 				+ "    \"op\" : \"" + ops + "\",\n" + "    \"data\" : \"" + searchStr
 				+ "\"\n" + "  }" + more + " ]\n" + "}";
-		this.testJqGridSearch(customerManager, sortOrder, json, expectedSize,
-				expectedFirst, firstResult, maxResult);
+		this.testJqGridSearch(customerManager, sortOrder, json,
+				expectedTotalRowCount, expectedResultRowCount, expectedFirst,
+				firstResult, maxResult);
 	}
 
 	/**
 	 * test jqGrid Search
+	 * 
 	 * @throws Exception
 	 */
 	@Test
 	public void testJqGridSearch() throws Exception {
-    CustomerManagerJPA customerManager = this.getCustomerManager();
+		CustomerManagerJPA customerManager = this.getCustomerManager();
 		String ops[] = { "eq", "ne", "bw", "cn", "nc", "cn", "eq" };
 		String groupOps[] = { "AND", "AND", "AND", "AND", "AND", "AND", "OR" };
 		String sortOrder[] = { "desc", "desc", "desc", "desc", "desc", "desc",
@@ -249,10 +257,11 @@ public class TestEclipseLink {
 		String more[] = { "", "", "", "", "",
 				",{\"field\" : \"name\", \"op\" : \"cn\", \"data\" : \"Doe\" }",
 				",{\"field\" : \"name\", \"op\" : \"cn\", \"data\" : \"Doe\" }", };
+		int expectedTotalRowCount=3;
 		for (int oindex = 0; oindex < ops.length; oindex++) {
 			this.testJqGridSearch(customerManager, sortOrder[oindex],
 					searchStr[oindex], ops[oindex], groupOps[oindex], more[oindex],
-					expectedSize[oindex], expectedFirst[oindex], 0, 10);
+					expectedTotalRowCount,expectedSize[oindex], expectedFirst[oindex], 0, 10);
 		}
 		int expectedSize2[] = { 1, 2, 1, 2, 2, 2, 1, 1, 2, 1, 1, 1, 2, 1 };
 		String searchStr2[] = { "John Doe", "John Doe", "John", "John Doe", "Joh",
@@ -270,28 +279,29 @@ public class TestEclipseLink {
 						+ searchStr2[oindex] + "=>" + expectedSize2[oindex] + ","
 						+ expectedFirst2[oindex]);
 			this.testJqGridSearch(customerManager, "asc", searchStr2[oindex],
-					op.name(), "AND", "", expectedSize2[oindex], expectedFirst2[oindex],
+					op.name(), "AND", "", expectedTotalRowCount,expectedSize2[oindex], expectedFirst2[oindex],
 					0, 10);
 			oindex++;
 		}
-		this.testJqGridSearch(customerManager, "asc", null, 3, "Heather Bourne", 0,
+		this.testJqGridSearch(customerManager, "asc", null, expectedTotalRowCount,expectedTotalRowCount, "Heather Bourne", 0,
 				10);
 	}
 
 	/**
 	 * test the Paging functionality
-	 * @throws Exception 
+	 * 
+	 * @throws Exception
 	 */
 	@Test
 	public void testPaging() throws Exception {
 		em = (EntityManager) boManagerFactory.getContext();
 		em.getTransaction().begin();
-		for (int i=1000;i<1100;i++) {
-   			this.addCustomer(""+i, "Customer #"+i,"London","VIP");
+		for (int i = 1000; i < 1100; i++) {
+			this.addCustomer("" + i, "Customer #" + i, "London", "VIP");
 		}
 		em.getTransaction().commit();
-	  CustomerManagerJPA customerManager = this.getCustomerManager();
-	 	this.testJqGridSearch(customerManager, "desc","Customer #10","bw", "AND", "", 20, "Customer #1079", 20,20);
-
+		CustomerManagerJPA customerManager = this.getCustomerManager();
+		this.testJqGridSearch(customerManager, "desc", "Customer #10", "bw", "AND",
+				"", 103,20, "Customer #1079", 20, 20 );
 	}
 }

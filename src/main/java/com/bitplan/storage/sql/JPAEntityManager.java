@@ -39,6 +39,7 @@ import com.bitplan.restinterface.BOManager;
 public abstract class JPAEntityManager<BO> extends BOManagerImpl<BO> implements
 		BOManager<BO> {
 
+	public static boolean debug = true;
 	// for examples
 	// http://www.winstonprakash.com/articles/netbeans/JPA_Add_Update_Delete.html
 	EntityManager entityManager;
@@ -164,6 +165,38 @@ public abstract class JPAEntityManager<BO> extends BOManagerImpl<BO> implements
 	}
 
 	/**
+	 * help building Criteria Queries
+	 * 
+	 * @author wf
+	 * 
+	 */
+	protected class QueryHelper {
+		CriteriaBuilder cb;
+		CriteriaQuery<BO> q;
+		CriteriaQuery<Long> countQuery;
+		Root<BO> c;
+
+		@SuppressWarnings("unchecked")
+		public QueryHelper() {
+			cb = getEntityManager().getCriteriaBuilder();
+			q = (CriteriaQuery<BO>) cb.createQuery(getEntityType());
+			countQuery = cb.createQuery(Long.class);
+			c = (Root<BO>) q.from(getEntityType());
+		}
+	}
+
+	/**
+	 * get the total RowCount
+	 * @return
+	 */
+	public long getTotalRowCount(QueryHelper qh) {
+		qh.countQuery.select(qh.cb.count(qh.countQuery.from(getEntityType())));
+		Long count = getEntityManager().createQuery(qh.countQuery)
+				.getSingleResult();
+		return count;
+	}
+
+	/**
 	 * find by the given JqGridFilters
 	 * 
 	 * @param <T>
@@ -173,21 +206,18 @@ public abstract class JPAEntityManager<BO> extends BOManagerImpl<BO> implements
 	 */
 	@SuppressWarnings("unchecked")
 	public List<BO> findByJqGridFilter(JqGridSearch search) {
-		CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
-
-		CriteriaQuery<BO> q = (CriteriaQuery<BO>) cb.createQuery(this
-				.getEntityType());
-		Root<BO> c = (Root<BO>) q.from(this.getEntityType());
+		QueryHelper qh = new QueryHelper();
+    search.setTotalRowCount(this.getTotalRowCount(qh));
 		if (search.getSortIndex() != null
 				&& (!search.getSortIndex().trim().equals(""))) {
 			String beanField = FieldHelper.firstToLower(search.getSortIndex());
-			Path<Object> sortPath = c.get(beanField);
+			Path<Object> sortPath = qh.c.get(beanField);
 			switch (search.getSortOrder()) {
 			case asc:
-				q.orderBy(cb.asc(sortPath));
+				qh.q.orderBy(qh.cb.asc(sortPath));
 				break;
 			case desc:
-				q.orderBy(cb.desc(sortPath));
+				qh.q.orderBy(qh.cb.desc(sortPath));
 				break;
 			}
 		}
@@ -196,50 +226,50 @@ public abstract class JPAEntityManager<BO> extends BOManagerImpl<BO> implements
 			List<Predicate> predicates = new ArrayList<Predicate>();
 			for (JqGridRule rule : filter.getRules()) {
 				String beanField = FieldHelper.firstToLower(rule.getField());
-				Path<String> beanValue = c.<String> get(beanField);
+				Path<String> beanValue = qh.c.<String> get(beanField);
 				Predicate expr;
 				switch (rule.getOp()) {
 				case eq: // equals
-					expr = cb.equal(beanValue, rule.getData());
+					expr = qh.cb.equal(beanValue, rule.getData());
 					break;
 				case ne: // not equals
-					expr = cb.not(cb.equal(c.get(beanField), rule.getData()));
+					expr = qh.cb.not(qh.cb.equal(qh.c.get(beanField), rule.getData()));
 					break;
 				case bw: // begins with
-					expr = cb.like(beanValue, rule.getData() + "%");
+					expr = qh.cb.like(beanValue, rule.getData() + "%");
 					break;
 				case ew: // ends with
-					expr = cb.like(beanValue, "%" + rule.getData());
+					expr = qh.cb.like(beanValue, "%" + rule.getData());
 					break;
 				case en: // does not end with
-					expr = cb.not(cb.like(beanValue, "%" + rule.getData()));
+					expr = qh.cb.not(qh.cb.like(beanValue, "%" + rule.getData()));
 					break;
 				case bn: // does not begin with
-					expr = cb.not(cb.like(beanValue, rule.getData() + "%"));
+					expr = qh.cb.not(qh.cb.like(beanValue, rule.getData() + "%"));
 					break;
 				case cn: // contains
-					expr = cb.like(beanValue, "%" + rule.getData() + "%");
+					expr = qh.cb.like(beanValue, "%" + rule.getData() + "%");
 					break;
 				case nc: // does not contain
-					expr = cb.not(cb.like(beanValue, "%" + rule.getData() + "%"));
+					expr = qh.cb.not(qh.cb.like(beanValue, "%" + rule.getData() + "%"));
 					break;
 				case in: // in
 					expr = beanValue.in(this.getInMemberList(rule.getData()));
 					break;
 				case ni: // not in
-					expr = cb.not(beanValue.in(this.getInMemberList(rule.getData())));
+					expr = qh.cb.not(beanValue.in(this.getInMemberList(rule.getData())));
 					break;
 				case lt: // less than
-					expr = cb.lessThan(beanValue, rule.getData());
+					expr = qh.cb.lessThan(beanValue, rule.getData());
 					break;
 				case le: // less than or equal
-					expr = cb.lessThanOrEqualTo(beanValue, rule.getData());
+					expr = qh.cb.lessThanOrEqualTo(beanValue, rule.getData());
 					break;
 				case gt: // greater than
-					expr = cb.greaterThan(beanValue, rule.getData());
+					expr = qh.cb.greaterThan(beanValue, rule.getData());
 					break;
 				case ge: // greater than or equal
-					expr = cb.greaterThanOrEqualTo(beanValue, rule.getData());
+					expr = qh.cb.greaterThanOrEqualTo(beanValue, rule.getData());
 					break;
 				default:
 					throw new IllegalArgumentException("unsupported operation "
@@ -250,25 +280,33 @@ public abstract class JPAEntityManager<BO> extends BOManagerImpl<BO> implements
 			Predicate whereExpr = null;
 			switch (filter.getGroupOp()) {
 			case AND:
-				whereExpr = cb.conjunction();
-				whereExpr = cb
-						.and(predicates.toArray(new Predicate[predicates.size()]));
+				whereExpr = qh.cb.conjunction();
+				whereExpr = qh.cb.and(predicates.toArray(new Predicate[predicates
+						.size()]));
 				break;
 			case OR:
-				whereExpr = cb.disjunction();
-				whereExpr = cb.or(predicates.toArray(new Predicate[predicates.size()]));
+				whereExpr = qh.cb.disjunction();
+				whereExpr = qh.cb
+						.or(predicates.toArray(new Predicate[predicates.size()]));
 				break;
 			} // switch
 
-			q.where(whereExpr);
+			qh.q.where(whereExpr);
 		} // if filter
-		q.select(c);
-		TypedQuery<BO> query = getEntityManager().createQuery(q);
+		qh.q.select(qh.c);
+
+		TypedQuery<BO> query = getEntityManager().createQuery(qh.q);
 		query.setFirstResult(search.getFirstResult());
 		query.setMaxResults(search.getMaxResults());
 		List<BO> results = query.getResultList();
-		String sql = query.unwrap(JpaQuery.class).getDatabaseQuery().getSQLString();
-		System.out.println(sql);
+
+		// set the ResultRowCount
+		search.setResultRowCount(results.size());
+		if (debug) {
+			String sql = query.unwrap(JpaQuery.class).getDatabaseQuery()
+					.getSQLString();
+			System.out.println(sql);
+		}
 		return results;
 	}
 
