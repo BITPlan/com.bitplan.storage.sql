@@ -176,15 +176,15 @@ public class TestEclipseLink {
 	 * @param sortOrder
 	 * @param json
 	 * @param expectedTotalRowCount
-	 * @param expectedResultRowCount
+	 * @param expectedResultCount
 	 * @param expectedFirst
 	 * @param firstResult
 	 * @param maxResult
 	 * @throws Exception
 	 */
 	public void testJqGridSearch(CustomerManagerJPA customerManager,
-			String sortOrder, String json, int expectedTotalRowCount,
-			int expectedResultRowCount, String expectedFirst, int firstResult,
+			String sortOrder, String json, long expectedTotalRowCount,
+			int expectedResultCount, String expectedFirst, int firstResult,
 			int maxResult) throws Exception {
 		JqGridSearch search = this.getSearch("name", sortOrder, json, firstResult,
 				maxResult);
@@ -197,8 +197,8 @@ public class TestEclipseLink {
 		}
 		List<Customer> customers = customerManager.findByJqGridFilter(search);
 		assertEquals("totalRowCount",expectedTotalRowCount,search.getTotalRowCount());
-		assertEquals(expectedResultRowCount,search.getResultRowCount());
-		assertEquals(expectedResultRowCount, customers.size());
+		assertEquals(expectedResultCount,search.getResultRowCount());
+		assertEquals(expectedResultCount, customers.size());
 		if (debug)
 			System.out.println(customers.size());
 		for (Customer customer : customers) {
@@ -226,7 +226,7 @@ public class TestEclipseLink {
 	 */
 	public void testJqGridSearch(CustomerManagerJPA customerManager,
 			String sortOrder, String searchStr, String ops, String groupOps,
-			String more, int expectedTotalRowCount, int expectedResultRowCount,
+			String more, long expectedTotalRowCount, int expectedResultRowCount,
 			String expectedFirst, int firstResult, int maxResult) throws Exception {
 		String json = "{\n" + "  \"groupOp\" : \"" + groupOps + "\",\n"
 				+ "  \"rules\" : [ {\n" + "    \"field\" : \"name\",\n"
@@ -257,11 +257,11 @@ public class TestEclipseLink {
 		String more[] = { "", "", "", "", "",
 				",{\"field\" : \"name\", \"op\" : \"cn\", \"data\" : \"Doe\" }",
 				",{\"field\" : \"name\", \"op\" : \"cn\", \"data\" : \"Doe\" }", };
-		int expectedTotalRowCount=3;
+		long expectedTotalRowCount=3;
 		for (int oindex = 0; oindex < ops.length; oindex++) {
 			this.testJqGridSearch(customerManager, sortOrder[oindex],
 					searchStr[oindex], ops[oindex], groupOps[oindex], more[oindex],
-					expectedTotalRowCount,expectedSize[oindex], expectedFirst[oindex], 0, 10);
+					expectedSize[oindex],expectedSize[oindex], expectedFirst[oindex], 0, 10);
 		}
 		int expectedSize2[] = { 1, 2, 1, 2, 2, 2, 1, 1, 2, 1, 1, 1, 2, 1 };
 		String searchStr2[] = { "John Doe", "John Doe", "John", "John Doe", "Joh",
@@ -279,11 +279,11 @@ public class TestEclipseLink {
 						+ searchStr2[oindex] + "=>" + expectedSize2[oindex] + ","
 						+ expectedFirst2[oindex]);
 			this.testJqGridSearch(customerManager, "asc", searchStr2[oindex],
-					op.name(), "AND", "", expectedTotalRowCount,expectedSize2[oindex], expectedFirst2[oindex],
+					op.name(), "AND", "", expectedSize2[oindex],expectedSize2[oindex], expectedFirst2[oindex],
 					0, 10);
 			oindex++;
 		}
-		this.testJqGridSearch(customerManager, "asc", null, expectedTotalRowCount,expectedTotalRowCount, "Heather Bourne", 0,
+		this.testJqGridSearch(customerManager, "asc", null, expectedTotalRowCount,(int) expectedTotalRowCount, "Heather Bourne", 0,
 				10);
 	}
 
@@ -302,6 +302,6 @@ public class TestEclipseLink {
 		em.getTransaction().commit();
 		CustomerManagerJPA customerManager = this.getCustomerManager();
 		this.testJqGridSearch(customerManager, "desc", "Customer #10", "bw", "AND",
-				"", 103,20, "Customer #1079", 20, 20 );
+				"", 100,20, "Customer #1079", 20, 20 );
 	}
 }
