@@ -6,7 +6,7 @@
  *
  * http://www.bitplan.com
  * 
- * generated: 2013-01-07 09:08 with smartGENERATOR
+ * generated: 2013-02-11 18:40 with smartGENERATOR
  */
 package com.bitplan.testentity.jpa;
 import java.io.Serializable;
@@ -37,7 +37,9 @@ import com.bitplan.restinterface.BO;
 @Entity(name="PhoneContact")
 @Table(name="PhoneContact")
 public class PhoneContactJpaDao extends ContactJpaDao implements PhoneContact,Serializable {
-
+	// >>>{code}{PhoneContactJpaDao}{PhoneContact}
+	// no implementation yet !!!
+	// <<<{code}{PhoneContactJpaDao}{PhoneContact}
   /**   
    * make Serializable happy ...   
    */  

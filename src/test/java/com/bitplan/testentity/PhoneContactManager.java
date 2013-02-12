@@ -6,7 +6,7 @@
  *
  * http://www.bitplan.com
  * 
- * generated: 2012-12-29 13:01 with smartGENERATOR
+ * generated: 2013-02-11 18:40 with smartGENERATOR
  */
 package com.bitplan.testentity;
 // List interface
@@ -26,13 +26,13 @@ public interface PhoneContactManager extends BOManager<PhoneContact> {
 	// <<<{ManagerImplSection}{PhoneContact}{PhoneContact}
 
 	/**
-	 * set the phoneContacts
+	 * set the phonecontacts
 	 * @param pPhoneContacts
 	 */
 	public void setPhoneContacts(List<PhoneContact> pPhoneContacts);
 	
 	/**
-	 * @return the phoneContacts
+	 * @return the phonecontacts
 	 */
 	public List<PhoneContact> getPhoneContacts();
 	

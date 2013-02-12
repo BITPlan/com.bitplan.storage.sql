@@ -6,7 +6,7 @@
  *
  * http://www.bitplan.com
  * 
- * generated: 2013-01-07 09:08 with smartGENERATOR
+ * generated: 2013-02-11 18:40 with smartGENERATOR
  */
 package com.bitplan.testentity.jpa;
 import java.io.Serializable;
@@ -38,7 +38,9 @@ import com.bitplan.testentity.Customer;
 @Entity(name="Order")
 @Table(name="order_table")
 public class OrderJpaDao extends JPABOImpl<Order> implements Order,Serializable {
-
+	// >>>{code}{OrderJpaDao}{Order}
+	// no implementation yet !!!
+	// <<<{code}{OrderJpaDao}{Order}
   /**   
    * make Serializable happy ...   
    */  

@@ -232,7 +232,7 @@ public abstract class JPAEntityManager<BO> extends BOManagerImpl<BO> implements
 					expr = qh.builder.equal(beanValue, rule.getData());
 					break;
 				case ne: // not equals
-					expr = qh.builder.not(qh.builder.equal(qh.from.get(beanField), rule.getData()));
+					expr = qh.builder.notEqual(qh.from.get(beanField), rule.getData());
 					break;
 				case bw: // begins with
 					expr = qh.builder.like(beanValue, rule.getData() + "%");
@@ -241,16 +241,22 @@ public abstract class JPAEntityManager<BO> extends BOManagerImpl<BO> implements
 					expr = qh.builder.like(beanValue, "%" + rule.getData());
 					break;
 				case en: // does not end with
-					expr = qh.builder.not(qh.builder.like(beanValue, "%" + rule.getData()));
+					expr = qh.builder.notLike(beanValue, "%" + rule.getData());
 					break;
 				case bn: // does not begin with
-					expr = qh.builder.not(qh.builder.like(beanValue, rule.getData() + "%"));
+					expr = qh.builder.notLike(beanValue, rule.getData() + "%");
 					break;
 				case cn: // contains
 					expr = qh.builder.like(beanValue, "%" + rule.getData() + "%");
 					break;
 				case nc: // does not contain
-					expr = qh.builder.not(qh.builder.like(beanValue, "%" + rule.getData() + "%"));
+					expr = qh.builder.notLike(beanValue, "%" + rule.getData() + "%");
+					break;
+				case nu: // is null
+					expr = qh.builder.isNull(beanValue);
+					break;
+				case nn: // is not null
+					expr = qh.builder.isNotNull(beanValue);
 					break;
 				case in: // in
 					expr = beanValue.in(this.getInMemberList(rule.getData()));

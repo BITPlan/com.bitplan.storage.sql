@@ -6,11 +6,10 @@
  *
  * http://www.bitplan.com
  * 
- * generated: 2012-12-29 13:01 with smartGENERATOR
+ * generated: 2013-02-11 18:40 with smartGENERATOR
  */
 package com.bitplan.testentity;
 // Infrastructure imports
-
 import com.bitplan.restinterface.BOManagerFactory;
 import com.bitplan.restinterface.Frame;
 import com.bitplan.restinterface.Configuration;

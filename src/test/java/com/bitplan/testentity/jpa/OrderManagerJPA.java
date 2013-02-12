@@ -6,7 +6,7 @@
  *
  * http://www.bitplan.com
  * 
- * generated: 2012-12-14 12:42 with smartGENERATOR
+ * generated: 2013-02-11 18:40 with smartGENERATOR
  */
 package com.bitplan.testentity.jpa;
 // base Entity Manager
@@ -33,6 +33,9 @@ import com.bitplan.testentity.OrderManager;
 public class OrderManagerJPA extends JPAEntityManager<Order>
 	implements OrderManager {
 	
+	/**
+	 * constructor
+	 */
 	public OrderManagerJPA() {
 		this.setTableName("order_table");
 	}

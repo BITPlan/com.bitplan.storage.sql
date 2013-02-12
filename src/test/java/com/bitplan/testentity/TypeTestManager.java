@@ -6,7 +6,7 @@
  *
  * http://www.bitplan.com
  * 
- * generated: 2012-11-28 17:58 with smartGENERATOR
+ * generated: 2013-02-11 18:40 with smartGENERATOR
  */
 package com.bitplan.testentity;
 // List interface
@@ -26,13 +26,13 @@ public interface TypeTestManager extends BOManager<TypeTest> {
 	// <<<{ManagerImplSection}{TypeTest}{TypeTest}
 
 	/**
-	 * set the typeTests
+	 * set the typetests
 	 * @param pTypeTests
 	 */
 	public void setTypeTests(List<TypeTest> pTypeTests);
 	
 	/**
-	 * @return the typeTests
+	 * @return the typetests
 	 */
 	public List<TypeTest> getTypeTests();
 	

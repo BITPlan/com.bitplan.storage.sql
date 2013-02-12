@@ -6,7 +6,7 @@
  *
  * http://www.bitplan.com
  * 
- * generated: 2012-12-14 12:42 with smartGENERATOR
+ * generated: 2013-02-11 18:40 with smartGENERATOR
  */
 package com.bitplan.testentity.jpa;
 // base Entity Manager
@@ -33,6 +33,9 @@ import com.bitplan.testentity.TypeTestManager;
 public class TypeTestManagerJPA extends JPAEntityManager<TypeTest>
 	implements TypeTestManager {
 	
+	/**
+	 * constructor
+	 */
 	public TypeTestManagerJPA() {
 		this.setTableName("TypeTest");
 	}
@@ -41,7 +44,7 @@ public class TypeTestManagerJPA extends JPAEntityManager<TypeTest>
 	// <<<{Managercode}{TypeTestJpaDao}{TypeTest}
 
   /**
-	 * set the typeTests
+	 * set the typetests
 	 * @param pTypeTests
 	 */
 	@Override
@@ -50,7 +53,7 @@ public class TypeTestManagerJPA extends JPAEntityManager<TypeTest>
 	}
 	
 	/**
-	 * @return the typeTests
+	 * @return the typetests
 	 */
 	@Override
 	public List<TypeTest> getTypeTests() {

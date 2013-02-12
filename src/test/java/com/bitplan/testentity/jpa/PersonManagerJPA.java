@@ -6,7 +6,7 @@
  *
  * http://www.bitplan.com
  * 
- * generated: 2012-12-29 13:01 with smartGENERATOR
+ * generated: 2013-02-11 18:40 with smartGENERATOR
  */
 package com.bitplan.testentity.jpa;
 // base Entity Manager
@@ -33,6 +33,9 @@ import com.bitplan.testentity.PersonManager;
 public class PersonManagerJPA extends JPAEntityManager<Person>
 	implements PersonManager {
 	
+	/**
+	 * constructor
+	 */
 	public PersonManagerJPA() {
 		this.setTableName("Person");
 	}
