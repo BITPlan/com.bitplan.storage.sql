@@ -6,7 +6,7 @@
  *
  * http://www.bitplan.com
  * 
- * generated: 2012-12-29 13:01 with smartGENERATOR
+ * generated: 2013-02-13 19:29 with smartGENERATOR
  */
 package com.bitplan.testentity;
 import com.bitplan.testentity.Person;
@@ -46,6 +46,42 @@ public interface Person {
    * @param pname - new value for name
    */
   public void setName(String pname);
+
+  /**
+   * getter for xsd:string/String SSN
+   * @return sSN
+   */
+  public String getSSN();
+
+  /**
+   * setter for xsd:string/String SSN
+   * @param psSN - new value for SSN
+   */
+  public void setSSN(String psSN);
+
+  /**
+   * getter for xsd:string/String EMailStatus
+   * @return eMailStatus
+   */
+  public String getEMailStatus();
+
+  /**
+   * setter for xsd:string/String EMailStatus
+   * @param peMailStatus - new value for EMailStatus
+   */
+  public void setEMailStatus(String peMailStatus);
+
+  /**
+   * getter for xsd:string/String xStatus
+   * @return xStatus
+   */
+  public String getXStatus();
+
+  /**
+   * setter for xsd:string/String xStatus
+   * @param pxStatus - new value for xStatus
+   */
+  public void setXStatus(String pxStatus);
 
   /**
    * getter for Contact/List<Contact> contacts

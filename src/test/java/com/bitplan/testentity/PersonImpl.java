@@ -6,7 +6,7 @@
  *
  * http://www.bitplan.com
  * 
- * generated: 2012-12-29 13:01 with smartGENERATOR
+ * generated: 2013-02-13 19:29 with smartGENERATOR
  */
 package com.bitplan.testentity;
 import com.bitplan.testentity.Person;
@@ -47,6 +47,21 @@ public class PersonImpl implements Person {
   private String name;
   
   /**
+   * SSN
+   */
+  private String sSN;
+  
+  /**
+   * EMailStatus
+   */
+  private String eMailStatus;
+  
+  /**
+   * xStatus
+   */
+  private String xStatus;
+  
+  /**
    * contacts
    */
   private List<Contact> contacts=new ArrayList<Contact>();
@@ -76,6 +91,42 @@ public class PersonImpl implements Person {
   public void setName(String pname) { name=pname; };
  
   /**
+   * getter for SSN
+   * @return the value for sSN
+   */
+  public String getSSN() { return sSN; };
+
+  /**
+   * setter for SSN
+   * @param psSN - new value for SSN
+   */
+  public void setSSN(String psSN) { sSN=psSN; };
+ 
+  /**
+   * getter for EMailStatus
+   * @return the value for eMailStatus
+   */
+  public String getEMailStatus() { return eMailStatus; };
+
+  /**
+   * setter for EMailStatus
+   * @param peMailStatus - new value for EMailStatus
+   */
+  public void setEMailStatus(String peMailStatus) { eMailStatus=peMailStatus; };
+ 
+  /**
+   * getter for xStatus
+   * @return the value for xStatus
+   */
+  public String getXStatus() { return xStatus; };
+
+  /**
+   * setter for xStatus
+   * @param pxStatus - new value for xStatus
+   */
+  public void setXStatus(String pxStatus) { xStatus=pxStatus; };
+ 
+  /**
    * getter for contacts
    * @return the value for contacts
    */
@@ -95,6 +146,9 @@ public class PersonImpl implements Person {
   public void copyFrom(Person pPerson) {
 		setId(pPerson.getId());
 		setName(pPerson.getName());
+		setSSN(pPerson.getSSN());
+		setEMailStatus(pPerson.getEMailStatus());
+		setXStatus(pPerson.getXStatus());
 	} // copyFrom
 	
 } // PersonImpl

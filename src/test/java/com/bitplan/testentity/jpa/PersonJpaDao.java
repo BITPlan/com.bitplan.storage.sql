@@ -6,7 +6,7 @@
  *
  * http://www.bitplan.com
  * 
- * generated: 2013-02-11 18:40 with smartGENERATOR
+ * generated: 2013-02-13 19:32 with smartGENERATOR
  */
 package com.bitplan.testentity.jpa;
 import java.io.Serializable;
@@ -108,6 +108,57 @@ public class PersonJpaDao extends JPABOImpl<Person> implements Person,Serializab
   }
   
   /**
+   * getter for xsd:string/String SSN
+   * @return sSN
+   */
+  @Column(name="SSN")
+  public String getSSN() { 
+  	return getPersonImpl().getSSN(); 
+  }
+
+  /**
+   * setter for xsd:string/String SSN
+   * @param psSN - new value for SSN
+   */
+  public void setSSN(String psSN) { 
+  	getPersonImpl().setSSN(psSN); 
+  }
+  
+  /**
+   * getter for xsd:string/String EMailStatus
+   * @return eMailStatus
+   */
+  @Column(name="EMailStatus")
+  public String getEMailStatus() { 
+  	return getPersonImpl().getEMailStatus(); 
+  }
+
+  /**
+   * setter for xsd:string/String EMailStatus
+   * @param peMailStatus - new value for EMailStatus
+   */
+  public void setEMailStatus(String peMailStatus) { 
+  	getPersonImpl().setEMailStatus(peMailStatus); 
+  }
+  
+  /**
+   * getter for xsd:string/String xStatus
+   * @return xStatus
+   */
+  @Column(name="xStatus")
+  public String getXStatus() { 
+  	return getPersonImpl().getXStatus(); 
+  }
+
+  /**
+   * setter for xsd:string/String xStatus
+   * @param pxStatus - new value for xStatus
+   */
+  public void setXStatus(String pxStatus) { 
+  	getPersonImpl().setXStatus(pxStatus); 
+  }
+  
+  /**
    * getter for Contact/List<Contact> contacts
    * @return contacts
    */
@@ -144,6 +195,9 @@ public class PersonJpaDao extends JPABOImpl<Person> implements Person,Serializab
 		Object result=null;
     if (fieldName.equals("id")) result=getId();
     if (fieldName.equals("name")) result=getName();
+    if (fieldName.equals("SSN")) result=getSSN();
+    if (fieldName.equals("EMailStatus")) result=getEMailStatus();
+    if (fieldName.equals("xStatus")) result=getXStatus();
     if (fieldName.equals("contacts")) result=getContacts();
 		return result;
 	} // getField
@@ -153,6 +207,9 @@ public class PersonJpaDao extends JPABOImpl<Person> implements Person,Serializab
 	  Map<String, Object> result=new HashMap<String,Object>();
     result.put("id",getId());
     result.put("name",getName());
+    result.put("SSN",getSSN());
+    result.put("EMailStatus",getEMailStatus());
+    result.put("xStatus",getXStatus());
 		return result;
 	} // toMap
 
@@ -160,5 +217,8 @@ public class PersonJpaDao extends JPABOImpl<Person> implements Person,Serializab
 	public void fromMap(Map<String, Object> pMap) {
     if (pMap.containsKey("id"))	setId(getTypeConverter().getString(pMap.get("id")));
     if (pMap.containsKey("name"))	setName(getTypeConverter().getString(pMap.get("name")));
+    if (pMap.containsKey("SSN"))	setSSN(getTypeConverter().getString(pMap.get("SSN")));
+    if (pMap.containsKey("EMailStatus"))	setEMailStatus(getTypeConverter().getString(pMap.get("EMailStatus")));
+    if (pMap.containsKey("xStatus"))	setXStatus(getTypeConverter().getString(pMap.get("xStatus")));
 	} // fromMap
 } // PersonJpaDao

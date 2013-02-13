@@ -6,7 +6,7 @@
  *
  * http://www.bitplan.com
  * 
- * generated: 2013-02-11 18:40 with smartGENERATOR
+ * generated: 2013-02-13 19:29 with smartGENERATOR
  */
 package com.bitplan.testentity.jpa;
 import java.io.Serializable;

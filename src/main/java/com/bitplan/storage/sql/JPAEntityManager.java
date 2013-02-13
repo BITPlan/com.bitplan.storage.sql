@@ -196,6 +196,16 @@ public abstract class JPAEntityManager<BO> extends BOManagerImpl<BO> implements
 		}
 		
 	}
+	
+	/**
+	 * get the Bean Field name
+	 * @param fieldName
+	 * @return
+	 */
+  public String getBeanFieldName(String fieldName) {
+  	return java.beans.Introspector.decapitalize(fieldName);
+  }
+  
 	/**
 	 * find by the given JqGridFilters
 	 * 
@@ -209,7 +219,7 @@ public abstract class JPAEntityManager<BO> extends BOManagerImpl<BO> implements
 
   	if (search.getSortIndex() != null
 				&& (!search.getSortIndex().trim().equals(""))) {
-			String beanField = FieldHelper.firstToLower(search.getSortIndex());
+			String beanField = this.getBeanFieldName(search.getSortIndex());
 			Path<Object> sortPath = qh.from.get(beanField);
 			switch (search.getSortOrder()) {
 			case asc:
@@ -224,7 +234,7 @@ public abstract class JPAEntityManager<BO> extends BOManagerImpl<BO> implements
 		if (filter != null) {
 			List<Predicate> predicates = new ArrayList<Predicate>();
 			for (JqGridRule rule : filter.getRules()) {
-				String beanField = FieldHelper.firstToLower(rule.getField());
+				String beanField = this.getBeanFieldName(rule.getField());
 				Path<String> beanValue = qh.from.<String> get(beanField);
 				Predicate expr;
 				switch (rule.getOp()) {

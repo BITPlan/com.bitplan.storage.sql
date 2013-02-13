@@ -6,7 +6,7 @@
  *
  * http://www.bitplan.com
  * 
- * generated: 2012-12-29 09:04 with smartGENERATOR
+ * generated: 2013-02-13 19:29 with smartGENERATOR
  */
 package com.bitplan.testentity;
 import com.bitplan.testentity.Customer;

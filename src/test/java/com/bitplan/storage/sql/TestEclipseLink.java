@@ -10,21 +10,23 @@ package com.bitplan.storage.sql;
 
 import static org.junit.Assert.*;
 
+import org.apache.commons.beanutils.PropertyUtils;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.bitplan.rest.jqgrid.JqGridFilter;
-import com.bitplan.rest.jqgrid.JqGridFilterImpl;
 import com.bitplan.rest.jqgrid.JqGridSearch;
-import com.bitplan.rest.jqgrid.JqGridFilter.GroupOp;
 import com.bitplan.rest.jqgrid.JqGridFilter.Operations;
-import com.bitplan.rest.jqgrid.JqGridSearch.SortOrder;
 import com.bitplan.rest.jqgrid.JqGridSearchImpl;
+import com.bitplan.resthelper.FieldHelper;
 import com.bitplan.restinterface.BOManager;
 import com.bitplan.restinterface.BOManagerFactory;
 import com.bitplan.testentity.Customer;
 import com.bitplan.testentity.CustomerManager;
 import com.bitplan.testentity.Order;
+import com.bitplan.testentity.Person;
+import com.bitplan.testentity.PersonManager;
+import com.bitplan.testentity.jpa.PersonManagerJPA;
 import com.bitplan.testentity.jpa.CustomerJpaDao;
 import com.bitplan.testentity.jpa.CustomerManagerJPA;
 
@@ -88,7 +90,6 @@ public class TestEclipseLink {
 		String[] ids = { "1", "2", "3" };
 		String[] names = { "John Doe", "John Smith", "Heather Bourne" };
 		String[] cities = { "New York", null, "Newark, NJ" };
-		 
 
 		em = (EntityManager) boManagerFactory.getContext();
 		Customer customer1 = null;
@@ -174,7 +175,8 @@ public class TestEclipseLink {
 
 	/**
 	 * parameterized search
-	 * @param customerManager
+	 * 
+	 * @param boManager
 	 * @param sortOrder
 	 * @param json
 	 * @param expectedTotalRowCount
@@ -184,12 +186,12 @@ public class TestEclipseLink {
 	 * @param maxResult
 	 * @throws Exception
 	 */
-	public void testJqGridSearch(CustomerManagerJPA customerManager,
-			String searchField,String sortOrder, String json, long expectedTotalRowCount,
-			int expectedResultCount, String expectedFirst, int firstResult,
-			int maxResult) throws Exception {
-		JqGridSearch search = this.getSearch(searchField, sortOrder, json, firstResult,
-				maxResult);
+	public <BO_T> void testJqGridSearch(JPAEntityManager<BO_T> boManager,
+			String displayField, String searchField, String sortOrder, String json,
+			long expectedTotalRowCount, int expectedResultCount,
+			String expectedFirst, int firstResult, int maxResult) throws Exception {
+		JqGridSearch search = this.getSearch(searchField, sortOrder, json,
+				firstResult, maxResult);
 		if (debug) {
 			JqGridFilter filter = search.getFilter();
 			if (filter != null)
@@ -197,23 +199,26 @@ public class TestEclipseLink {
 			else
 				System.out.println("filter:null");
 		}
-		List<Customer> customers = customerManager.findByJqGridFilter(search);
-		assertEquals("totalRowCount",expectedTotalRowCount,search.getTotalRowCount());
-		assertEquals(expectedResultCount,search.getResultRowCount());
-		assertEquals(expectedResultCount, customers.size());
+		List<BO_T> bos = boManager.findByJqGridFilter(search);
+		assertEquals("totalRowCount", expectedTotalRowCount,
+				search.getTotalRowCount());
+		assertEquals(expectedResultCount, search.getResultRowCount());
+		assertEquals(expectedResultCount, bos.size());
 		if (debug)
-			System.out.println(customers.size());
-		for (Customer customer : customers) {
+			System.out.println(bos.size());
+		for (BO_T bo : bos) {
 			if (debug)
-				System.out.println(customer.getId() + ", " + customer.getName());
+				System.out.println(PropertyUtils.getSimpleProperty(bo, displayField));
 		}
-		assertEquals(expectedFirst, customers.get(0).getName());
+		assertEquals(expectedFirst,
+				PropertyUtils.getSimpleProperty(bos.get(0), displayField));
 	}
 
 	/**
-	 * parameterized Search
+	 * parameterized search
 	 * 
-	 * @param customerManager
+	 * @param boManager
+	 * @param searchField
 	 * @param sortOrder
 	 * @param searchStr
 	 * @param ops
@@ -226,16 +231,17 @@ public class TestEclipseLink {
 	 * @param maxResult
 	 * @throws Exception
 	 */
-	public void testJqGridSearch(CustomerManagerJPA customerManager,
-			String searchField,String sortOrder, String searchStr, String ops, String groupOps,
-			String more, long expectedTotalRowCount, int expectedResultRowCount,
+	public <BO_T> void testJqGridSearch(JPAEntityManager<BO_T> boManager,
+			String displayField, String searchField, String sortOrder,
+			String searchStr, String ops, String groupOps, String more,
+			long expectedTotalRowCount, int expectedResultRowCount,
 			String expectedFirst, int firstResult, int maxResult) throws Exception {
 		String json = "{\n" + "  \"groupOp\" : \"" + groupOps + "\",\n"
-				+ "  \"rules\" : [ {\n" + "    \"field\" : \""+searchField+"\",\n"
+				+ "  \"rules\" : [ {\n" + "    \"field\" : \"" + searchField + "\",\n"
 				+ "    \"op\" : \"" + ops + "\",\n" + "    \"data\" : \"" + searchStr
 				+ "\"\n" + "  }" + more + " ]\n" + "}";
-		this.testJqGridSearch(customerManager, searchField,sortOrder, json,
-				expectedTotalRowCount, expectedResultRowCount, expectedFirst,
+		this.testJqGridSearch(boManager, displayField, searchField, sortOrder,
+				json, expectedTotalRowCount, expectedResultRowCount, expectedFirst,
 				firstResult, maxResult);
 	}
 
@@ -251,7 +257,8 @@ public class TestEclipseLink {
 		String groupOps[] = { "AND", "AND", "AND", "AND", "AND", "AND", "OR" };
 		String sortOrder[] = { "desc", "desc", "desc", "desc", "desc", "desc",
 				"asc" };
-		String searchField[] = { "name","name","name","name","name","name","name","city","city"  };
+		String searchField[] = { "name", "name", "name", "name", "name", "name",
+				"name", "city", "city" };
 		String searchStr[] = { "John Doe", "John Doe", "John", "Doe", "John",
 				"John", "Heather Bourne" };
 		int expectedSize[] = { 1, 2, 2, 1, 1, 1, 2 };
@@ -260,17 +267,20 @@ public class TestEclipseLink {
 		String more[] = { "", "", "", "", "",
 				",{\"field\" : \"name\", \"op\" : \"cn\", \"data\" : \"Doe\" }",
 				",{\"field\" : \"name\", \"op\" : \"cn\", \"data\" : \"Doe\" }", };
-		long expectedTotalRowCount=3;
+		long expectedTotalRowCount = 3;
 		for (int oindex = 0; oindex < ops.length; oindex++) {
-			this.testJqGridSearch(customerManager, searchField[oindex],sortOrder[oindex],
-					searchStr[oindex], ops[oindex], groupOps[oindex], more[oindex],
-					expectedSize[oindex],expectedSize[oindex], expectedFirst[oindex], 0, 10);
+			this.testJqGridSearch(customerManager, "name", searchField[oindex],
+					sortOrder[oindex], searchStr[oindex], ops[oindex], groupOps[oindex],
+					more[oindex], expectedSize[oindex], expectedSize[oindex],
+					expectedFirst[oindex], 0, 10);
 		}
-		int expectedSize2[] = { 1, 2, 1, 2, 2, 2, 1, 1, 2, 1, 1, 1, 2, 1,1,2 };
-		String searchField2[] = { "name","name","name","name","name","name","name","name","name","name","name","name","name","name","city","city"  };
+		int expectedSize2[] = { 1, 2, 1, 2, 2, 2, 1, 1, 2, 1, 1, 1, 2, 1, 1, 2 };
+		String searchField2[] = { "name", "name", "name", "name", "name", "name",
+				"name", "name", "name", "name", "name", "name", "name", "name", "city",
+				"city" };
 		String searchStr2[] = { "John Doe", "John Doe", "John", "John Doe", "Joh",
 				"John Doe", "Heat", "Jo", "John Doe,John Smith", "John Smith,John Doe",
-				"Doe", "e", "ohn", "th",null,null };
+				"Doe", "e", "ohn", "th", null, null };
 		String expectedFirst2[] = { "John Doe", "Heather Bourne", "Heather Bourne",
 				"Heather Bourne", "John Doe", "John Doe", "Heather Bourne",
 				"Heather Bourne", "John Doe", "Heather Bourne", "John Doe",
@@ -282,13 +292,15 @@ public class TestEclipseLink {
 				System.out.println("" + (oindex) + ": name " + op.name() + " "
 						+ searchStr2[oindex] + "=>" + expectedSize2[oindex] + ","
 						+ expectedFirst2[oindex]);
-			this.testJqGridSearch(customerManager, searchField2[oindex], "asc", searchStr2[oindex],
-					op.name(), "AND", "", expectedSize2[oindex],expectedSize2[oindex], expectedFirst2[oindex],
+			this.testJqGridSearch(customerManager, "name", searchField2[oindex],
+					"asc", searchStr2[oindex], op.name(), "AND", "",
+					expectedSize2[oindex], expectedSize2[oindex], expectedFirst2[oindex],
 					0, 10);
 			oindex++;
 		}
-		this.testJqGridSearch(customerManager, "name","asc", null, expectedTotalRowCount,(int) expectedTotalRowCount, "Heather Bourne", 0,
-				10);
+		this.testJqGridSearch(customerManager, "name", "name", "asc", null,
+				expectedTotalRowCount, (int) expectedTotalRowCount, "Heather Bourne",
+				0, 10);
 	}
 
 	/**
@@ -305,7 +317,59 @@ public class TestEclipseLink {
 		}
 		em.getTransaction().commit();
 		CustomerManagerJPA customerManager = this.getCustomerManager();
-		this.testJqGridSearch(customerManager, "name","desc", "Customer #10", "bw", "AND",
-				"", 100,20, "Customer #1079", 20, 20 );
+		this.testJqGridSearch(customerManager, "name", "name", "desc",
+				"Customer #10", "bw", "AND", "", 100, 20, "Customer #1079", 20, 20);
 	}
+
+	/**
+	 * add a test record for the Person entity
+	 * 
+	 * @param i
+	 * @return
+	 */
+	private Person addPerson(int i) {
+		Person person = boManagerFactory.getInstance(Person.class);
+		person.setId("id" + i);
+		person.setName("person" + i);
+		person.setSSN("SSN" + i);
+		person.setEMailStatus("EMailStatus" + i);
+		person.setXStatus("xStatus"+i);
+		em.persist(person);
+		return person;
+	}
+
+	/**
+	 * test the fieldName access
+	 * 
+	 * @throws Exception
+	 */
+	@Test
+	public void testFieldNames() throws Exception {
+		em = (EntityManager) boManagerFactory.getContext();
+		em.getTransaction().begin();
+		for (int i = 0; i <= 15; i++) {
+			this.addPerson(i);
+		}
+		em.getTransaction().commit();
+		BOManager<Person> boManager = boManagerFactory.getBOManager(
+				PersonManager.class, Person.class);
+		assertTrue(boManager instanceof PersonManagerJPA);
+		PersonManagerJPA personManager = (PersonManagerJPA) boManager;
+		this.testJqGridSearch(personManager, "name", "SSN", "desc", "SSN1", "bw",
+				"AND", "", 7, 7, "person15", 0, 20);
+		this.testJqGridSearch(personManager, "SSN", "EMailStatus", "asc",
+				"EMailStatus1", "bn", "AND", "", 9, 9, "SSN0", 0, 20);
+		this.testJqGridSearch(personManager, "xStatus", "xStatus", "asc",
+				"xStatus1", "bn", "AND", "", 9, 9, "xStatus0", 0, 20);
+	}
+	
+	@Test
+	public void testDecapitalize() throws Exception {
+		// http://docs.oracle.com/javase/6/docs/api/java/beans/Introspector.html#decapitalize%28java.lang.String%29
+		String names[]={"SSN","EMailStatus","xStatus"};
+		for (String name:names) {
+		  System.out.println(FieldHelper.firstToUpper(name)+":"+java.beans.Introspector.decapitalize(name));
+		}
+	}
+
 }
