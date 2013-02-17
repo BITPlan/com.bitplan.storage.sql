@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2011-2012 BITPlan GmbH
+ * Copyright (C) 2011-2013 BITPlan GmbH
  * 
  * Pater-Delp-Str. 1
  * D-47877 Willich-Schiefbahn
@@ -26,8 +26,6 @@ import com.bitplan.rest.jqgrid.JqGridFilter;
 import com.bitplan.rest.jqgrid.JqGridRule;
 import com.bitplan.rest.jqgrid.JqGridSearch;
 import com.bitplan.resthelper.BOManagerImpl;
-import com.bitplan.resthelper.FieldHelper;
-import com.bitplan.restinterface.BO;
 import com.bitplan.restinterface.BOManager;
 
 /**
@@ -36,8 +34,8 @@ import com.bitplan.restinterface.BOManager;
  * @author wf
  * 
  */
-public abstract class JPAEntityManager<BO> extends BOManagerImpl<BO> implements
-		BOManager<BO> {
+public abstract class JPAEntityManager<BO_T> extends BOManagerImpl<BO_T> implements
+		BOManager<BO_T> {
 
 	public static boolean debug = true;
 	// for examples
@@ -104,7 +102,7 @@ public abstract class JPAEntityManager<BO> extends BOManagerImpl<BO> implements
 	}
 
 	@Override
-	public void persist(BO entity) {
+	public void persist(BO_T entity) {
 		this.getEntityManager().persist(entity);
 	}
 
@@ -114,21 +112,21 @@ public abstract class JPAEntityManager<BO> extends BOManagerImpl<BO> implements
 	}
 
 	@Override
-	public BO findById(Object id) throws Exception {
+	public BO_T findById(Object id) throws Exception {
 		@SuppressWarnings("unchecked")
-		BO result = (BO) getEntityManager().find(this.getEntityType(), id);
+		BO_T result = (BO_T) getEntityManager().find(this.getEntityType(), id);
 		return result;
 	}
 
 	@Override
-	public List<BO> findBy(String attributeName, Object attributeValue,
+	public List<BO_T> findBy(String attributeName, Object attributeValue,
 			int maxResults) throws Exception {
 		Query query = getEntityManager().createNativeQuery(
 				"SELECT * FROM " + this.getTableName() + " WHERE " + attributeName
 						+ "='" + attributeValue.toString() + "'", this.getEntityType());
 		query.setMaxResults(maxResults);
 		@SuppressWarnings("unchecked")
-		List<BO> result = query.getResultList();
+		List<BO_T> result = query.getResultList();
 		return result;
 	}
 
@@ -171,25 +169,25 @@ public abstract class JPAEntityManager<BO> extends BOManagerImpl<BO> implements
 	 */
 	protected class QueryHelper {
 		CriteriaBuilder builder;
-		CriteriaQuery<BO> query;
-		CriteriaQuery<BO> select;
+		CriteriaQuery<BO_T> query;
+		CriteriaQuery<BO_T> select;
 		
 		CriteriaQuery<Long> countQuery;
 		TypedQuery<Long> countTypedQuery;
 
-		Root<BO> from;
-		Root<BO> countFrom;
+		Root<BO_T> from;
+		Root<BO_T> countFrom;
 		CriteriaQuery<Long> countSelect;
 
 		@SuppressWarnings("unchecked")
 		public QueryHelper() {
 			builder = getEntityManager().getCriteriaBuilder();
 			
-			query = (CriteriaQuery<BO>) builder.createQuery(getEntityType());
+			query = (CriteriaQuery<BO_T>) builder.createQuery(getEntityType());
 			countQuery = builder.createQuery(Long.class);
 			
-			from = (Root<BO>) query.from(getEntityType());
-			countFrom= (Root<BO>) countQuery.from(getEntityType());
+			from = (Root<BO_T>) query.from(getEntityType());
+			countFrom= (Root<BO_T>) countQuery.from(getEntityType());
 			
 			select = query.select(from);
 			countSelect= countQuery.select(builder.count(from));
@@ -214,7 +212,7 @@ public abstract class JPAEntityManager<BO> extends BOManagerImpl<BO> implements
 	 * @param sortOrder
 	 * @param sortIndex
 	 */
-	public List<BO> findByJqGridFilter(JqGridSearch search) {
+	public List<BO_T> findByJqGridFilter(JqGridSearch search) {
 		QueryHelper qh = new QueryHelper();
 
   	if (search.getSortIndex() != null
@@ -312,10 +310,10 @@ public abstract class JPAEntityManager<BO> extends BOManagerImpl<BO> implements
 		qh.countTypedQuery=getEntityManager().createQuery(qh.countSelect);
 	  search.setTotalRowCount(qh.countTypedQuery.getSingleResult());
 
-		TypedQuery<BO> query = getEntityManager().createQuery(qh.select);
+		TypedQuery<BO_T> query = getEntityManager().createQuery(qh.select);
 		query.setFirstResult(search.getFirstResult());
 		query.setMaxResults(search.getMaxResults());
-		List<BO> results = query.getResultList();		
+		List<BO_T> results = query.getResultList();		
 	 	
 		// set the ResultRowCount
 		search.setResultRowCount(results.size());

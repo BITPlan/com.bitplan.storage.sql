@@ -7,11 +7,11 @@
  -
  - http://www.bitplan.com
  - 
- - generated: 2012-12-29 13:01 with smartGENERATOR
+ - generated: 2013-02-14 17:35 with smartGENERATOR
  -->
 <persistence xmlns="http://java.sun.com/xml/ns/persistence"
 	version="2.0">
-	<persistence-unit name="default" transaction-type="RESOURCE_LOCAL">
+	<persistence-unit name="com.bitplan.testentity" transaction-type="RESOURCE_LOCAL">
 		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
 		<class>com.bitplan.testentity.jpa.CustomerJpaDao</class>
 		<class>com.bitplan.testentity.jpa.OrderJpaDao</class>

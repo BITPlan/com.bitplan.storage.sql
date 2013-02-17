@@ -30,6 +30,7 @@ public class JPAEntityManagerFactory extends BOManagerFactoryImpl {
 	
 	/**
 	 * get mySQL Properties
+	 * @param persistenceUnitName
 	 * @param database
 	 * @param host
 	 * @param username
@@ -37,11 +38,12 @@ public class JPAEntityManagerFactory extends BOManagerFactoryImpl {
 	 * @param reCreateDatabase
 	 * @return
 	 */
-	public static Map<String, String>  getMySQLProps(String database,String host, String username, String password, boolean reCreateDatabase) {
+	public static Map<String, String>  getMySQLProps(String persistenceUnitName,String database,String host, String username, String password, boolean reCreateDatabase) {
 		/**
 		 * properties
 		 */
 		Map<String, String> props = new HashMap<String, String>();
+		props.put("persistence.unit.name", persistenceUnitName);
 		props.put("eclipselink.target-database", "MYSQL");
 		props.put("javax.persistence.jdbc.driver", "com.mysql.jdbc.Driver");
 		props.put("javax.persistence.jdbc.url",

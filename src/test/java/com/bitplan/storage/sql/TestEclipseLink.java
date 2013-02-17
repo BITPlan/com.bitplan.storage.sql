@@ -359,14 +359,14 @@ public class TestEclipseLink {
 				"AND", "", 7, 7, "person15", 0, 20);
 		this.testJqGridSearch(personManager, "SSN", "EMailStatus", "asc",
 				"EMailStatus1", "bn", "AND", "", 9, 9, "SSN0", 0, 20);
-		this.testJqGridSearch(personManager, "xStatus", "xStatus", "asc",
+		this.testJqGridSearch(personManager, "XStatus", "XStatus", "asc",
 				"xStatus1", "bn", "AND", "", 9, 9, "xStatus0", 0, 20);
 	}
 	
 	@Test
 	public void testDecapitalize() throws Exception {
 		// http://docs.oracle.com/javase/6/docs/api/java/beans/Introspector.html#decapitalize%28java.lang.String%29
-		String names[]={"SSN","EMailStatus","xStatus"};
+		String names[]={"SSN","EMailStatus","XStatus"};
 		for (String name:names) {
 		  System.out.println(FieldHelper.firstToUpper(name)+":"+java.beans.Introspector.decapitalize(name));
 		}

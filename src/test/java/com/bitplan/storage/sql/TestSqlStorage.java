@@ -37,7 +37,7 @@ public class TestSqlStorage extends TestStorage {
 	public static void prepareGuice() throws Exception {
 		if (boManagerFactory==null) {
 		  boManagerFactory=BOManagerFactoryImpl.create(new TestentityJPAModule());
-		  Map<String, String> props = JPAEntityManagerFactory.getMySQLProps("testsqlstorage","localhost","cm", "secret",true);
+		  Map<String, String> props = JPAEntityManagerFactory.getMySQLProps("com.bitplan.testentity","testsqlstorage","localhost","cm", "secret",true);
 		  boManagerFactory.setContext(props);
 			Logger.getRootLogger().setLevel(Level.ERROR);
 
