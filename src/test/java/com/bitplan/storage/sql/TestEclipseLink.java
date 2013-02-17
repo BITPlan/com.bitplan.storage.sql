@@ -26,9 +26,12 @@ import com.bitplan.testentity.CustomerManager;
 import com.bitplan.testentity.Order;
 import com.bitplan.testentity.Person;
 import com.bitplan.testentity.PersonManager;
+import com.bitplan.testentity.TypeTest;
+import com.bitplan.testentity.TypeTestManager;
 import com.bitplan.testentity.jpa.PersonManagerJPA;
 import com.bitplan.testentity.jpa.CustomerJpaDao;
 import com.bitplan.testentity.jpa.CustomerManagerJPA;
+import com.bitplan.testentity.jpa.TypeTestManagerJPA;
 
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -60,7 +63,7 @@ public class TestEclipseLink {
 	 * @throws Exception
 	 */
 	public CustomerManagerJPA getCustomerManager() throws Exception {
-		BOManager<Customer> boManager = this.boManagerFactory.getBOManager(
+		BOManager<Customer> boManager = boManagerFactory.getBOManager(
 				CustomerManager.class, Customer.class);
 		assertTrue(boManager instanceof CustomerManagerJPA);
 		CustomerManagerJPA customerManager = (CustomerManagerJPA) boManager;
@@ -187,10 +190,10 @@ public class TestEclipseLink {
 	 * @throws Exception
 	 */
 	public <BO_T> void testJqGridSearch(JPAEntityManager<BO_T> boManager,
-			String displayField, String searchField, String sortOrder, String json,
+			String displayField, String searchField, String sortField,String sortOrder, String json,
 			long expectedTotalRowCount, int expectedResultCount,
-			String expectedFirst, int firstResult, int maxResult) throws Exception {
-		JqGridSearch search = this.getSearch(searchField, sortOrder, json,
+			Object expectedFirst, int firstResult, int maxResult) throws Exception {
+		JqGridSearch search = this.getSearch(sortField, sortOrder, json,
 				firstResult, maxResult);
 		if (debug) {
 			JqGridFilter filter = search.getFilter();
@@ -205,12 +208,12 @@ public class TestEclipseLink {
 		assertEquals(expectedResultCount, search.getResultRowCount());
 		assertEquals(expectedResultCount, bos.size());
 		if (debug)
-			System.out.println(bos.size());
+			System.out.println("size: "+bos.size());
 		for (BO_T bo : bos) {
 			if (debug)
 				System.out.println(PropertyUtils.getSimpleProperty(bo, displayField));
 		}
-		assertEquals(expectedFirst,
+		assertEquals("expectedFirst: ",expectedFirst,
 				PropertyUtils.getSimpleProperty(bos.get(0), displayField));
 	}
 
@@ -219,6 +222,7 @@ public class TestEclipseLink {
 	 * 
 	 * @param boManager
 	 * @param searchField
+	 * @param sortField
 	 * @param sortOrder
 	 * @param searchStr
 	 * @param ops
@@ -232,15 +236,15 @@ public class TestEclipseLink {
 	 * @throws Exception
 	 */
 	public <BO_T> void testJqGridSearch(JPAEntityManager<BO_T> boManager,
-			String displayField, String searchField, String sortOrder,
+			String displayField, String searchField, String sortField,String sortOrder,
 			String searchStr, String ops, String groupOps, String more,
 			long expectedTotalRowCount, int expectedResultRowCount,
-			String expectedFirst, int firstResult, int maxResult) throws Exception {
+			Object expectedFirst, int firstResult, int maxResult) throws Exception {
 		String json = "{\n" + "  \"groupOp\" : \"" + groupOps + "\",\n"
 				+ "  \"rules\" : [ {\n" + "    \"field\" : \"" + searchField + "\",\n"
 				+ "    \"op\" : \"" + ops + "\",\n" + "    \"data\" : \"" + searchStr
 				+ "\"\n" + "  }" + more + " ]\n" + "}";
-		this.testJqGridSearch(boManager, displayField, searchField, sortOrder,
+		this.testJqGridSearch(boManager, displayField, searchField, sortField,sortOrder,
 				json, expectedTotalRowCount, expectedResultRowCount, expectedFirst,
 				firstResult, maxResult);
 	}
@@ -269,7 +273,7 @@ public class TestEclipseLink {
 				",{\"field\" : \"name\", \"op\" : \"cn\", \"data\" : \"Doe\" }", };
 		long expectedTotalRowCount = 3;
 		for (int oindex = 0; oindex < ops.length; oindex++) {
-			this.testJqGridSearch(customerManager, "name", searchField[oindex],
+			this.testJqGridSearch(customerManager, "name", "name",searchField[oindex],
 					sortOrder[oindex], searchStr[oindex], ops[oindex], groupOps[oindex],
 					more[oindex], expectedSize[oindex], expectedSize[oindex],
 					expectedFirst[oindex], 0, 10);
@@ -292,13 +296,13 @@ public class TestEclipseLink {
 				System.out.println("" + (oindex) + ": name " + op.name() + " "
 						+ searchStr2[oindex] + "=>" + expectedSize2[oindex] + ","
 						+ expectedFirst2[oindex]);
-			this.testJqGridSearch(customerManager, "name", searchField2[oindex],
+			this.testJqGridSearch(customerManager, "name", searchField2[oindex],searchField2[oindex],
 					"asc", searchStr2[oindex], op.name(), "AND", "",
 					expectedSize2[oindex], expectedSize2[oindex], expectedFirst2[oindex],
 					0, 10);
 			oindex++;
 		}
-		this.testJqGridSearch(customerManager, "name", "name", "asc", null,
+		this.testJqGridSearch(customerManager, "name", "name", "name", "asc", null,
 				expectedTotalRowCount, (int) expectedTotalRowCount, "Heather Bourne",
 				0, 10);
 	}
@@ -317,7 +321,7 @@ public class TestEclipseLink {
 		}
 		em.getTransaction().commit();
 		CustomerManagerJPA customerManager = this.getCustomerManager();
-		this.testJqGridSearch(customerManager, "name", "name", "desc",
+		this.testJqGridSearch(customerManager, "name", "name","name", "desc",
 				"Customer #10", "bw", "AND", "", 100, 20, "Customer #1079", 20, 20);
 	}
 
@@ -337,6 +341,19 @@ public class TestEclipseLink {
 		em.persist(person);
 		return person;
 	}
+	
+	/**
+	 * add a TypeTest Record
+	 * @param i
+	 * @return
+	 */
+	private TypeTest addTypeTest(int i) {
+		TypeTest typeTest=boManagerFactory.getInstance(TypeTest.class);
+		typeTest.setId(i);
+		typeTest.setTbooleanVal(i%2 == 0); // odd or even?
+		em.persist(typeTest);
+		return typeTest;
+	}
 
 	/**
 	 * test the fieldName access
@@ -355,12 +372,32 @@ public class TestEclipseLink {
 				PersonManager.class, Person.class);
 		assertTrue(boManager instanceof PersonManagerJPA);
 		PersonManagerJPA personManager = (PersonManagerJPA) boManager;
-		this.testJqGridSearch(personManager, "name", "SSN", "desc", "SSN1", "bw",
+		this.testJqGridSearch(personManager, "name", "SSN", "SSN","desc", "SSN1", "bw",
 				"AND", "", 7, 7, "person15", 0, 20);
-		this.testJqGridSearch(personManager, "SSN", "EMailStatus", "asc",
+		this.testJqGridSearch(personManager, "SSN", "EMailStatus","EMailStatus", "asc",
 				"EMailStatus1", "bn", "AND", "", 9, 9, "SSN0", 0, 20);
-		this.testJqGridSearch(personManager, "XStatus", "XStatus", "asc",
+		this.testJqGridSearch(personManager, "XStatus", "XStatus", "XStatus","asc",
 				"xStatus1", "bn", "AND", "", 9, 9, "xStatus0", 0, 20);
+	}
+	
+	@Test
+	public void testTypes() throws Exception {
+		em = (EntityManager) boManagerFactory.getContext();
+		em.getTransaction().begin();
+		for (int i = 0; i < 15; i++) {
+			this.addTypeTest(i);
+		}
+		em.getTransaction().commit();
+		BOManager<TypeTest> boManager = boManagerFactory.getBOManager(
+				TypeTestManager.class, TypeTest.class);
+		assertTrue(boManager instanceof TypeTestManagerJPA);
+		TypeTestManagerJPA typeTestManager = (TypeTestManagerJPA) boManager;
+		// odd search
+		this.testJqGridSearch(typeTestManager, "id", "TbooleanVal", "id","desc", "0", "eq",
+				"AND", "", 7, 7, 13l, 0, 20);
+		// even search
+		this.testJqGridSearch(typeTestManager, "id", "TbooleanVal", "id","desc", "1", "eq",
+				"AND", "", 8, 8, 14l, 0, 20);
 	}
 	
 	@Test
