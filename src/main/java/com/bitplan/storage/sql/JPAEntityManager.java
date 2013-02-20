@@ -204,6 +204,11 @@ public abstract class JPAEntityManager<BO_T> extends BOManagerImpl<BO_T> impleme
   	return java.beans.Introspector.decapitalize(fieldName);
   }
   
+  @Deprecated
+	public List<BO_T> findByJqGridFilter(JqGridSearch search) {
+		return this.findByJqGridFilter(search, null,null);
+	}
+
 	/**
 	 * find by the given JqGridFilters
 	 * 
@@ -212,7 +217,7 @@ public abstract class JPAEntityManager<BO_T> extends BOManagerImpl<BO_T> impleme
 	 * @param sortOrder
 	 * @param sortIndex
 	 */
-	public List<BO_T> findByJqGridFilter(JqGridSearch search) {
+	public List<BO_T> findByJqGridFilter(JqGridSearch search,String foreignKey, String foreignValue) {
 		QueryHelper qh = new QueryHelper();
 
   	if (search.getSortIndex() != null

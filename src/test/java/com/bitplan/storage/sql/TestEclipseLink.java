@@ -11,6 +11,7 @@ package com.bitplan.storage.sql;
 import static org.junit.Assert.*;
 
 import org.apache.commons.beanutils.PropertyUtils;
+import org.eclipse.persistence.jpa.JpaQuery;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -28,6 +29,7 @@ import com.bitplan.testentity.Person;
 import com.bitplan.testentity.PersonManager;
 import com.bitplan.testentity.TypeTest;
 import com.bitplan.testentity.TypeTestManager;
+import com.bitplan.testentity.jpa.OrderJpaDao;
 import com.bitplan.testentity.jpa.PersonManagerJPA;
 import com.bitplan.testentity.jpa.CustomerJpaDao;
 import com.bitplan.testentity.jpa.CustomerManagerJPA;
@@ -36,6 +38,9 @@ import com.bitplan.testentity.jpa.TypeTestManagerJPA;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
 
 /**
  * Test SQL storage with EclipseLink see e.g.
@@ -406,6 +411,21 @@ public class TestEclipseLink {
 		String names[]={"SSN","EMailStatus","XStatus"};
 		for (String name:names) {
 		  System.out.println(FieldHelper.firstToUpper(name)+":"+java.beans.Introspector.decapitalize(name));
+		}
+	}
+	
+	@Test 
+	public void testJoin() throws Exception {
+		em = (EntityManager) boManagerFactory.getContext();
+		CriteriaBuilder criteriaBuilder=em.getCriteriaBuilder();
+		CriteriaQuery<OrderJpaDao> select = criteriaBuilder.createQuery(OrderJpaDao.class);
+		TypedQuery<OrderJpaDao> query = em.createQuery(select);
+		List<OrderJpaDao> results = query.getResultList();		
+		if (debug) {
+			String sql = query.unwrap(JpaQuery.class).getDatabaseQuery()
+					.getSQLString();
+		
+			System.out.println(sql);
 		}
 	}
 
