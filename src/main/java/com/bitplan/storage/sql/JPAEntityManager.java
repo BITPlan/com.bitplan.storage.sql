@@ -34,14 +34,15 @@ import com.bitplan.restinterface.BOManager;
  * @author wf
  * 
  */
-public abstract class JPAEntityManager<BO_T> extends BOManagerImpl<BO_T> implements
-		BOManager<BO_T> {
+public abstract class JPAEntityManager<BO_T> extends BOManagerImpl<BO_T>
+		implements BOManager<BO_T> {
 
 	public static boolean debug = true;
 	// for examples
 	// http://www.winstonprakash.com/articles/netbeans/JPA_Add_Update_Delete.html
 	EntityManager entityManager;
 	String tableName;
+
 	/**
 	 * @return the tableName
 	 */
@@ -171,42 +172,71 @@ public abstract class JPAEntityManager<BO_T> extends BOManagerImpl<BO_T> impleme
 		CriteriaBuilder builder;
 		CriteriaQuery<BO_T> query;
 		CriteriaQuery<BO_T> select;
-		
+
 		CriteriaQuery<Long> countQuery;
 		TypedQuery<Long> countTypedQuery;
 
 		Root<BO_T> from;
 		Root<BO_T> countFrom;
+
 		CriteriaQuery<Long> countSelect;
 
 		@SuppressWarnings("unchecked")
-		public QueryHelper() {
+		public QueryHelper(String foreignAttribute, String foreignKey,
+				String foreignValue) {
 			builder = getEntityManager().getCriteriaBuilder();
-			
+
 			query = (CriteriaQuery<BO_T>) builder.createQuery(getEntityType());
 			countQuery = builder.createQuery(Long.class);
-			
+
 			from = (Root<BO_T>) query.from(getEntityType());
-			countFrom= (Root<BO_T>) countQuery.from(getEntityType());
-			
+			countFrom = (Root<BO_T>) countQuery.from(getEntityType());
+
 			select = query.select(from);
-			countSelect= countQuery.select(builder.count(from));
+			countSelect = countQuery.select(builder.count(from));
 		}
-		
+
 	}
-	
+
 	/**
 	 * get the Bean Field name
+	 * 
 	 * @param fieldName
 	 * @return
 	 */
-  public String getBeanFieldName(String fieldName) {
-  	return java.beans.Introspector.decapitalize(fieldName);
-  }
-  
-  @Deprecated
+	public String getBeanFieldName(String fieldName) {
+		return java.beans.Introspector.decapitalize(fieldName);
+	}
+
+	@Deprecated
 	public List<BO_T> findByJqGridFilter(JqGridSearch search) {
-		return this.findByJqGridFilter(search, null,null);
+		return this.findByJqGridFilter(search, null, null, null);
+	}
+
+	/**
+	 * find given JqGrid search Parameters
+	 * 
+	 * @param search
+	 * @param fullyQualifyingforeignKey
+	 *          e.g. ::com::bitplan::smartCRM::Person::meineOrganisation
+	 * @param foreignValue
+	 *          - the id
+	 * @return
+	 */
+	public List<BO_T> findByJqGridFilter(JqGridSearch search,
+			String fullyQualifyingforeignKey, String foreignValue) {
+		String foreignAttribute=null;
+		String foreignKey=null;
+		if (!fullyQualifyingforeignKey.trim().equals("")) {
+			String[] fqParts = fullyQualifyingforeignKey.split("::");
+			String attributeName = fqParts[fqParts.length - 1];
+			String[] aParts = attributeName.split("\\.");
+			foreignAttribute = aParts[0];
+			foreignKey = aParts[1];
+			foreignKey = this.getBeanFieldName(foreignKey);
+		}
+		return this.findByJqGridFilter(search, foreignAttribute, foreignKey,
+				foreignValue);
 	}
 
 	/**
@@ -217,10 +247,11 @@ public abstract class JPAEntityManager<BO_T> extends BOManagerImpl<BO_T> impleme
 	 * @param sortOrder
 	 * @param sortIndex
 	 */
-	public List<BO_T> findByJqGridFilter(JqGridSearch search,String foreignKey, String foreignValue) {
-		QueryHelper qh = new QueryHelper();
+	public List<BO_T> findByJqGridFilter(JqGridSearch search,
+			String foreignAttribute, String foreignKey, String foreignValue) {
+		QueryHelper qh = new QueryHelper(foreignAttribute, foreignKey, foreignValue);
 
-  	if (search.getSortIndex() != null
+		if (search.getSortIndex() != null
 				&& (!search.getSortIndex().trim().equals(""))) {
 			String beanField = this.getBeanFieldName(search.getSortIndex());
 			Path<Object> sortPath = qh.from.get(beanField);
@@ -233,7 +264,10 @@ public abstract class JPAEntityManager<BO_T> extends BOManagerImpl<BO_T> impleme
 				break;
 			}
 		}
+
 		JqGridFilter filter = search.getFilter();
+		Predicate whereExpr = null;
+
 		if (filter != null) {
 			List<Predicate> predicates = new ArrayList<Predicate>();
 			for (JqGridRule rule : filter.getRules()) {
@@ -275,7 +309,8 @@ public abstract class JPAEntityManager<BO_T> extends BOManagerImpl<BO_T> impleme
 					expr = beanValue.in(this.getInMemberList(rule.getData()));
 					break;
 				case ni: // not in
-					expr = qh.builder.not(beanValue.in(this.getInMemberList(rule.getData())));
+					expr = qh.builder.not(beanValue.in(this.getInMemberList(rule
+							.getData())));
 					break;
 				case lt: // less than
 					expr = qh.builder.lessThan(beanValue, rule.getData());
@@ -295,7 +330,7 @@ public abstract class JPAEntityManager<BO_T> extends BOManagerImpl<BO_T> impleme
 				} // switch
 				predicates.add(expr);
 			} // for
-			Predicate whereExpr = null;
+
 			switch (filter.getGroupOp()) {
 			case AND:
 				whereExpr = qh.builder.conjunction();
@@ -304,31 +339,42 @@ public abstract class JPAEntityManager<BO_T> extends BOManagerImpl<BO_T> impleme
 				break;
 			case OR:
 				whereExpr = qh.builder.disjunction();
-				whereExpr = qh.builder
-						.or(predicates.toArray(new Predicate[predicates.size()]));
+				whereExpr = qh.builder.or(predicates.toArray(new Predicate[predicates
+						.size()]));
 				break;
 			} // switch
+		} // if filter
+		if (foreignAttribute != null && foreignKey != null
+				&& (!foreignKey.trim().equals(""))) {
+			Path<BO_T> path = qh.from.join(foreignAttribute).get(foreignKey);
+			Predicate joinExpr = qh.builder.equal(path, foreignValue);
+			if (whereExpr != null)
+				whereExpr = qh.builder.and(whereExpr, joinExpr);
+			else
+				whereExpr = qh.builder.and(joinExpr);
+		}
+		if (whereExpr != null) {
 			qh.query.where(whereExpr);
 			qh.countQuery.where(whereExpr);
-		} // if filter
+		}
 		// http://stackoverflow.com/questions/5349264/total-row-count-for-pagination-using-jpa-criteria-api
-		qh.countTypedQuery=getEntityManager().createQuery(qh.countSelect);
-	  search.setTotalRowCount(qh.countTypedQuery.getSingleResult());
+		qh.countTypedQuery = getEntityManager().createQuery(qh.countSelect);
+		search.setTotalRowCount(qh.countTypedQuery.getSingleResult());
 
 		TypedQuery<BO_T> query = getEntityManager().createQuery(qh.select);
 		query.setFirstResult(search.getFirstResult());
 		query.setMaxResults(search.getMaxResults());
-		List<BO_T> results = query.getResultList();		
-	 	
+		List<BO_T> results = query.getResultList();
+
 		// set the ResultRowCount
 		search.setResultRowCount(results.size());
 		if (debug) {
 			String sql = query.unwrap(JpaQuery.class).getDatabaseQuery()
 					.getSQLString();
-			String countSql = qh.countTypedQuery.unwrap(JpaQuery.class).getDatabaseQuery()
-					.getSQLString();
+			String countSql = qh.countTypedQuery.unwrap(JpaQuery.class)
+					.getDatabaseQuery().getSQLString();
 			System.out.println(sql);
-			System.out.println("\t"+countSql);
+			System.out.println("\t" + countSql);
 		}
 		return results;
 	}
