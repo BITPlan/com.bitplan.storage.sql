@@ -93,7 +93,12 @@ public abstract class JPAEntityManager<BO_T> extends BOManagerImpl<BO_T>
 		assert (this.getEntityManager().isOpen());
 		this.getEntityManager().getTransaction().begin();
 	}
-
+	
+	@Override
+	public void clearCache() {
+		this.getEntityManager().getEntityManagerFactory().getCache().evictAll();
+	}
+	
 	@Override
 	public void purge() {
 		bolist.clear();
@@ -105,6 +110,11 @@ public abstract class JPAEntityManager<BO_T> extends BOManagerImpl<BO_T>
 	@Override
 	public void persist(BO_T entity) {
 		this.getEntityManager().persist(entity);
+	}
+	
+	@Override
+	public void merge(BO_T entity) {
+		this.getEntityManager().merge(entity);
 	}
 
 	@Override
@@ -180,10 +190,11 @@ public abstract class JPAEntityManager<BO_T> extends BOManagerImpl<BO_T>
 		Root<BO_T> countFrom;
 
 		CriteriaQuery<Long> countSelect;
+		ForeignKey fk;
 
 		@SuppressWarnings("unchecked")
-		public QueryHelper(String foreignAttribute, String foreignKey,
-				String foreignValue) {
+		public QueryHelper(ForeignKey foreignKey) {
+			this.fk=foreignKey;
 			builder = getEntityManager().getCriteriaBuilder();
 
 			query = (CriteriaQuery<BO_T>) builder.createQuery(getEntityType());
@@ -195,6 +206,15 @@ public abstract class JPAEntityManager<BO_T> extends BOManagerImpl<BO_T>
 			select = query.select(from);
 			countSelect = countQuery.select(builder.count(from));
 		}
+		
+		/**
+		 * does this QueryHelper have a foreign key?
+		 * @return
+		 */
+		boolean hasForeignKey() {
+			return fk!=null && fk.foreignAttribute != null && fk.foreignKey != null
+					&& (!fk.foreignKey.trim().equals(""));
+		} 
 
 	}
 
@@ -204,13 +224,54 @@ public abstract class JPAEntityManager<BO_T> extends BOManagerImpl<BO_T>
 	 * @param fieldName
 	 * @return
 	 */
-	public String getBeanFieldName(String fieldName) {
+	public static String getBeanFieldName(String fieldName) {
 		return java.beans.Introspector.decapitalize(fieldName);
 	}
 
 	@Deprecated
 	public List<BO_T> findByJqGridFilter(JqGridSearch search) {
-		return this.findByJqGridFilter(search, null, null, null);
+		return this.findByJqGridFilter(search, null);
+	}
+	
+	/**
+	 * helper to handle foreign Key setting - usually used for parent Key
+	 * @author wf
+	 *
+	 */
+	public static class ForeignKey {
+		String foreignAttribute=null;
+		String foreignKey=null;
+		String foreignValue=null;
+
+		/**
+		 * create the given Foreign Key
+		 * @param fullyQualifyingforeignKey
+		 * @param foreignValue
+		 */
+		public ForeignKey(String fullyQualifyingforeignKey, String foreignValue) {
+			this.foreignValue=foreignValue;
+			if (!fullyQualifyingforeignKey.trim().equals("")) {
+				String[] fqParts = fullyQualifyingforeignKey.split("::");
+				String attributeName = fqParts[fqParts.length - 1];
+				String[] aParts = attributeName.split("\\.");
+				foreignAttribute = aParts[0];
+				foreignKey = aParts[1];
+				foreignKey = getBeanFieldName(foreignKey);
+			}
+		}
+
+		/**
+		 * create the given foreign key
+		 * @param pForeignAttribute
+		 * @param pForeignKey
+		 * @param pForeignValue
+		 */
+		public ForeignKey(String pForeignAttribute, String pForeignKey,
+				String pForeignValue) {
+			this.foreignAttribute=pForeignAttribute;
+			this.foreignKey=pForeignKey;
+			this.foreignValue=pForeignValue;
+		}
 	}
 
 	/**
@@ -224,32 +285,20 @@ public abstract class JPAEntityManager<BO_T> extends BOManagerImpl<BO_T>
 	 * @return
 	 */
 	public List<BO_T> findByJqGridFilter(JqGridSearch search,
-			String fullyQualifyingforeignKey, String foreignValue) {
-		String foreignAttribute=null;
-		String foreignKey=null;
-		if (!fullyQualifyingforeignKey.trim().equals("")) {
-			String[] fqParts = fullyQualifyingforeignKey.split("::");
-			String attributeName = fqParts[fqParts.length - 1];
-			String[] aParts = attributeName.split("\\.");
-			foreignAttribute = aParts[0];
-			foreignKey = aParts[1];
-			foreignKey = this.getBeanFieldName(foreignKey);
-		}
-		return this.findByJqGridFilter(search, foreignAttribute, foreignKey,
-				foreignValue);
+			String fullyQualifyingForeignKey, String foreignValue) {
+		ForeignKey foreignKey=new ForeignKey(fullyQualifyingForeignKey,foreignValue);
+		return this.findByJqGridFilter(search, foreignKey);
 	}
 
 	/**
-	 * find by the given JqGridFilters
-	 * 
-	 * @param <T>
-	 * @param filters
-	 * @param sortOrder
-	 * @param sortIndex
+	 * find given JqGrid search and a foreign Key
+	 * @param search
+	 * @param foreignKey
+	 * @return
 	 */
 	public List<BO_T> findByJqGridFilter(JqGridSearch search,
-			String foreignAttribute, String foreignKey, String foreignValue) {
-		QueryHelper qh = new QueryHelper(foreignAttribute, foreignKey, foreignValue);
+			ForeignKey foreignKey) {
+		QueryHelper qh = new QueryHelper(foreignKey);
 
 		if (search.getSortIndex() != null
 				&& (!search.getSortIndex().trim().equals(""))) {
@@ -344,10 +393,9 @@ public abstract class JPAEntityManager<BO_T> extends BOManagerImpl<BO_T>
 				break;
 			} // switch
 		} // if filter
-		if (foreignAttribute != null && foreignKey != null
-				&& (!foreignKey.trim().equals(""))) {
-			Path<BO_T> path = qh.from.join(foreignAttribute).get(foreignKey);
-			Predicate joinExpr = qh.builder.equal(path, foreignValue);
+		if (qh.hasForeignKey()) {
+			Path<BO_T> path = qh.from.join(qh.fk.foreignAttribute).get(qh.fk.foreignKey);
+			Predicate joinExpr = qh.builder.equal(path, qh.fk.foreignValue);
 			if (whereExpr != null)
 				whereExpr = qh.builder.and(whereExpr, joinExpr);
 			else

@@ -227,7 +227,8 @@ public class TestEclipseLink {
 			else
 				System.out.println("filter:null");
 		}
-		List<BO_T> bos = boManager.findByJqGridFilter(search,foreignAttribute,foreignKey,foreignValue);
+		JPAEntityManager.ForeignKey lForeignKey=new JPAEntityManager.ForeignKey(foreignAttribute,foreignKey,foreignValue);
+		List<BO_T> bos = boManager.findByJqGridFilter(search,lForeignKey);
 		assertEquals("totalRowCount", expectedTotalRowCount,
 				search.getTotalRowCount());
 		assertEquals(expectedResultCount, search.getResultRowCount());
