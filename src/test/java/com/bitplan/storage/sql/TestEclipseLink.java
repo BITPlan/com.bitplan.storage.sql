@@ -12,6 +12,7 @@ import static org.junit.Assert.*;
 
 import org.apache.commons.beanutils.PropertyUtils;
 import org.eclipse.persistence.jpa.JpaQuery;
+import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -43,7 +44,6 @@ import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Root;
 
@@ -65,6 +65,12 @@ public class TestEclipseLink {
 		TestSqlStorage.prepareGuice();
 		boManagerFactory = TestSqlStorage.boManagerFactory;
 	}
+	
+	@AfterClass
+	public static void closeEntityManager() throws Exception {
+		// OrderManagerJPA om = getOrderManager();
+	  TestSqlStorage.boManagerFactory=null;
+	}
 
 	/**
 	 * get the OrderManager
@@ -72,7 +78,7 @@ public class TestEclipseLink {
 	 * @return
 	 * @throws Exception
 	 */
-	public OrderManagerJPA getOrderManager() throws Exception {
+	public static OrderManagerJPA getOrderManager() throws Exception {
 		BOManager<Order> boManager = boManagerFactory.getBOManager(
 				OrderManager.class, Order.class);
 		assertTrue(boManager instanceof OrderManagerJPA);

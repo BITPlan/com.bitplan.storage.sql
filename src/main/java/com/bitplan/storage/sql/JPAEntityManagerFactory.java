@@ -51,6 +51,8 @@ public class JPAEntityManagerFactory extends BOManagerFactoryImpl {
 		props.put("javax.persistence.jdbc.user", username);
 		props.put("javax.persistence.jdbc.password", password);
 		//props.put("eclipselink.ddl-generation","create-tables");
+		// http://wiki.eclipse.org/EclipseLink/Examples/JPA/Caching
+		props.put("shared-cache-mode","NONE");
 		if (reCreateDatabase)
 			props.put("eclipselink.ddl-generation", "drop-and-create-tables");
 		// http://wiki.eclipse.org/EclipseLink/UserGuide/JPA/Advanced_JPA_Development/Schema_Generation/Appending_strings_to_CREATE_TABLE_statements

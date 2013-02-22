@@ -101,10 +101,10 @@ public abstract class JPAEntityManager<BO_T> extends BOManagerImpl<BO_T>
 	
 	@Override
 	public void purge() {
-		bolist.clear();
 		Query query = getEntityManager().createQuery(
 				"DELETE FROM " + this.getEntityName());
 		query.executeUpdate();
+		bolist.clear();
 	}
 
 	@Override
@@ -302,7 +302,7 @@ public abstract class JPAEntityManager<BO_T> extends BOManagerImpl<BO_T>
 
 		if (search.getSortIndex() != null
 				&& (!search.getSortIndex().trim().equals(""))) {
-			String beanField = this.getBeanFieldName(search.getSortIndex());
+			String beanField = getBeanFieldName(search.getSortIndex());
 			Path<Object> sortPath = qh.from.get(beanField);
 			switch (search.getSortOrder()) {
 			case asc:
@@ -320,7 +320,7 @@ public abstract class JPAEntityManager<BO_T> extends BOManagerImpl<BO_T>
 		if (filter != null) {
 			List<Predicate> predicates = new ArrayList<Predicate>();
 			for (JqGridRule rule : filter.getRules()) {
-				String beanField = this.getBeanFieldName(rule.getField());
+				String beanField = getBeanFieldName(rule.getField());
 				Path<String> beanValue = qh.from.<String> get(beanField);
 				Predicate expr;
 				switch (rule.getOp()) {

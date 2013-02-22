@@ -23,6 +23,7 @@
 		<exclude-unlisted-classes>true</exclude-unlisted-classes> 
 		<properties>
 		<!-- 
+	    <property name="eclipselink.cache.shared.default" value="false"/>
 			<property name="javax.persistence.jdbc.user" value="test" />
 			<property name="javax.persistence.jdbc.password" value="test" />
 -->

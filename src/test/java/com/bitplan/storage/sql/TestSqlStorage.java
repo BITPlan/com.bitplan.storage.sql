@@ -40,7 +40,6 @@ public class TestSqlStorage extends TestStorage {
 		  Map<String, String> props = JPAEntityManagerFactory.getMySQLProps("com.bitplan.testentity","testsqlstorage","localhost","cm", "secret",true);
 		  boManagerFactory.setContext(props);
 			Logger.getRootLogger().setLevel(Level.ERROR);
-
 		}
 	}
 
