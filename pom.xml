@@ -55,21 +55,18 @@
 			<groupId>org.eclipse.persistence</groupId>
 			<artifactId>eclipselink</artifactId>
 			<version>2.4.1</version>
-			<!--   <exclusions>
+			<exclusions>
 				<exclusion>
-					<groupId>org.eclipse.persistence</groupId>
-					<artifactId>javax.persistence</artifactId>
+					<artifactId>commonj.sdo</artifactId>
+					<groupId>commonj.sdo</groupId>
 				</exclusion>
 			</exclusions>
-			-->
-			<!-- <scope>provided</scope> since I'm running inside a Java EE container -->
 		</dependency>
-		<!--  <dependency>
-			<groupId>javax.persistence</groupId>
-			<artifactId>persistence-api</artifactId>
-			<version>1.0</version>
-			<scope>provided</scope>
-		</dependency> -->
+		<!-- <exclusions> <exclusion> <groupId>org.eclipse.persistence</groupId> 
+			<artifactId>javax.persistence</artifactId> </exclusion> </exclusions> -->
+		<!-- <scope>provided</scope> since I'm running inside a Java EE container -->
+		<!-- <dependency> <groupId>javax.persistence</groupId> <artifactId>persistence-api</artifactId> 
+			<version>1.0</version> <scope>provided</scope> </dependency> -->
 		<!-- mySQL Connector -->
 		<dependency>
 			<groupId>mysql</groupId>
