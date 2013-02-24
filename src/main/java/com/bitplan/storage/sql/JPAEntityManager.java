@@ -151,8 +151,8 @@ public abstract class JPAEntityManager<BO_T> extends BOManagerImpl<BO_T>
 	@Override
 	public void findAll(int maxResults) {
 		// http://stackoverflow.com/questions/2401129/hql-equivalent-query-to-this-sql-query
-		Query query = getEntityManager().createNativeQuery(
-				"SELECT * FROM " + this.getTableName(), this.getEntityType());
+		//http://stackoverflow.com/questions/6650768/jpa-and-inheritance-how-do-i-get-all-entities-of-a-given-superclass
+		Query query = getEntityManager().createQuery("SELECT e FROM " + this.getEntityName()+" e", this.getEntityType());
 		query.setMaxResults(maxResults);
 		bolist = query.getResultList();
 	}
