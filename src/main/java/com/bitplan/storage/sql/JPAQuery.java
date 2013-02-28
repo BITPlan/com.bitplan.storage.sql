@@ -1,27 +1,83 @@
+
 package com.bitplan.storage.sql;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import com.bitplan.javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
-public class JPAQuery implements com.bitplan.javax.persistence.Query {
+import com.bitplan.javax.persistence.Query;
+import com.bitplan.restinterface.BO;
+
+/**
+ * JPA specific implementation of Query (delegation)
+ * @author wf
+ *
+ */
+public class JPAQuery<BO_T> implements com.bitplan.javax.persistence.Query {
+
+	TypedQuery<? extends BO<?>> javaxQuery;
+	String name;
+	
+	public JPAEntityManager<BO_T> myManager;
+	
+	/**
+	 * create a query
+	 * @param pManager
+	 */
+	public JPAQuery(JPAEntityManager<BO_T> pManager, String pName) {
+	  myManager=pManager;	
+	  if (pName!=null) {
+	  	setName(pName);
+	  	javaxQuery=myManager.getEntityManager().createNamedQuery(pName,pManager.getEntityType());
+	  }
+	}
+	
+	/**
+	 * @return the name
+	 */
+	public String getName() {
+		return name;
+	}
+
+	/**
+	 * @param name the name to set
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
 
 	@Override
 	public List<Object> getResultList() {
-		// TODO Auto-generated method stub
-		return null;
+		List<? extends BO<?>> qresult = javaxQuery.getResultList();
+		List<Object> result=new ArrayList<Object>();
+		for (BO<?> bo:qresult) {
+			result.add(bo);
+		}
+		return result;
 	}
 
 	@Override
 	public Query setFirstResult(int startPosition) {
-		// TODO Auto-generated method stub
-		return null;
+		javaxQuery=javaxQuery.setFirstResult(startPosition);
+		return this;
 	}
 
 	@Override
 	public Query setMaxResults(int maxResult) {
-		// TODO Auto-generated method stub
-		return null;
+		javaxQuery=javaxQuery.setMaxResults(maxResult);
+		return this;
+	}
+
+	@Override
+	public Object getSingleResult() {
+		BO<?> result = javaxQuery.getSingleResult();
+		return result;
+	}
+
+	@Override
+	public void setParameter(String name, Object value) {
+		javaxQuery.setParameter(name,value);
 	}
 
 }

@@ -156,6 +156,12 @@ public abstract class JPAEntityManager<BO_T> extends BOManagerImpl<BO_T>
 		query.setMaxResults(maxResults);
 		bolist = query.getResultList();
 	}
+	
+	@Override
+	public com.bitplan.javax.persistence.Query createNamedQuery(String name) {
+		JPAQuery<BO_T> query=new JPAQuery<BO_T>(this,name);
+		return query;
+	}
 
 	/**
 	 * split a comma separated in List

@@ -6,7 +6,7 @@
  *
  * http://www.bitplan.com
  * 
- * generated: 2013-02-11 18:40 with smartGENERATOR
+ * generated: 2013-02-28 21:46 with smartGENERATOR
  */
 package com.bitplan.testentity.jpa;
 import java.io.Serializable;
@@ -37,6 +37,9 @@ import com.bitplan.testentity.Customer;
  */
 @Entity(name="Order")
 @Table(name="order_table")
+	// >>>{annotation}{Order}{Order}
+@NamedQuery(name="orderFromCountry", query="SELECT o FROM Order o where o.address like :address")
+	// <<<{annotation}{Order}{Order}
 public class OrderJpaDao extends JPABOImpl<Order> implements Order,Serializable {
 	// >>>{code}{OrderJpaDao}{Order}
 	// no implementation yet !!!

@@ -6,7 +6,7 @@
  *
  * http://www.bitplan.com
  * 
- * generated: 2013-02-11 18:40 with smartGENERATOR
+ * generated: 2013-02-28 21:46 with smartGENERATOR
  */
 package com.bitplan.testentity.jpa;
 import java.io.Serializable;
@@ -36,6 +36,9 @@ import com.bitplan.restinterface.BO;
  */
 @Entity(name="TypeTest")
 @Table(name="TypeTest")
+	// >>>{annotation}{TypeTest}{TypeTest}
+	// no implementation yet !!!
+	// <<<{annotation}{TypeTest}{TypeTest}
 public class TypeTestJpaDao extends JPABOImpl<TypeTest> implements TypeTest,Serializable {
 	// >>>{code}{TypeTestJpaDao}{TypeTest}
 	// no implementation yet !!!

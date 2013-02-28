@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright (C) 2012 BITPlan GmbH
  *
  * Pater-Delp-Str. 1

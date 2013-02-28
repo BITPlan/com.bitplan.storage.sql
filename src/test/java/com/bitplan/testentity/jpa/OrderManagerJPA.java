@@ -24,7 +24,9 @@ import com.bitplan.testentity.Order;
 import com.bitplan.testentity.OrderImpl;
 import com.bitplan.testentity.OrderManager;
 	// >>>{ManagerImports}{Orderjpa}{Order}
-	// no implementation yet !!!
+import javax.persistence.Entity;
+import javax.persistence.NamedQuery;
+
 	// <<<{ManagerImports}{Orderjpa}{Order}
 /**
  * JPA EntityManager implementation for interface Order

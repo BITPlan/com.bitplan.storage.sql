@@ -6,7 +6,7 @@
  *
  * http://www.bitplan.com
  * 
- * generated: 2013-02-13 19:32 with smartGENERATOR
+ * generated: 2013-02-28 21:46 with smartGENERATOR
  */
 package com.bitplan.testentity.jpa;
 import java.io.Serializable;
@@ -38,6 +38,9 @@ import com.bitplan.testentity.Contact;
  */
 @Entity(name="Person")
 @Table(name="Person")
+	// >>>{annotation}{Person}{Person}
+	// no implementation yet !!!
+	// <<<{annotation}{Person}{Person}
 public class PersonJpaDao extends JPABOImpl<Person> implements Person,Serializable {
 	// >>>{code}{PersonJpaDao}{Person}
 	// no implementation yet !!!
