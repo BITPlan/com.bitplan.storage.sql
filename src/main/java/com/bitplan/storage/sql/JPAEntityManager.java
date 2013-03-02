@@ -10,6 +10,7 @@ package com.bitplan.storage.sql;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -43,6 +44,8 @@ public abstract class JPAEntityManager<BO_T> extends BOManagerImpl<BO_T>
 	EntityManager entityManager;
 	String tableName;
 
+	protected static Logger LOGGER=Logger.getLogger("com.bitplan.storage.sql");
+	
 	/**
 	 * @return the tableName
 	 */
@@ -132,6 +135,7 @@ public abstract class JPAEntityManager<BO_T> extends BOManagerImpl<BO_T>
 	@Override
 	public List<BO_T> findBy(String attributeName, Object attributeValue,
 			int maxResults) throws Exception {
+		// FIXME avoid native query ...
 		Query query = getEntityManager().createNativeQuery(
 				"SELECT * FROM " + this.getTableName() + " WHERE " + attributeName
 						+ "='" + attributeValue.toString() + "'", this.getEntityType());
