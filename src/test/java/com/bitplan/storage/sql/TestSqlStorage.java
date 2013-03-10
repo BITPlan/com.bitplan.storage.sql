@@ -17,28 +17,38 @@ import com.bitplan.storage.TestStorage;
 import com.bitplan.testentity.TestentityJPAModule;
 import java.util.Map;
 
-
 /**
- * Test SQL storage with 
+ * Test SQL storage with
  * 
- * @author wf grant all on testsqlstorage.* to 'cm'@'localhost' identified by
- *         'secret'; see testsqlstorage.sql
+ * @author wf grant all on testsqlstorage.* to 'sec 'secret'; see
+ *         testsqlstorage.sql
  */
 public class TestSqlStorage extends TestStorage {
-	
-  static BOManagerFactory boManagerFactory;
-	
+
+	static BOManagerFactory boManagerFactory;
+
 	@Override
 	public com.bitplan.restinterface.BOManagerFactory getBOManagerFactory() {
 		return boManagerFactory;
 	}
 
+	/**
+	 * get the properties
+	 * @return
+	 */
+	public static Map<String, String> getProps() {
+		Map<String, String> props = JPAEntityManagerFactory.getMySQLProps(
+				"com.bitplan.testentity", "testsqlstorage", "localhost", "cm",
+				"secret", true);
+		return props;
+	}
+
 	@BeforeClass
 	public static void prepareGuice() throws Exception {
-		if (boManagerFactory==null) {
-		  boManagerFactory=BOManagerFactoryImpl.create(new TestentityJPAModule());
-		  Map<String, String> props = JPAEntityManagerFactory.getMySQLProps("com.bitplan.testentity","testsqlstorage","localhost","cm", "secret",true);
-		  boManagerFactory.setContext(props);
+		if (boManagerFactory == null) {
+			boManagerFactory = BOManagerFactoryImpl.create(new TestentityJPAModule());
+			Map<String, String> props=getProps();
+			boManagerFactory.setContext(props);
 			Logger.getRootLogger().setLevel(Level.ERROR);
 		}
 	}
