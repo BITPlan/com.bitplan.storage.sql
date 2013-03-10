@@ -10,7 +10,7 @@
  */
 package com.bitplan.testentity;
 import com.bitplan.restinterface.BOManagerFactory;
-import com.bitplan.restinterface.BOManagerFactoryConfiguration;
+import com.bitplan.restinterface.BOManagerFactoryConfigurationImpl;
 // Domain imports
 import com.bitplan.testentity.Customer;
 import com.bitplan.testentity.CustomerManager;
@@ -30,7 +30,7 @@ import com.bitplan.testentity.EMailContactManager;
 /**
  * Guice Module for  Testentity
  */
-public class  TestentityBOManagerFactoryConfiguration implements BOManagerFactoryConfiguration {
+public class  TestentityBOManagerFactoryConfiguration extends BOManagerFactoryConfigurationImpl {
   /**
    * initialize 
    * @param - factory - the factory to configure
