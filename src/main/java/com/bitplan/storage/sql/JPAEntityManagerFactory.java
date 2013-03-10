@@ -17,6 +17,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 import com.bitplan.resthelper.BOManagerFactoryImpl;
+import com.bitplan.restinterface.BOManager;
 
 /**
  * JPA EntityManager Factory 
@@ -25,8 +26,9 @@ import com.bitplan.resthelper.BOManagerFactoryImpl;
  */
 public class JPAEntityManagerFactory extends BOManagerFactoryImpl {
 	private static final String PERSISTENCE_UNIT_NAME = "default";
-	private EntityManagerFactory factory;
-	private EntityManager em;
+	private Map<String,EntityManagerFactory> factoryMap=new HashMap<String,EntityManagerFactory>();
+	private Map<String,EntityManager> emMap=new HashMap<String,EntityManager>();
+	private String puName;
 	
 	/**
 	 * get mySQL Properties
@@ -70,18 +72,27 @@ public class JPAEntityManagerFactory extends BOManagerFactoryImpl {
 	public void setContext(Object pContext) {
 		@SuppressWarnings("rawtypes")
 		Map props=(Map) pContext;
-		String puName=PERSISTENCE_UNIT_NAME;
+		puName=PERSISTENCE_UNIT_NAME;
 		if (props.containsKey("persistence.unit.name")) {
 			puName=(String) props.get("persistence.unit.name");
 		}
-		factory = Persistence.createEntityManagerFactory(puName,
+		EntityManagerFactory factory = Persistence.createEntityManagerFactory(puName,
 				props);
-		em = factory.createEntityManager();
+		factoryMap.put(puName,factory);
+		emMap.put(puName,factory.createEntityManager());
 	}
 
 	@Override
 	public Object getContext() {
-		return em;
+		return emMap.get(puName);
 	}
+
+	@Override
+	public <T >void init(BOManager<T> manager) {
+    JPAEntityManager<T> jpamanager=(JPAEntityManager<T>) manager;
+    jpamanager.setEntityManager(emMap.get(puName));
+    jpamanager.setPuName(puName);
+	}
+
 
 }

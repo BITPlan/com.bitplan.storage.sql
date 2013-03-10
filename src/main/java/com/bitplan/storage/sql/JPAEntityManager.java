@@ -11,7 +11,7 @@ package com.bitplan.storage.sql;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
-
+import java.util.logging.Level;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
@@ -20,7 +20,6 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-
 import org.eclipse.persistence.jpa.JpaQuery;
 
 import com.bitplan.rest.jqgrid.JqGridFilter;
@@ -43,8 +42,26 @@ public abstract class JPAEntityManager<BO_T> extends BOManagerImpl<BO_T>
 	// http://www.winstonprakash.com/articles/netbeans/JPA_Add_Update_Delete.html
 	EntityManager entityManager;
 	String tableName;
-
+  protected String puName;
 	protected static Logger LOGGER=Logger.getLogger("com.bitplan.storage.sql");
+  
+	/**
+	 * @return the puName
+	 */
+	public String getPuName() {
+		return puName;
+	}
+
+	/**
+	 * @param puName the puName to set
+	 */
+	public void setPuName(String puName) {
+		LOGGER.log(Level.INFO,"setting puname for "+this.getClass().getSimpleName()+" to "+puName);
+		if (this.getClass().getSimpleName().contains("acy")) {
+			LOGGER.log(Level.INFO,"setting puname for "+this.getClass().getSimpleName()+" to "+puName);
+		}
+		this.puName = puName;
+	}
 	
 	/**
 	 * @return the tableName
@@ -78,6 +95,8 @@ public abstract class JPAEntityManager<BO_T> extends BOManagerImpl<BO_T>
 
 	@Override
 	public void setContext(Object context) {
+		if (entityManager!=null)
+			return;
 		assert (context != null);
 		if (context == this.getFactory()) {
 			context = this.getFactory().getContext();
@@ -156,7 +175,9 @@ public abstract class JPAEntityManager<BO_T> extends BOManagerImpl<BO_T>
 	public void findAll(int maxResults) {
 		// http://stackoverflow.com/questions/2401129/hql-equivalent-query-to-this-sql-query
 		//http://stackoverflow.com/questions/6650768/jpa-and-inheritance-how-do-i-get-all-entities-of-a-given-superclass
-		Query query = getEntityManager().createQuery("SELECT e FROM " + this.getEntityName()+" e", this.getEntityType());
+		String sql="SELECT e FROM " + this.getEntityName()+" e";
+		LOGGER.log(Level.INFO,sql+"["+this.getPuName()+"]");
+		Query query = getEntityManager().createQuery(sql,this.getEntityType());
 		query.setMaxResults(maxResults);
 		bolist = query.getResultList();
 	}
