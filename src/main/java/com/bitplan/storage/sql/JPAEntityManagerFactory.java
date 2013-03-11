@@ -84,6 +84,7 @@ public class JPAEntityManagerFactory extends BOManagerFactoryImpl {
 
 	@Override
 	public Object getContext() {
+		// return the least recently set context
 		return emMap.get(puName);
 	}
 
