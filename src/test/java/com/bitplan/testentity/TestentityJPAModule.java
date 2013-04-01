@@ -11,7 +11,6 @@
 package com.bitplan.testentity;
 // Infrastructure imports
 import com.bitplan.restinterface.BOManagerFactory;
-import com.bitplan.restinterface.Frame;
 import com.bitplan.restinterface.Configuration;
 import com.bitplan.storage.sql.JPAEntityManagerFactory;
 import com.google.inject.AbstractModule;
