@@ -31,6 +31,38 @@ public class JPAEntityManagerFactory extends BOManagerFactoryImpl {
 	private String puName;
 	
 	/**
+	 * get properties
+	 * @param persistenceUnitName
+	 * @param database
+	 * @param host
+	 * @param username
+	 * @param password
+	 * @param reCreateDatabase
+	 * @return
+	 */
+	public static Map<String, String> getProps(String persistenceUnitName,String database,String host, String username, String password, boolean reCreateDatabase) {
+		/**
+		 * properties
+		 */
+		Map<String, String> props = new HashMap<String, String>();
+		props.put("persistence.unit.name", persistenceUnitName);
+		props.put("javax.persistence.jdbc.user", username);
+		props.put("javax.persistence.jdbc.password", password);
+		//props.put("eclipselink.ddl-generation","create-tables");
+		// http://wiki.eclipse.org/EclipseLink/Examples/JPA/Caching
+		props.put("shared-cache-mode","NONE");
+		if (reCreateDatabase)
+			props.put("eclipselink.ddl-generation", "drop-and-create-tables");
+		// http://wiki.eclipse.org/EclipseLink/DesignDocs/368365
+		//props.put("eclipselink.ddl-generation", "create-or-extend-tables");
+		//props.put("eclipselink.ddl-generation.output-mode", "database");
+		// props.put("eclipselink.ddl-generation.output-mode", "database");
+		props.put("eclipselink.ddl-generation.output-mode", "both");
+
+		return props;
+	}
+	
+	/**
 	 * get mySQL Properties
 	 * @param persistenceUnitName
 	 * @param database
@@ -41,30 +73,31 @@ public class JPAEntityManagerFactory extends BOManagerFactoryImpl {
 	 * @return
 	 */
 	public static Map<String, String>  getMySQLProps(String persistenceUnitName,String database,String host, String username, String password, boolean reCreateDatabase) {
-		/**
-		 * properties
-		 */
-		Map<String, String> props = new HashMap<String, String>();
-		props.put("persistence.unit.name", persistenceUnitName);
+		Map<String, String> props = getProps(persistenceUnitName,database,host,username,password,reCreateDatabase);
 		props.put("eclipselink.target-database", "MYSQL");
 		props.put("javax.persistence.jdbc.driver", "com.mysql.jdbc.Driver");
 		props.put("javax.persistence.jdbc.url",
 				"jdbc:mysql://"+host+":3306/"+database);
-		props.put("javax.persistence.jdbc.user", username);
-		props.put("javax.persistence.jdbc.password", password);
-		//props.put("eclipselink.ddl-generation","create-tables");
-		// http://wiki.eclipse.org/EclipseLink/Examples/JPA/Caching
-		props.put("shared-cache-mode","NONE");
 		// http://wiki.eclipse.org/EclipseLink/UserGuide/JPA/Advanced_JPA_Development/Schema_Generation/Appending_strings_to_CREATE_TABLE_statements
 		props.put("eclipselink.ddl.default-table-suffix", "engine=InnoDB");
-		if (reCreateDatabase)
-			props.put("eclipselink.ddl-generation", "drop-and-create-tables");
-		// http://wiki.eclipse.org/EclipseLink/DesignDocs/368365
-		//props.put("eclipselink.ddl-generation", "create-or-extend-tables");
-		//props.put("eclipselink.ddl-generation.output-mode", "database");
-		// props.put("eclipselink.ddl-generation.output-mode", "database");
-		props.put("eclipselink.ddl-generation.output-mode", "both");
+		return props;
+	}
 
+	/**
+	 * get properties for Oracle database
+	 * @param persistenceUnitName
+	 * @param database
+	 * @param host
+	 * @param username
+	 * @param password
+	 * @param reCreateDatabase
+	 * @return
+	 */
+	public static Map<String, String>  getOracleProps(String persistenceUnitName,String database,String host, String username, String password, boolean reCreateDatabase) {
+		Map<String, String> props = getProps(persistenceUnitName,database,host,username,password,reCreateDatabase);
+		props.put("eclipselink.target-database", "Oracle");
+		props.put("javax.persistence.jdbc.driver", "oracle.jdbc.OracleDriver");
+		props.put("javax.persistence.jdbc.url","jdbc:oracle:thin:@" + host + ":1521:" + database);
 		return props;
 	}
 
