@@ -66,8 +66,8 @@ public class JPAEntityManagerFactory extends BOManagerFactoryImpl {
 			props.put("eclipselink.ddl-generation", "drop-and-create-tables");
 			props.put("eclipselink.ddl-generation.output-mode", "both");
 		}	else {
-			props.put("eclipselink.ddl-generation", "create-or-extend-tables");
-		  props.put("eclipselink.ddl-generation.output-mode", "database");
+			//props.put("eclipselink.ddl-generation", "create-or-extend-tables");
+		  //props.put("eclipselink.ddl-generation.output-mode", "database");
 		}
 		return props;
 	}

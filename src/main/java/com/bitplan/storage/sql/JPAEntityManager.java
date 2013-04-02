@@ -113,7 +113,7 @@ public abstract class JPAEntityManager<BO_T> extends BOManagerImpl<BO_T>
 	@Override
 	public void beginTransaction() {
 		assert (this.getEntityManager().isOpen());
-		this.getEntityManager().getTransaction().begin();
+		this.getEntityManager().getTransaction().begin();		
 	}
 	
 	@Override
