@@ -62,6 +62,8 @@ public class JPAEntityManagerFactory extends BOManagerFactoryImpl {
 		props.put("shared-cache-mode", "NONE");
 		if (reCreateDatabase)
 			props.put("eclipselink.ddl-generation", "drop-and-create-tables");
+		else
+			props.put("eclipselink.ddl-generation", "create-or-extend-tables");
 		// http://wiki.eclipse.org/EclipseLink/DesignDocs/368365
 		// props.put("eclipselink.ddl-generation", "create-or-extend-tables");
 		// props.put("eclipselink.ddl-generation.output-mode", "database");
