@@ -177,7 +177,11 @@ public abstract class JPAEntityManager<BO_T> extends BOManagerImpl<BO_T>
 		//http://stackoverflow.com/questions/6650768/jpa-and-inheritance-how-do-i-get-all-entities-of-a-given-superclass
 		String sql="SELECT e FROM " + this.getEntityName()+" e";
 		LOGGER.log(Level.INFO,sql+"["+this.getPuName()+"]");
-		Query query = getEntityManager().createQuery(sql,this.getEntityType());
+		EntityManager em = getEntityManager();
+		if (em==null) {
+			throw new RuntimeException("EntityManager not set for "+this.getEntityName());
+		}
+		Query query = em.createQuery(sql,this.getEntityType());
 		query.setMaxResults(maxResults);
 		bolist = query.getResultList();
 	}
