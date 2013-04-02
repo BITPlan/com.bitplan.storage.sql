@@ -11,7 +11,6 @@ package com.bitplan.storage.sql;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
@@ -173,8 +172,7 @@ public class JPAEntityManagerFactory extends BOManagerFactoryImpl {
 
 	@Override
 	public void setContext(Object pContext) {
-		@SuppressWarnings("rawtypes")
-		Map props = (Map) pContext;
+		Properties props = (Properties) pContext;
 		puName = PERSISTENCE_UNIT_NAME;
 		if (props.containsKey("persistence.unit.name")) {
 			puName = (String) props.get("persistence.unit.name");
