@@ -155,16 +155,19 @@ public class JPAEntityManagerFactory extends BOManagerFactoryImpl {
 	 * @param password
 	 * @param reCreateDatabase
 	 * @return
+	 * @throws Exception 
 	 */
 	public static Properties getOracleProps(String persistenceUnitName,
 			String database, String host, String username, String password,
-			boolean reCreateDatabase) {
+			boolean reCreateDatabase) throws Exception {
 		Properties props = getProps(persistenceUnitName, database, host, username,
 				password, reCreateDatabase);
 		props.put("eclipselink.target-database", "Oracle");
 		props.put("javax.persistence.jdbc.driver", "oracle.jdbc.OracleDriver");
 		props.put("javax.persistence.jdbc.url", "jdbc:oracle:thin:@" + host
 				+ ":1521:" + database);
+		// FIXME - only for bootstrapping
+		writeProperties(persistenceUnitName, props);
 		return props;
 	}
 
