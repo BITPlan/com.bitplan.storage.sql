@@ -16,6 +16,7 @@ import com.bitplan.restinterface.BOManagerFactory;
 import com.bitplan.storage.TestStorage;
 import com.bitplan.testentity.TestentityJPAModule;
 import java.util.Map;
+import java.util.Properties;
 
 /**
  * Test SQL storage with
@@ -35,9 +36,10 @@ public class TestSqlStorage extends TestStorage {
 	/**
 	 * get the properties
 	 * @return
+	 * @throws Exception 
 	 */
-	public static Map<String, String> getProps() {
-		Map<String, String> props = JPAEntityManagerFactory.getMySQLProps(
+	public static Properties getProps() throws Exception {
+		Properties props = JPAEntityManagerFactory.getMySQLProps(
 				"com.bitplan.testentity", "testsqlstorage", "localhost", "cm",
 				"secret", true);
 		return props;
@@ -47,7 +49,7 @@ public class TestSqlStorage extends TestStorage {
 	public static void prepareGuice() throws Exception {
 		if (boManagerFactory == null) {
 			boManagerFactory = BOManagerFactoryImpl.create(new TestentityJPAModule());
-			Map<String, String> props=getProps();
+			Properties props=getProps();
 			boManagerFactory.setContext(props);
 			Logger.getRootLogger().setLevel(Level.ERROR);
 		}

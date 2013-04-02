@@ -8,8 +8,7 @@
  */
 package com.bitplan.storage.sql;
 
-import java.util.Map;
-
+import java.util.Properties;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -22,16 +21,16 @@ import org.junit.Test;
  */
 public class TestMultiplePUs {
 
-	public Map<String, String> getProps() {
-		Map<String, String> props = JPAEntityManagerFactory.getMySQLProps("com.bitplan.testentity","mod_auth","localhost","cm", "secret",true);
+	public Properties getProps() throws Exception {
+		Properties props = JPAEntityManagerFactory.getMySQLProps("com.bitplan.testentity","mod_auth","localhost","cm", "secret",true);
 		return props;
 	}
 	
 	@Test
-	public void testMultiplePus() {
+	public void testMultiplePus() throws Exception {
 		//  grant select on mod_auth.* to 'cm'@'localhost' identified by 'secret';
 		String puName="com.bitplan.secondpu";
-		Map<String, String> props = getProps();
+		Properties props = getProps();
 		
 		EntityManagerFactory factory = Persistence.createEntityManagerFactory(puName,
 				props);
