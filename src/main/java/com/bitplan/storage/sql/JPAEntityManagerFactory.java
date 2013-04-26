@@ -106,7 +106,7 @@ public class JPAEntityManagerFactory extends BOManagerFactoryImpl {
 	 * @param props
 	 * @throws Exception
 	 */
-	private static void writeProperties(String puname, RunMode runmode,Properties props)
+	public static void writeProperties(String puname, RunMode runmode,Properties props)
 			throws Exception {
 		String comment = "Properties for persistence unit " + puname;
 		File propertyFile = getPropertyFile(puname,runmode,true);

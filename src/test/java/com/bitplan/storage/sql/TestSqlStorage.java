@@ -13,9 +13,9 @@ import org.apache.log4j.Logger;
 import org.junit.BeforeClass;
 import com.bitplan.resthelper.BOManagerFactoryImpl;
 import com.bitplan.restinterface.BOManagerFactory;
+import com.bitplan.restinterface.BOManagerFactoryConfiguration.RunMode;
 import com.bitplan.storage.TestStorage;
 import com.bitplan.testentity.TestentityJPAModule;
-import java.util.Map;
 import java.util.Properties;
 
 /**
@@ -39,9 +39,11 @@ public class TestSqlStorage extends TestStorage {
 	 * @throws Exception 
 	 */
 	public static Properties getProps() throws Exception {
-		Properties props = JPAEntityManagerFactory.xgetMySQLProps(
+		/* Properties props = JPAEntityManagerFactory.xgetMySQLProps(
 				"com.bitplan.testentity", "testsqlstorage", "localhost", "cm",
 				"secret", true);
+		JPAEntityManagerFactory.writeProperties("com.bitplan.testentity", RunMode.Test, props);*/
+		Properties props = JPAEntityManagerFactory.readProperties("com.bitplan.testentity", RunMode.Test);
 		return props;
 	}
 
