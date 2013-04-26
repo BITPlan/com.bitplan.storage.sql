@@ -1,12 +1,12 @@
 /**
- * Copyright (C) 2011-2012 BITPlan GmbH
+ * Copyright (C) 2011-2013 BITPlan GmbH
  * 
  * Pater-Delp-Str. 1
  * D-47877 Willich-Schiefbahn
  *
  * http://www.bitplan.com
  * 
- * generated: 2013-02-28 21:46 with smartGENERATOR
+ * generated: 2013-04-26 16:28 with smartGENERATOR
  */
 package com.bitplan.testentity.jpa;
 import java.io.Serializable;
@@ -76,6 +76,7 @@ public class PhoneContactJpaDao extends ContactJpaDao implements PhoneContact,Se
   }
   /**
    * getter for xsd:string/String number
+   * null
    * @return number
    */
   @Column(name="number")
@@ -85,6 +86,7 @@ public class PhoneContactJpaDao extends ContactJpaDao implements PhoneContact,Se
 
   /**
    * setter for xsd:string/String number
+   * null
    * @param pnumber - new value for number
    */
   public void setNumber(String pnumber) { 

@@ -1,12 +1,12 @@
 /**
- * Copyright (C) 2011-2012 BITPlan GmbH
+ * Copyright (C) 2011-2013 BITPlan GmbH
  * 
  * Pater-Delp-Str. 1
  * D-47877 Willich-Schiefbahn
  *
  * http://www.bitplan.com
  * 
- * generated: 2013-02-28 21:46 with smartGENERATOR
+ * generated: 2013-04-26 16:28 with smartGENERATOR
  */
 package com.bitplan.testentity.jpa;
 import java.io.Serializable;
@@ -76,6 +76,7 @@ public class ContactJpaDao extends JPABOImpl<Contact> implements Contact,Seriali
   }
   /**
    * getter for xsd:string/String id
+   * null
    * @return id
    */
   @Id
@@ -86,6 +87,7 @@ public class ContactJpaDao extends JPABOImpl<Contact> implements Contact,Seriali
 
   /**
    * setter for xsd:string/String id
+   * null
    * @param pid - new value for id
    */
   public void setId(String pid) { 
@@ -94,6 +96,7 @@ public class ContactJpaDao extends JPABOImpl<Contact> implements Contact,Seriali
   
   /**
    * getter for xsd:dateTime/java.util.Date timeOfContact
+   * null
    * @return timeOfContact
    */
   @Column(name="timeOfContact")
@@ -104,6 +107,7 @@ public class ContactJpaDao extends JPABOImpl<Contact> implements Contact,Seriali
 
   /**
    * setter for xsd:dateTime/java.util.Date timeOfContact
+   * null
    * @param ptimeOfContact - new value for timeOfContact
    */
   public void setTimeOfContact(java.util.Date ptimeOfContact) { 
@@ -112,6 +116,7 @@ public class ContactJpaDao extends JPABOImpl<Contact> implements Contact,Seriali
   
   /**
    * getter for xsd:string/String why
+   * null
    * @return why
    */
   @Column(name="why")
@@ -121,6 +126,7 @@ public class ContactJpaDao extends JPABOImpl<Contact> implements Contact,Seriali
 
   /**
    * setter for xsd:string/String why
+   * null
    * @param pwhy - new value for why
    */
   public void setWhy(String pwhy) { 
@@ -129,6 +135,7 @@ public class ContactJpaDao extends JPABOImpl<Contact> implements Contact,Seriali
   
   /**
    * getter for Person/Person person
+   * null
    * @return person
    */
   @ManyToOne(targetEntity=PersonJpaDao.class)
@@ -138,6 +145,7 @@ public class ContactJpaDao extends JPABOImpl<Contact> implements Contact,Seriali
 
   /**
    * setter for Person/Person person
+   * null
    * @param pperson - new value for person
    */
   public void setPerson(Person pperson) { 

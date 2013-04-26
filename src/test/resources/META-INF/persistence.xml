@@ -7,16 +7,10 @@
  -
  - http://www.bitplan.com
  - 
- - generated: 2013-02-28 21:46 with smartGENERATOR
+ - generated: 2013-04-26 16:28 with smartGENERATOR
  -->
 <persistence xmlns="http://java.sun.com/xml/ns/persistence"
 	version="2.0">
-	<persistence-unit name="com.bitplan.composite" transaction-type="RESOURCE_LOCAL">
-		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-	</persistence-unit>
-	<persistence-unit name="com.bitplan.secondpu" transaction-type="RESOURCE_LOCAL">
-		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-	</persistence-unit>
 	<persistence-unit name="com.bitplan.testentity" transaction-type="RESOURCE_LOCAL">
 		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
 		<class>com.bitplan.testentity.jpa.CustomerJpaDao</class>

@@ -1,12 +1,12 @@
 /**
- * Copyright (C) 2011-2012 BITPlan GmbH
+ * Copyright (C) 2011-2013 BITPlan GmbH
  * 
  * Pater-Delp-Str. 1
  * D-47877 Willich-Schiefbahn
  *
  * http://www.bitplan.com
  * 
- * generated: 2013-02-28 21:46 with smartGENERATOR
+ * generated: 2013-04-26 16:28 with smartGENERATOR
  */
 package com.bitplan.testentity.jpa;
 import java.io.Serializable;
@@ -77,6 +77,7 @@ public class PersonJpaDao extends JPABOImpl<Person> implements Person,Serializab
   }
   /**
    * getter for xsd:string/String id
+   * null
    * @return id
    */
   @Id
@@ -87,6 +88,7 @@ public class PersonJpaDao extends JPABOImpl<Person> implements Person,Serializab
 
   /**
    * setter for xsd:string/String id
+   * null
    * @param pid - new value for id
    */
   public void setId(String pid) { 
@@ -95,6 +97,7 @@ public class PersonJpaDao extends JPABOImpl<Person> implements Person,Serializab
   
   /**
    * getter for xsd:string/String name
+   * null
    * @return name
    */
   @Column(name="name")
@@ -104,6 +107,7 @@ public class PersonJpaDao extends JPABOImpl<Person> implements Person,Serializab
 
   /**
    * setter for xsd:string/String name
+   * null
    * @param pname - new value for name
    */
   public void setName(String pname) { 
@@ -112,6 +116,7 @@ public class PersonJpaDao extends JPABOImpl<Person> implements Person,Serializab
   
   /**
    * getter for xsd:string/String SSN
+   * null
    * @return sSN
    */
   @Column(name="SSN")
@@ -121,6 +126,7 @@ public class PersonJpaDao extends JPABOImpl<Person> implements Person,Serializab
 
   /**
    * setter for xsd:string/String SSN
+   * null
    * @param psSN - new value for SSN
    */
   public void setSSN(String psSN) { 
@@ -129,6 +135,7 @@ public class PersonJpaDao extends JPABOImpl<Person> implements Person,Serializab
   
   /**
    * getter for xsd:string/String EMailStatus
+   * null
    * @return eMailStatus
    */
   @Column(name="EMailStatus")
@@ -138,6 +145,7 @@ public class PersonJpaDao extends JPABOImpl<Person> implements Person,Serializab
 
   /**
    * setter for xsd:string/String EMailStatus
+   * null
    * @param peMailStatus - new value for EMailStatus
    */
   public void setEMailStatus(String peMailStatus) { 
@@ -146,6 +154,7 @@ public class PersonJpaDao extends JPABOImpl<Person> implements Person,Serializab
   
   /**
    * getter for xsd:string/String xStatus
+   * null
    * @return xStatus
    */
   @Column(name="xStatus")
@@ -155,6 +164,7 @@ public class PersonJpaDao extends JPABOImpl<Person> implements Person,Serializab
 
   /**
    * setter for xsd:string/String xStatus
+   * null
    * @param pxStatus - new value for xStatus
    */
   public void setXStatus(String pxStatus) { 
@@ -163,6 +173,7 @@ public class PersonJpaDao extends JPABOImpl<Person> implements Person,Serializab
   
   /**
    * getter for Contact/List<Contact> contacts
+   * null
    * @return contacts
    */
   @OneToMany(targetEntity=ContactJpaDao.class, cascade=CascadeType.ALL, mappedBy="person")
@@ -172,6 +183,7 @@ public class PersonJpaDao extends JPABOImpl<Person> implements Person,Serializab
 
   /**
    * setter for Contact/List<Contact> contacts
+   * null
    * @param pcontacts - new value for contacts
    */
   public void setContacts(List<Contact> pcontacts) { 

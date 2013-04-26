@@ -9,6 +9,9 @@
 package com.bitplan.storage.sql;
 
 import java.util.Properties;
+import java.util.prefs.Preferences;
+import java.util.prefs.PreferencesFactory;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -22,7 +25,7 @@ import org.junit.Test;
 public class TestMultiplePUs {
 
 	public Properties getProps() throws Exception {
-		Properties props = JPAEntityManagerFactory.getMySQLProps("com.bitplan.testentity","mod_auth","localhost","cm", "secret",true);
+		Properties props = JPAEntityManagerFactory.xgetMySQLProps("com.bitplan.testentity","mod_auth","localhost","cm", "secret",true);
 		return props;
 	}
 	
@@ -38,6 +41,17 @@ public class TestMultiplePUs {
 		Query query = em.createNativeQuery("select count(user_name) from user;");
 		Long count = (Long) query.getSingleResult();
 		System.out.println(count);
+	}
+	
+	@Test
+	/**
+	 * http://stackoverflow.com/questions/16120913/where-to-put-and-how-to-get-a-proper-location-for-system-wide-configuration-data
+	 */
+	public void testPreferences() throws Exception {
+		System.out.println(Preferences.systemRoot().absolutePath());
+		System.out.println(Preferences.systemNodeForPackage(this.getClass()));
+		
+		
 	}
 
 }

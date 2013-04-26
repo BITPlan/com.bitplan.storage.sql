@@ -39,7 +39,7 @@ public class TestSqlStorage extends TestStorage {
 	 * @throws Exception 
 	 */
 	public static Properties getProps() throws Exception {
-		Properties props = JPAEntityManagerFactory.getMySQLProps(
+		Properties props = JPAEntityManagerFactory.xgetMySQLProps(
 				"com.bitplan.testentity", "testsqlstorage", "localhost", "cm",
 				"secret", true);
 		return props;

@@ -1,12 +1,12 @@
 /**
- * Copyright (C) 2011-2012 BITPlan GmbH
+ * Copyright (C) 2011-2013 BITPlan GmbH
  * 
  * Pater-Delp-Str. 1
  * D-47877 Willich-Schiefbahn
  *
  * http://www.bitplan.com
  * 
- * generated: 2012-12-29 13:01 with smartGENERATOR
+ * generated: 2013-04-26 16:28 with smartGENERATOR
  */
 package com.bitplan.testentity;
 import com.bitplan.restinterface.BOManagerFactory;
@@ -31,11 +31,22 @@ import com.bitplan.testentity.EMailContactManager;
  * Guice Module for  Testentity
  */
 public class  TestentityBOManagerFactoryConfiguration extends BOManagerFactoryConfigurationImpl {
+
+  /**
+   * construct the BOManagerFactoryConfiguration
+   */
+  public TestentityBOManagerFactoryConfiguration(String pName) {
+		super(pName);
+	}
+
   /**
    * initialize 
    * @param - factory - the factory to configure
    */
   public void init(BOManagerFactory factory) throws Exception { 
+    // first initialize the factory for this configuration
+    factory.initConfiguration(this);
+    // then add all BOManagers for this configuration
     factory.getBOManager(CustomerManager.class,Customer.class);
     factory.getBOManager(OrderManager.class,Order.class);
     factory.getBOManager(TypeTestManager.class,TypeTest.class);

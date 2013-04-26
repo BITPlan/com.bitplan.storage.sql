@@ -23,6 +23,8 @@ import javax.persistence.Persistence;
 
 import com.bitplan.resthelper.BOManagerFactoryImpl;
 import com.bitplan.restinterface.BOManager;
+import com.bitplan.restinterface.BOManagerFactoryConfiguration;
+import com.bitplan.restinterface.BOManagerFactoryConfiguration.RunMode;
 
 /**
  * JPA EntityManager Factory
@@ -35,6 +37,13 @@ public class JPAEntityManagerFactory extends BOManagerFactoryImpl {
 	private Map<String, EntityManagerFactory> factoryMap = new HashMap<String, EntityManagerFactory>();
 	private Map<String, EntityManager> emMap = new HashMap<String, EntityManager>();
 	private String puName;
+	
+	@Override
+	public void initConfiguration(BOManagerFactoryConfiguration config) throws Exception {
+		Properties props = JPAEntityManagerFactory.readProperties(config.getName(),config.getRunMode());
+		config.setProperties(props);
+		setContext(props);
+	}
 
 	/**
 	 * get properties
@@ -75,13 +84,14 @@ public class JPAEntityManagerFactory extends BOManagerFactoryImpl {
 	/**
 	 * get the property File for the given persistence unit
 	 * @param puname
+	 * @param runMode 
 	 * @param createPath
 	 * @return
 	 * @throws IOException 
 	 */
-	public static File getPropertyFile(String puname, boolean createPath) throws IOException {
+	public static File getPropertyFile(String puname, RunMode runMode, boolean createPath) throws IOException {
 		File propertyFile = new File(System.getProperty("user.home") + "/" + ".jpa"
-				+ "/" + puname + ".xml");
+				+ "/" +runMode.toString()+"/" + puname + ".xml");
 		if (createPath) {
 			propertyFile.getParentFile().mkdirs();
 			propertyFile.createNewFile();
@@ -91,15 +101,15 @@ public class JPAEntityManagerFactory extends BOManagerFactoryImpl {
 
 	/**
 	 * write the properties for the given pu
-	 * 
 	 * @param puname
+	 * @param runmode
 	 * @param props
 	 * @throws Exception
 	 */
-	private static void writeProperties(String puname, Properties props)
+	private static void writeProperties(String puname, RunMode runmode,Properties props)
 			throws Exception {
 		String comment = "Properties for persistence unit " + puname;
-		File propertyFile = getPropertyFile(puname,true);
+		File propertyFile = getPropertyFile(puname,runmode,true);
 		FileOutputStream fs = new FileOutputStream(propertyFile);
 		props.storeToXML(fs, comment);
 		fs.close();
@@ -108,11 +118,12 @@ public class JPAEntityManagerFactory extends BOManagerFactoryImpl {
 	/**
 	 * read the properties for the given puname
 	 * @param puname
+	 * @param runMode 
 	 * @return
 	 * @throws Exception
 	 */
-	public static Properties readProperties(String puname) throws Exception {
-		File propertyFile = getPropertyFile(puname,true);
+	public static Properties readProperties(String puname, RunMode runMode) throws Exception {
+		File propertyFile = getPropertyFile(puname,runMode,true);
 		Properties props=new Properties();
 		props.loadFromXML(new FileInputStream(propertyFile));
 		return props;
@@ -129,7 +140,7 @@ public class JPAEntityManagerFactory extends BOManagerFactoryImpl {
 	 * @param reCreateDatabase
 	 * @return
 	 */
-	public static Properties getMySQLProps(String persistenceUnitName,
+	public static Properties xgetMySQLProps(String persistenceUnitName,
 			String database, String host, String username, String password,
 			boolean reCreateDatabase) throws Exception {
 		Properties props = getProps(persistenceUnitName, database, host, username,
@@ -141,7 +152,7 @@ public class JPAEntityManagerFactory extends BOManagerFactoryImpl {
 		// http://wiki.eclipse.org/EclipseLink/UserGuide/JPA/Advanced_JPA_Development/Schema_Generation/Appending_strings_to_CREATE_TABLE_statements
 		props.put("eclipselink.ddl.default-table-suffix", "engine=InnoDB");
 		// FIXME - only for bootstrapping
-		writeProperties(persistenceUnitName, props);
+		// writeProperties(persistenceUnitName, props);
 		return props;
 	}
 
@@ -157,7 +168,7 @@ public class JPAEntityManagerFactory extends BOManagerFactoryImpl {
 	 * @return
 	 * @throws Exception 
 	 */
-	public static Properties getOracleProps(String persistenceUnitName,
+	public static Properties xgetOracleProps(String persistenceUnitName,
 			String database, String host, String username, String password,
 			boolean reCreateDatabase) throws Exception {
 		Properties props = getProps(persistenceUnitName, database, host, username,
@@ -167,7 +178,7 @@ public class JPAEntityManagerFactory extends BOManagerFactoryImpl {
 		props.put("javax.persistence.jdbc.url", "jdbc:oracle:thin:@" + host
 				+ ":1521:" + database);
 		// FIXME - only for bootstrapping
-		writeProperties(persistenceUnitName, props);
+		// writeProperties(persistenceUnitName, props);
 		return props;
 	}
 

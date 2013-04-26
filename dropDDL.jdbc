@@ -1,7 +1,0 @@
-ALTER TABLE order_table DROP FOREIGN KEY FK_order_table_CUSTOMER_id
-ALTER TABLE Contact DROP FOREIGN KEY FK_Contact_PERSON_id
-DROP TABLE Customer
-DROP TABLE order_table
-DROP TABLE TypeTest
-DROP TABLE Person
-DROP TABLE Contact

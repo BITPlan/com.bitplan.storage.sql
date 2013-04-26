@@ -1,12 +1,12 @@
 /**
- * Copyright (C) 2011-2012 BITPlan GmbH
+ * Copyright (C) 2011-2013 BITPlan GmbH
  * 
  * Pater-Delp-Str. 1
  * D-47877 Willich-Schiefbahn
  *
  * http://www.bitplan.com
  * 
- * generated: 2013-02-28 21:46 with smartGENERATOR
+ * generated: 2013-04-26 16:28 with smartGENERATOR
  */
 package com.bitplan.testentity.jpa;
 import java.io.Serializable;
@@ -76,6 +76,7 @@ public class OrderJpaDao extends JPABOImpl<Order> implements Order,Serializable 
   }
   /**
    * getter for xsd:string/String id
+   * null
    * @return id
    */
   @Id
@@ -86,6 +87,7 @@ public class OrderJpaDao extends JPABOImpl<Order> implements Order,Serializable 
 
   /**
    * setter for xsd:string/String id
+   * null
    * @param pid - new value for id
    */
   public void setId(String pid) { 
@@ -94,6 +96,7 @@ public class OrderJpaDao extends JPABOImpl<Order> implements Order,Serializable 
   
   /**
    * getter for xsd:string/String shipping address
+   * null
    * @return address
    */
   @Column(name="SHIPPING_ADDRESS")
@@ -103,6 +106,7 @@ public class OrderJpaDao extends JPABOImpl<Order> implements Order,Serializable 
 
   /**
    * setter for xsd:string/String shipping address
+   * null
    * @param paddress - new value for shipping address
    */
   public void setAddress(String paddress) { 
@@ -111,6 +115,7 @@ public class OrderJpaDao extends JPABOImpl<Order> implements Order,Serializable 
   
   /**
    * getter for Customer/Customer customer
+   * null
    * @return customer
    */
   @ManyToOne(targetEntity=CustomerJpaDao.class)
@@ -120,6 +125,7 @@ public class OrderJpaDao extends JPABOImpl<Order> implements Order,Serializable 
 
   /**
    * setter for Customer/Customer customer
+   * null
    * @param pcustomer - new value for customer
    */
   public void setCustomer(Customer pcustomer) { 
