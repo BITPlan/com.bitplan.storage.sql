@@ -124,6 +124,12 @@ public class JPAEntityManagerFactory extends BOManagerFactoryImpl {
 	 */
 	public static Properties readProperties(String puname, RunMode runMode) throws Exception {
 		File propertyFile = getPropertyFile(puname,runMode,true);
+		if (!propertyFile.exists()) {
+			throw new IllegalArgumentException("read Properties failed: propertyfile "+propertyFile.getAbsolutePath()+" does not exist");
+		}
+		if (!propertyFile.canRead()) {
+			throw new IllegalArgumentException("read Properties failed: propertyfile "+propertyFile.getAbsolutePath()+" not readable");
+		}
 		Properties props=new Properties();
 		props.loadFromXML(new FileInputStream(propertyFile));
 		return props;
