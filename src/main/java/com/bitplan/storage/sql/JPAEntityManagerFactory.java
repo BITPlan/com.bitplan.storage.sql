@@ -37,10 +37,12 @@ public class JPAEntityManagerFactory extends BOManagerFactoryImpl {
 	private Map<String, EntityManagerFactory> factoryMap = new HashMap<String, EntityManagerFactory>();
 	private Map<String, EntityManager> emMap = new HashMap<String, EntityManager>();
 	private String puName;
-	
+
 	@Override
-	public void initConfiguration(BOManagerFactoryConfiguration config) throws Exception {
-		Properties props = JPAEntityManagerFactory.readProperties(config.getName(),config.getRunMode());
+	public void initConfiguration(BOManagerFactoryConfiguration config)
+			throws Exception {
+		Properties props = JPAEntityManagerFactory.readProperties(config.getName(),
+				config.getRunMode());
 		config.setProperties(props);
 		setContext(props);
 	}
@@ -74,24 +76,26 @@ public class JPAEntityManagerFactory extends BOManagerFactoryImpl {
 		if (reCreateDatabase) {
 			props.put("eclipselink.ddl-generation", "drop-and-create-tables");
 			props.put("eclipselink.ddl-generation.output-mode", "both");
-		}	else {
-			//props.put("eclipselink.ddl-generation", "create-or-extend-tables");
-		  //props.put("eclipselink.ddl-generation.output-mode", "database");
+		} else {
+			// props.put("eclipselink.ddl-generation", "create-or-extend-tables");
+			// props.put("eclipselink.ddl-generation.output-mode", "database");
 		}
 		return props;
 	}
 
 	/**
 	 * get the property File for the given persistence unit
+	 * 
 	 * @param puname
-	 * @param runMode 
+	 * @param runMode
 	 * @param createPath
 	 * @return
-	 * @throws IOException 
+	 * @throws IOException
 	 */
-	public static File getPropertyFile(String puname, RunMode runMode, boolean createPath) throws IOException {
+	public static File getPropertyFile(String puname, RunMode runMode,
+			boolean createPath) throws IOException {
 		File propertyFile = new File(System.getProperty("user.home") + "/" + ".jpa"
-				+ "/" +runMode.toString()+"/" + puname + ".xml");
+				+ "/" + runMode.toString() + "/" + puname + ".xml");
 		if (createPath) {
 			propertyFile.getParentFile().mkdirs();
 			propertyFile.createNewFile();
@@ -101,15 +105,16 @@ public class JPAEntityManagerFactory extends BOManagerFactoryImpl {
 
 	/**
 	 * write the properties for the given pu
+	 * 
 	 * @param puname
 	 * @param runmode
 	 * @param props
 	 * @throws Exception
 	 */
-	public static void writeProperties(String puname, RunMode runmode,Properties props)
-			throws Exception {
+	public static void writeProperties(String puname, RunMode runmode,
+			Properties props) throws Exception {
 		String comment = "Properties for persistence unit " + puname;
-		File propertyFile = getPropertyFile(puname,runmode,true);
+		File propertyFile = getPropertyFile(puname, runmode, true);
 		FileOutputStream fs = new FileOutputStream(propertyFile);
 		props.storeToXML(fs, comment);
 		fs.close();
@@ -117,21 +122,33 @@ public class JPAEntityManagerFactory extends BOManagerFactoryImpl {
 
 	/**
 	 * read the properties for the given puname
+	 * 
 	 * @param puname
-	 * @param runMode 
+	 * @param runMode
 	 * @return
 	 * @throws Exception
 	 */
-	public static Properties readProperties(String puname, RunMode runMode) throws Exception {
-		File propertyFile = getPropertyFile(puname,runMode,true);
+	public static Properties readProperties(String puname, RunMode runMode)
+			throws Exception {
+		File propertyFile = getPropertyFile(puname, runMode, true);
 		if (!propertyFile.exists()) {
-			throw new IllegalArgumentException("read Properties failed: propertyfile "+propertyFile.getAbsolutePath()+" does not exist");
+			throw new IllegalArgumentException(
+					"read Properties failed: propertyfile "
+							+ propertyFile.getAbsolutePath() + " does not exist");
 		}
 		if (!propertyFile.canRead()) {
-			throw new IllegalArgumentException("read Properties failed: propertyfile "+propertyFile.getAbsolutePath()+" not readable");
+			throw new IllegalArgumentException(
+					"read Properties failed: propertyfile "
+							+ propertyFile.getAbsolutePath() + " not readable");
 		}
-		Properties props=new Properties();
-		props.loadFromXML(new FileInputStream(propertyFile));
+		Properties props = new Properties();
+		try {
+			props.loadFromXML(new FileInputStream(propertyFile));
+		} catch (java.util.InvalidPropertiesFormatException ipfe) {
+			throw new IllegalArgumentException(
+					"read Properties failed: propertyfile "
+							+ propertyFile.getAbsolutePath() + " "+ipfe.getMessage());		
+		}
 		return props;
 	}
 
@@ -172,7 +189,7 @@ public class JPAEntityManagerFactory extends BOManagerFactoryImpl {
 	 * @param password
 	 * @param reCreateDatabase
 	 * @return
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	public static Properties xgetOracleProps(String persistenceUnitName,
 			String database, String host, String username, String password,
