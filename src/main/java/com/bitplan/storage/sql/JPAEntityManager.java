@@ -262,11 +262,6 @@ public abstract class JPAEntityManager<BO_T> extends BOManagerImpl<BO_T>
 	public static String getBeanFieldName(String fieldName) {
 		return java.beans.Introspector.decapitalize(fieldName);
 	}
-
-	@Deprecated
-	public List<BO_T> findByJqGridFilter(JqGridSearch search) {
-		return this.findByJqGridFilter(search, null);
-	}
 	
 	/**
 	 * helper to handle foreign Key setting - usually used for parent Key
@@ -324,7 +319,16 @@ public abstract class JPAEntityManager<BO_T> extends BOManagerImpl<BO_T>
 		ForeignKey foreignKey=new ForeignKey(fullyQualifyingForeignKey,foreignValue);
 		return this.findByJqGridFilter(search, foreignKey);
 	}
-
+	
+	/**
+	 * find by JQGrid Filter
+	 * @param search
+	 * @return
+	 */
+	public List<BO_T> findByJqGridFilter(JqGridSearch search) {
+		return this.findByJqGridFilter(search, null);
+	}
+	
 	/**
 	 * find given JqGrid search and a foreign Key
 	 * @param search
