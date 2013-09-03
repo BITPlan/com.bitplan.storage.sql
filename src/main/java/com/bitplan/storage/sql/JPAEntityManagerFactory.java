@@ -37,14 +37,17 @@ public class JPAEntityManagerFactory extends BOManagerFactoryImpl {
 	private Map<String, EntityManagerFactory> factoryMap = new HashMap<String, EntityManagerFactory>();
 	private Map<String, EntityManager> emMap = new HashMap<String, EntityManager>();
 	private String puName;
+	private Properties props;
 
 	@Override
 	public void initConfiguration(BOManagerFactoryConfiguration config)
 			throws Exception {
-		Properties props = JPAEntityManagerFactory.readProperties(config.getName(),
-				config.getRunMode());
-		config.setProperties(props);
-		setContext(props);
+		if (config.getProperties() == null) {
+			props = JPAEntityManagerFactory.readProperties(config.getName(),
+					config.getRunMode());
+			config.setProperties(props);
+		}
+		setContext(config.getProperties());
 	}
 
 	/**
@@ -147,7 +150,7 @@ public class JPAEntityManagerFactory extends BOManagerFactoryImpl {
 		} catch (java.util.InvalidPropertiesFormatException ipfe) {
 			throw new IllegalArgumentException(
 					"read Properties failed: propertyfile "
-							+ propertyFile.getAbsolutePath() + " "+ipfe.getMessage());		
+							+ propertyFile.getAbsolutePath() + " " + ipfe.getMessage());
 		}
 		return props;
 	}
