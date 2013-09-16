@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
+import java.util.logging.Level;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -33,6 +34,7 @@ import com.bitplan.restinterface.BOManagerFactoryConfiguration.RunMode;
  * 
  */
 public class JPAEntityManagerFactory extends BOManagerFactoryImpl {
+	
 	private static final String PERSISTENCE_UNIT_NAME = "default";
 	private Map<String, EntityManagerFactory> factoryMap = new HashMap<String, EntityManagerFactory>();
 	private Map<String, EntityManager> emMap = new HashMap<String, EntityManager>();
@@ -43,9 +45,12 @@ public class JPAEntityManagerFactory extends BOManagerFactoryImpl {
 	public void initConfiguration(BOManagerFactoryConfiguration config)
 			throws Exception {
 		if (config.getProperties() == null) {
+			LOGGER.log(Level.INFO,"reading config properties for "+config.getName()+" runmode "+config.getRunMode());
 			props = JPAEntityManagerFactory.readProperties(config.getName(),
 					config.getRunMode());
 			config.setProperties(props);
+		} else {
+			LOGGER.log(Level.INFO,"using existing config properties for "+config.getName()+" runmode "+config.getRunMode());
 		}
 		setContext(config.getProperties());
 	}
