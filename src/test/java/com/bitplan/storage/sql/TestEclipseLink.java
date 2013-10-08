@@ -173,7 +173,7 @@ public class TestEclipseLink {
 		// customer.getOrders().add(order2);
 		em.persist(order2);
 		em.getTransaction().commit();
-		// em.close();
+		//em.close();
 	}
 
 	@Test
@@ -185,6 +185,7 @@ public class TestEclipseLink {
 		String maxOrderId = em.createQuery("select max(o.id) from Order o",
 				String.class).getSingleResult();
 		assertEquals("200", maxOrderId);
+		//em.close();
 	}
 
 	/**
@@ -356,6 +357,7 @@ public class TestEclipseLink {
 		CustomerManagerJPA customerManager = this.getCustomerManager();
 		this.testJqGridSearch(null,null,null,customerManager, "name", "name", "name", "desc",
 				"Customer #10", "bw", "AND", "", 100, 20, "Customer #1079", 20, 20);
+		//em.close();
 	}
 
 	/**
@@ -412,6 +414,7 @@ public class TestEclipseLink {
 				"asc", "EMailStatus1", "bn", "AND", "", 9, 9, "SSN0", 0, 20);
 		this.testJqGridSearch(null,null,null,personManager, "XStatus", "XStatus", "XStatus",
 				"asc", "xStatus1", "bn", "AND", "", 9, 9, "xStatus0", 0, 20);
+		// em.close();
 	}
 
 	@Test
@@ -434,6 +437,7 @@ public class TestEclipseLink {
 		// even search
 		this.testJqGridSearch(null,null,null,typeTestManager, "id", "TbooleanVal", "id", "desc",
 				"1", "eq", "AND", "", 8, 8, 16l, 0, 20);
+		// em.close();
 	}
 
 	@Test
@@ -485,7 +489,7 @@ public class TestEclipseLink {
 	public void testJqGridSearchWithForeignKey() throws Exception {
 		int[] expectedTotalRowCount = { 2, 0 };
 		String customerId[] = { "1", "2" };
-		OrderManagerJPA orderManager = this.getOrderManager();
+		OrderManagerJPA orderManager = TestEclipseLink.getOrderManager();
 		for (int i = 0; i < expectedTotalRowCount.length; i++) {
 			this.testJqGridSearch("customer","id",customerId[i],orderManager,"id", "id", "id", "asc", null,
 					expectedTotalRowCount[i], expectedTotalRowCount[i], "100",
