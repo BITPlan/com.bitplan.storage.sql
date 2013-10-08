@@ -418,7 +418,9 @@ public class TestEclipseLink {
 	public void testTypes() throws Exception {
 		em = (EntityManager) boManagerFactory.getContext();
 		em.getTransaction().begin();
-		for (int i = 0; i < 15; i++) {
+		// do not use "0" as index so start at 2
+		// to avoid Null or zero primary key encountered in unit of work clone [com.bitplan.testentity.jpa.TypeTestJpaDao@666a5ddb], primary key [0]. Set descriptors IdValidation or the "eclipselink.id-validation" property.
+		for (int i = 2; i < 17; i++) {
 			this.addTypeTest(i);
 		}
 		em.getTransaction().commit();
@@ -428,10 +430,10 @@ public class TestEclipseLink {
 		TypeTestManagerJPA typeTestManager = (TypeTestManagerJPA) boManager;
 		// odd search
 		this.testJqGridSearch(null,null,null,typeTestManager, "id", "TbooleanVal", "id", "desc",
-				"0", "eq", "AND", "", 7, 7, 13l, 0, 20);
+				"0", "eq", "AND", "", 7, 7, 15l, 0, 20);
 		// even search
 		this.testJqGridSearch(null,null,null,typeTestManager, "id", "TbooleanVal", "id", "desc",
-				"1", "eq", "AND", "", 8, 8, 14l, 0, 20);
+				"1", "eq", "AND", "", 8, 8, 16l, 0, 20);
 	}
 
 	@Test
