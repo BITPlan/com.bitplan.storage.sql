@@ -10,7 +10,6 @@ package com.bitplan.storage.sql;
 
 import java.util.Properties;
 import java.util.prefs.Preferences;
-import java.util.prefs.PreferencesFactory;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -50,8 +49,6 @@ public class TestMultiplePUs {
 	public void testPreferences() throws Exception {
 		System.out.println(Preferences.systemRoot().absolutePath());
 		System.out.println(Preferences.systemNodeForPackage(this.getClass()));
-		
-		
 	}
 
 }
