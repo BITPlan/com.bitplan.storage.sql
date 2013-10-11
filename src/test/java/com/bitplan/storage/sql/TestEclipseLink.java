@@ -12,9 +12,11 @@ import static org.junit.Assert.*;
 
 import org.apache.commons.beanutils.PropertyUtils;
 import org.eclipse.persistence.jpa.JpaQuery;
+import org.junit.runners.MethodSorters;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.FixMethodOrder;
 
 import com.bitplan.rest.jqgrid.JqGridFilter;
 import com.bitplan.rest.jqgrid.JqGridSearch;
@@ -31,7 +33,7 @@ import com.bitplan.testentity.Person;
 import com.bitplan.testentity.PersonManager;
 import com.bitplan.testentity.TypeTest;
 import com.bitplan.testentity.TypeTestManager;
-import com.bitplan.testentity.jpa.OrderJpaDao;
+
 import com.bitplan.testentity.jpa.OrderManagerJPA;
 import com.bitplan.testentity.jpa.PersonManagerJPA;
 import com.bitplan.testentity.jpa.CustomerJpaDao;
@@ -42,11 +44,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Path;
-import javax.persistence.criteria.Root;
+
 
 /**
  * Test SQL storage with EclipseLink see e.g.
@@ -55,6 +53,7 @@ import javax.persistence.criteria.Root;
  * @author wf grant all on testsqlstorage.* to 'cm'@'localhost' identified by
  *         'secret'; see testsqlstorage.sql
  */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TestEclipseLink {
 
 	boolean debug = true;
