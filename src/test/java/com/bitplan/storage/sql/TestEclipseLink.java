@@ -39,6 +39,7 @@ import com.bitplan.testentity.jpa.CustomerManagerJPA;
 import com.bitplan.testentity.jpa.TypeTestManagerJPA;
 
 import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
@@ -134,19 +135,24 @@ public class TestEclipseLink {
 		}
 
 		// Read the existing entries and write to console
-		Query q = em.createQuery("select c from Customer c");
+		Query q = em.createQuery("select c from Customer c order by c.id");
 		@SuppressWarnings("unchecked")
 		List<CustomerJpaDao> lCustomerList = q.getResultList();
 		if (debug) {
 			System.out.println("Size: " + lCustomerList.size());
 		}
-		assertEquals("There should be one customer in the list", 3,
+		assertEquals("There should be three customers in the list", 3,
 				lCustomerList.size());
+		int index=0;
 		for (CustomerJpaDao lCustomer : lCustomerList) {
 			if (debug) {
 				System.out.println("id: " + lCustomer.getId() + " name: "
 						+ lCustomer.getName());
 			}
+			assertEquals(ids[index],lCustomer.getId());
+			assertEquals(names[index],lCustomer.getName());
+			assertEquals(cities[index],lCustomer.getCity());
+			index++;
 		}
 
 		// Create 2 orders
@@ -445,8 +451,11 @@ public class TestEclipseLink {
 		// http://docs.oracle.com/javase/6/docs/api/java/beans/Introspector.html#decapitalize%28java.lang.String%29
 		String names[] = { "SSN", "EMailStatus", "XStatus" };
 		for (String name : names) {
-			System.out.println(FieldHelper.firstToUpper(name) + ":"
-					+ java.beans.Introspector.decapitalize(name));
+			String result1=FieldHelper.firstToUpper(name);
+			String result2=java.beans.Introspector.decapitalize(name);
+			System.out.println(result1 + ":"
+					+ result2);
+			assertEquals(result1,result2);
 		}
 	}
 
@@ -459,19 +468,26 @@ public class TestEclipseLink {
 	public void testJoin() throws Exception {
 		// see
 		// http://stackoverflow.com/questions/9025196/how-to-use-jpa-criteria-api-when-joining-many-tables
+		// http://en.wikibooks.org/wiki/Java_Persistence/JPQL#JOIN
 		em = (EntityManager) boManagerFactory.getContext();
-		CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
-		CriteriaQuery<Object> select = criteriaBuilder.createQuery();
-		Root<OrderJpaDao> fromOrder = select.from(OrderJpaDao.class);
-		Path<Object> path = fromOrder.join("customer").get("id");
-		select.where(criteriaBuilder.equal(path, "100"));
+		// em.createQuery("select * from Customer c");
+		//CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
+		//CriteriaQuery<Object> select = criteriaBuilder.createQuery();
+		//Root<OrderJpaDao> fromOrder = select.from(OrderJpaDao.class);
+		//Path<Object> path = fromOrder.join("customer").get("id");
+		// select.where(criteriaBuilder.equal(path, "1"));
 		// Join<CustomerJpaDao,OrderJpaDao> orders=customerRoot.join("orders");
-		TypedQuery<Object> query = em.createQuery(select);
+		// TypedQuery<Object>
+		Query query = em.createQuery("select o from Order o join o.customer c");
+		@SuppressWarnings("unchecked")
 		List<Object> results = query.getResultList();
+		assertEquals(2,results.size());
 		for (Object obj : results) {
+			assertTrue(obj instanceof Order);
 			Order order = (Order) obj;
 			System.out
 					.println(order.getCustomer().getId() + ":" + order.getAddress());
+			assertEquals("1",order.getCustomer().getId());
 		}
 		if (debug) {
 			String sql = query.unwrap(JpaQuery.class).getDatabaseQuery()
