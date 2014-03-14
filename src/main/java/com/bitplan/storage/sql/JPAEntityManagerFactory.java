@@ -44,7 +44,7 @@ public class JPAEntityManagerFactory extends BOManagerFactoryImpl {
 	@Override
 	public void initConfiguration(BOManagerFactoryConfiguration config)
 			throws Exception {
-		if (config.getProperties() == null) {
+		if (config.getProperties() == null)  {
 			LOGGER.log(Level.INFO,"reading config properties for "+config.getName()+" runmode "+config.getRunMode());
 			props = JPAEntityManagerFactory.readProperties(config.getName(),
 					config.getRunMode());
