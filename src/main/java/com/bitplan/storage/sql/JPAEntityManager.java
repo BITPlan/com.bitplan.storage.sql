@@ -135,6 +135,7 @@ public abstract class JPAEntityManager<BO_T> extends BOManagerImpl<BO_T>
 	@Override
 	public void persist(BO_T entity) {
 		this.getEntityManager().persist(entity);
+		this.attachMe(entity);
 	}
 	
 	@Override
