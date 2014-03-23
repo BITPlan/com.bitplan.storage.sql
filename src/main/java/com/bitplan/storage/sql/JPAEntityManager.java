@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 import java.util.logging.Level;
+
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
@@ -20,11 +21,13 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+
 import org.eclipse.persistence.jpa.JpaQuery;
 
 import com.bitplan.rest.jqgrid.JqGridFilter;
 import com.bitplan.rest.jqgrid.JqGridRule;
 import com.bitplan.rest.jqgrid.JqGridSearch;
+import com.bitplan.resthelper.BOImpl;
 import com.bitplan.resthelper.BOManagerImpl;
 import com.bitplan.restinterface.BOManager;
 
@@ -143,11 +146,24 @@ public abstract class JPAEntityManager<BO_T> extends BOManagerImpl<BO_T>
 	public void close() {
 		this.getEntityManager().close();
 	}
+	
+	/**
+	 * set a back pointer to me in the given business object
+	 * @param bo
+	 */
+	public void attachMe(BO_T bo) {
+		if (bo instanceof BOImpl) {
+			@SuppressWarnings("unchecked")
+			BOImpl<BO_T> boimpl = (BOImpl<BO_T>)bo;
+			boimpl.setBOManager(this);;
+		}		
+	}
 
 	@Override
 	public BO_T findById(Object id) throws Exception {
 		@SuppressWarnings("unchecked")
 		BO_T result = (BO_T) getEntityManager().find(this.getEntityType(), id);
+		attachMe(result);
 		return result;
 	}
 
@@ -161,6 +177,9 @@ public abstract class JPAEntityManager<BO_T> extends BOManagerImpl<BO_T>
 		query.setMaxResults(maxResults);
 		@SuppressWarnings("unchecked")
 		List<BO_T> result = query.getResultList();
+		for (BO_T bo:result) {
+			attachMe(bo);
+		}
 		return result;
 	}
 
@@ -184,6 +203,9 @@ public abstract class JPAEntityManager<BO_T> extends BOManagerImpl<BO_T>
 		Query query = em.createQuery(sql,this.getEntityType());
 		query.setMaxResults(maxResults);
 		bolist = query.getResultList();
+		for (BO_T bo:bolist) {
+			attachMe(bo);
+		}
 	}
 	
 	@Override
