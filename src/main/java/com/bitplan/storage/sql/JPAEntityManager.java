@@ -112,6 +112,11 @@ public abstract class JPAEntityManager<BO_T> extends BOManagerImpl<BO_T>
 	public void commit() {
 		this.getEntityManager().getTransaction().commit();
 	}
+	
+	@Override
+	public void rollback() {
+		this.getEntityManager().getTransaction().rollback();
+	}
 
 	@Override
 	public void beginTransaction() {
