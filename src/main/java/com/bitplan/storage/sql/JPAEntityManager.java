@@ -126,7 +126,12 @@ public abstract class JPAEntityManager<BO_T> extends BOManagerImpl<BO_T>
 	
 	@Override
 	public void clearCache() {
-		this.getEntityManager().getEntityManagerFactory().getCache().evictAll();
+		EntityManager em = this.getEntityManager();
+		if (em!=null)
+		 em.getEntityManagerFactory().getCache().evictAll();
+		else
+			LOGGER.log(Level.WARNING,"EntityManager is null for "+this.getEntityName());
+		bolist.clear();
 	}
 	
 	@Override
@@ -198,6 +203,10 @@ public abstract class JPAEntityManager<BO_T> extends BOManagerImpl<BO_T>
 	@SuppressWarnings("unchecked")
 	@Override
 	public void findAll(int maxResults) {
+		// clear 2nd level cache
+		// http://stackoverflow.com/questions/13258976/how-to-refresh-jpa-entities-when-backend-database-changes-asynchronously
+		clearCache();
+
 		// http://stackoverflow.com/questions/2401129/hql-equivalent-query-to-this-sql-query
 		//http://stackoverflow.com/questions/6650768/jpa-and-inheritance-how-do-i-get-all-entities-of-a-given-superclass
 		String sql="SELECT e FROM " + this.getEntityName()+" e";
