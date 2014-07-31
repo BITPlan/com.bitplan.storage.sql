@@ -71,7 +71,7 @@ public class JPAQuery<BO_T> implements com.bitplan.javax.persistence.Query {
 
 	@Override
 	public Object getSingleResult() {
-		BO<?> result = javaxQuery.getSingleResult();
+		Object result = javaxQuery.getSingleResult();
 		return result;
 	}
 
