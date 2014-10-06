@@ -182,16 +182,28 @@ public abstract class JPAEntityManager<BO_T> extends BOManagerImpl<BO_T>
 	public List<BO_T> findBy(String attributeName, Object attributeValue,
 			int maxResults) throws Exception {
 		// FIXME avoid native query ...
-		Query query = getEntityManager().createNativeQuery(
+		String sqlquery=
 				"SELECT * FROM " + this.getTableName() + " WHERE " + attributeName
-						+ "='" + attributeValue.toString() + "'", this.getEntityType());
+						+ "='" + attributeValue.toString() + "'";
+	  List<BO_T> result = this.findByNativeQuery(sqlquery, maxResults);
+	  return result;
+	}
+	
+	/**
+	 * get all entries that match the given native SQL query
+	 * @param sqlquery
+	 * @param maxResults
+	 * @return
+	 */
+	public List<BO_T> findByNativeQuery(String sqlquery,int maxResults) {
+		Query query = getEntityManager().createNativeQuery(sqlquery,this.getEntityType());
 		query.setMaxResults(maxResults);
 		@SuppressWarnings("unchecked")
 		List<BO_T> result = query.getResultList();
 		for (BO_T bo:result) {
 			attachMe(bo);
 		}
-		return result;
+		return result;	
 	}
 
 	@Override
