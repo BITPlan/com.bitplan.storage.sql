@@ -4,6 +4,7 @@ package com.bitplan.storage.sql;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
 import com.bitplan.javax.persistence.Query;
@@ -29,7 +30,10 @@ public class JPAQuery<BO_T> implements com.bitplan.javax.persistence.Query {
 	  myManager=pManager;	
 	  if (pName!=null) {
 	  	setName(pName);
-	  	javaxQuery=myManager.getEntityManager().createNamedQuery(pName,pManager.getEntityType());
+	  	EntityManager entityManager = myManager.getEntityManager();
+	  	if (entityManager==null)
+	  		throw new RuntimeException("entityManager not set for "+myManager.getEntityName());
+	  	javaxQuery=entityManager.createNamedQuery(pName,pManager.getEntityType());
 	  }
 	}
 	
