@@ -22,6 +22,7 @@
 		<class>com.bitplan.testentity.jpa.PhoneContactJpaDao</class>
 		<class>com.bitplan.testentity.jpa.EMailContactJpaDao</class>
 		<class>com.bitplan.storage.sql.TestEclipseLinkSorting$Folder</class>
+		<class>com.bitplan.storage.sql.TestEclipseLinkSorting$Document</class>
 		<class>com.bitplan.storage.sql.TestEclipseLinkSorting$DocumentImpl</class>
 		<exclude-unlisted-classes>true</exclude-unlisted-classes> 
 		<properties>
