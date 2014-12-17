@@ -108,6 +108,18 @@ public abstract class JPAEntityManager<BO_T> extends BOManagerImpl<BO_T>
 		assert (context instanceof EntityManager);
 		this.setEntityManager((EntityManager) context);
 	}
+	
+
+	@Override
+	public BO_T create(boolean withInitialPersist) throws Exception {
+		BO_T result=this.create();
+		if (withInitialPersist) {
+			beginTransaction();
+			persist(result);
+			commit();
+		}
+		return result;
+	}
 
 	@Override
 	public void commit() {
