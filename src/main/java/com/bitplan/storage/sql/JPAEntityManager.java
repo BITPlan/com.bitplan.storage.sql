@@ -14,6 +14,7 @@ import java.util.logging.Logger;
 import java.util.logging.Level;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -110,7 +111,11 @@ public abstract class JPAEntityManager<BO_T> extends BOManagerImpl<BO_T>
 
 	@Override
 	public void commit() {
-		this.getEntityManager().getTransaction().commit();
+		EntityTransaction transaction = getEntityManager().getTransaction();
+		if (transaction.isActive())
+			transaction.commit();
+		else
+			LOGGER.log(Level.SEVERE,"commit called on non-active transaction");
 	}
 	
 	@Override
@@ -121,7 +126,12 @@ public abstract class JPAEntityManager<BO_T> extends BOManagerImpl<BO_T>
 	@Override
 	public void beginTransaction() {
 		assert (this.getEntityManager().isOpen());
-		this.getEntityManager().getTransaction().begin();		
+		EntityTransaction transaction = getEntityManager().getTransaction();
+		// only begin transaction if it is not already active
+		if (!transaction.isActive())
+			transaction.begin();		
+		else
+			LOGGER.log(Level.SEVERE,"begin called on non-active transaction");
 	}
 	
 	@Override
