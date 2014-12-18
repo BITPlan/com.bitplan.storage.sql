@@ -1,12 +1,12 @@
 /**
- * Copyright (C) 2011-2013 BITPlan GmbH
+ * Copyright (C) 2011-2014 BITPlan GmbH
  * 
  * Pater-Delp-Str. 1
  * D-47877 Willich-Schiefbahn
  *
  * http://www.bitplan.com
  * 
- * generated: 2013-04-26 16:28 with smartGENERATOR
+ * generated: 2014-12-18 13:57 with smartGENERATOR
  */
 package com.bitplan.testentity.jpa;
 // base Entity Manager
@@ -61,9 +61,12 @@ public class PersonManagerJPA extends JPAEntityManager<Person>
 	}
 	
 	@Override
-	public Person create() {
+	public Person createNew() throws Exception {
 		PersonJpaDao result = new PersonJpaDao(new PersonImpl());
 		result.setBOManager(this);
+	// >>>{add}{PersonManagerJpaDao}{Person}
+	// no implementation yet !!!
+	// <<<{add}{PersonManagerJpaDao}{Person}
 		return result;
 	}
 	

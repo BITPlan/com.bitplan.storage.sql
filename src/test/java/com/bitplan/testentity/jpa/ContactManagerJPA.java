@@ -1,12 +1,12 @@
 /**
- * Copyright (C) 2011-2013 BITPlan GmbH
+ * Copyright (C) 2011-2014 BITPlan GmbH
  * 
  * Pater-Delp-Str. 1
  * D-47877 Willich-Schiefbahn
  *
  * http://www.bitplan.com
  * 
- * generated: 2013-04-26 16:28 with smartGENERATOR
+ * generated: 2014-12-18 13:57 with smartGENERATOR
  */
 package com.bitplan.testentity.jpa;
 // base Entity Manager
@@ -61,9 +61,12 @@ public class ContactManagerJPA extends JPAEntityManager<Contact>
 	}
 	
 	@Override
-	public Contact create() {
+	public Contact createNew() throws Exception {
 		ContactJpaDao result = new ContactJpaDao(new ContactImpl());
 		result.setBOManager(this);
+	// >>>{add}{ContactManagerJpaDao}{Contact}
+	// no implementation yet !!!
+	// <<<{add}{ContactManagerJpaDao}{Contact}
 		return result;
 	}
 	

@@ -1,12 +1,12 @@
 /**
- * Copyright (C) 2011-2013 BITPlan GmbH
+ * Copyright (C) 2011-2014 BITPlan GmbH
  * 
  * Pater-Delp-Str. 1
  * D-47877 Willich-Schiefbahn
  *
  * http://www.bitplan.com
  * 
- * generated: 2013-04-26 16:28 with smartGENERATOR
+ * generated: 2014-12-18 13:57 with smartGENERATOR
  */
 package com.bitplan.testentity;
 import com.bitplan.testentity.TypeTest;
@@ -226,17 +226,19 @@ public class TypeTestImpl implements TypeTest {
    * @param TypeTest - the source Object to copy from
    */
   public void copyFrom(TypeTest pTypeTest) {
-		setId(pTypeTest.getId());
-		setTstringVal(pTypeTest.getTstringVal());
-		setTbooleanVal(pTypeTest.isTbooleanVal());
-		setTlongVal(pTypeTest.getTlongVal());
-		setTintVal(pTypeTest.getTintVal());
-		setTshortVal(pTypeTest.getTshortVal());
-		setTdecimalVal(pTypeTest.getTdecimalVal());
-		setTfloatVal(pTypeTest.getTfloatVal());
-		setTdoubleVal(pTypeTest.getTdoubleVal());
-		setTdateVal(pTypeTest.getTdateVal());
-		setTdateTimeVal(pTypeTest.getTdateTimeVal());
+    if (pTypeTest!=null) {
+      setId(pTypeTest.getId());
+      setTstringVal(pTypeTest.getTstringVal());
+      setTbooleanVal(pTypeTest.isTbooleanVal());
+      setTlongVal(pTypeTest.getTlongVal());
+      setTintVal(pTypeTest.getTintVal());
+      setTshortVal(pTypeTest.getTshortVal());
+      setTdecimalVal(pTypeTest.getTdecimalVal());
+      setTfloatVal(pTypeTest.getTfloatVal());
+      setTdoubleVal(pTypeTest.getTdoubleVal());
+      setTdateVal(pTypeTest.getTdateVal());
+      setTdateTimeVal(pTypeTest.getTdateTimeVal());
+    }
 	} // copyFrom
 	
 } // TypeTestImpl

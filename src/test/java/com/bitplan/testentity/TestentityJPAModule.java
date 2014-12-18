@@ -1,19 +1,19 @@
 /**
- * Copyright (C) 2011-2013 BITPlan GmbH
+ * Copyright (C) 2011-2014 BITPlan GmbH
  * 
  * Pater-Delp-Str. 1
  * D-47877 Willich-Schiefbahn
  *
  * http://www.bitplan.com
  * 
- * generated: 2013-04-26 16:28 with smartGENERATOR
+ * generated: 2014-12-18 13:57 with smartGENERATOR
  */
 package com.bitplan.testentity;
 // Infrastructure imports
 import com.bitplan.restinterface.BOManagerFactory;
 import com.bitplan.restinterface.Configuration;
 import com.bitplan.storage.sql.JPAEntityManagerFactory;
-import com.google.inject.AbstractModule;
+import com.bitplan.resthelper.RestModule;
 //import com.google.inject.name.Names;
 
 // Domain imports
@@ -48,15 +48,20 @@ import com.bitplan.rest.jqgrid.JqGridSearchImpl;
 /**
  * Guice Module for  Testentity
  */
-public class  TestentityJPAModule extends AbstractModule {  
+public class  TestentityJPAModule extends RestModule {  
   @Override 
   protected void configure() {
-	// >>>{configure_JPAModule}{TestentityJPAModule}{Testentity}
-	bind(JqGridSearch.class).to(JqGridSearchImpl.class);
-	// <<<{configure_JPAModule}{TestentityJPAModule}{Testentity}
     // Infrastructure bindings
-    // guice binding for BOManagerFactory
-    bind(BOManagerFactory.class).to(JPAEntityManagerFactory.class);
+    if (isForApplication()) {
+	// >>>{configure_JPAModule}{TestentityJPAModule}{Testentity}
+	    bind(JqGridSearch.class).to(JqGridSearchImpl.class);
+	// <<<{configure_JPAModule}{TestentityJPAModule}{Testentity}
+      //bind(Configuration.class).to(com.bitplan.testentity.rest.TestentityConfiguration.class);
+      //com.bitplan.resthtmlview.ResthtmlviewJPAModule viewModule = new com.bitplan.resthtmlview.ResthtmlviewJPAModule();
+      //viewModule.configure(this.binder());
+      // guice binding for BOManagerFactory
+      bind(BOManagerFactory.class).to(JPAEntityManagerFactory.class);
+    } // isForApplication
     // Domain entity bindings
     // guice binding for Customer
     bind(Customer.class).to(CustomerJpaDao.class);

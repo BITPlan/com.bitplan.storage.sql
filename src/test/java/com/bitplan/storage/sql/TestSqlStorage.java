@@ -50,7 +50,9 @@ public class TestSqlStorage extends TestStorage {
 	@BeforeClass
 	public static void prepareGuice() throws Exception {
 		if (boManagerFactory == null) {
-			boManagerFactory = BOManagerFactoryImpl.create(new TestentityJPAModule());
+			TestentityJPAModule module = new TestentityJPAModule();
+			module.setForApplication(true);
+			boManagerFactory = BOManagerFactoryImpl.create(module);
 			Properties props=getProps();
 			boManagerFactory.setContext(props);
 			Logger.getRootLogger().setLevel(Level.ERROR);

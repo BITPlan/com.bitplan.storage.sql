@@ -1,12 +1,12 @@
 /**
- * Copyright (C) 2011-2013 BITPlan GmbH
+ * Copyright (C) 2011-2014 BITPlan GmbH
  * 
  * Pater-Delp-Str. 1
  * D-47877 Willich-Schiefbahn
  *
  * http://www.bitplan.com
  * 
- * generated: 2013-04-26 16:28 with smartGENERATOR
+ * generated: 2014-12-18 13:57 with smartGENERATOR
  */
 package com.bitplan.testentity;
 import com.bitplan.testentity.Person;
@@ -144,11 +144,13 @@ public class PersonImpl implements Person {
    * @param Person - the source Object to copy from
    */
   public void copyFrom(Person pPerson) {
-		setId(pPerson.getId());
-		setName(pPerson.getName());
-		setSSN(pPerson.getSSN());
-		setEMailStatus(pPerson.getEMailStatus());
-		setXStatus(pPerson.getXStatus());
+    if (pPerson!=null) {
+      setId(pPerson.getId());
+      setName(pPerson.getName());
+      setSSN(pPerson.getSSN());
+      setEMailStatus(pPerson.getEMailStatus());
+      setXStatus(pPerson.getXStatus());
+    }
 	} // copyFrom
 	
 } // PersonImpl

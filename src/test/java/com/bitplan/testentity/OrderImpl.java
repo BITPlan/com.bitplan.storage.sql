@@ -1,12 +1,12 @@
 /**
- * Copyright (C) 2011-2013 BITPlan GmbH
+ * Copyright (C) 2011-2014 BITPlan GmbH
  * 
  * Pater-Delp-Str. 1
  * D-47877 Willich-Schiefbahn
  *
  * http://www.bitplan.com
  * 
- * generated: 2013-04-26 16:28 with smartGENERATOR
+ * generated: 2014-12-18 13:57 with smartGENERATOR
  */
 package com.bitplan.testentity;
 import com.bitplan.testentity.Order;
@@ -91,8 +91,10 @@ public class OrderImpl implements Order {
    * @param Order - the source Object to copy from
    */
   public void copyFrom(Order pOrder) {
-		setId(pOrder.getId());
-		setAddress(pOrder.getAddress());
+    if (pOrder!=null) {
+      setId(pOrder.getId());
+      setAddress(pOrder.getAddress());
+    }
 	} // copyFrom
 	
 } // OrderImpl

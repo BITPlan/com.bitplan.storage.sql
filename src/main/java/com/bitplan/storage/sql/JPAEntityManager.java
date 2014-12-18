@@ -112,8 +112,11 @@ public abstract class JPAEntityManager<BO_T> extends BOManagerImpl<BO_T>
 
 	@Override
 	public BO_T create(boolean withInitialPersist) throws Exception {
-		BO_T result=this.create();
+		// create a new business object but do not persist it (yet)
+		BO_T result=this.createNew();
+		// if initial persist is asked for do it now
 		if (withInitialPersist) {
+			// FIXME - should we handle transactions here?
 			beginTransaction();
 			persist(result);
 			commit();
@@ -196,7 +199,10 @@ public abstract class JPAEntityManager<BO_T> extends BOManagerImpl<BO_T>
 	public BO_T findById(Object id) throws Exception {
 		@SuppressWarnings("unchecked")
 		BO_T result = (BO_T) getEntityManager().find(this.getEntityType(), id);
-		attachMe(result);
+		if (result!=null)
+			attachMe(result);
+		else
+			LOGGER.log(Level.SEVERE,"findById failed for entity "+this.entityName+" id "+id);
 		return result;
 	}
 

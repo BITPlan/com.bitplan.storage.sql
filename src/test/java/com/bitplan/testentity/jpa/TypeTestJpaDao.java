@@ -1,12 +1,12 @@
 /**
- * Copyright (C) 2011-2013 BITPlan GmbH
+ * Copyright (C) 2011-2014 BITPlan GmbH
  * 
  * Pater-Delp-Str. 1
  * D-47877 Willich-Schiefbahn
  *
  * http://www.bitplan.com
  * 
- * generated: 2013-04-26 16:28 with smartGENERATOR
+ * generated: 2014-12-18 13:57 with smartGENERATOR
  */
 package com.bitplan.testentity.jpa;
 import java.io.Serializable;
@@ -16,7 +16,6 @@ import javax.persistence.*;
 import com.bitplan.storage.sql.JPABOImpl;
 // Guice
 import com.google.inject.Inject;
-
 import com.bitplan.testentity.TypeTest;
 import com.bitplan.testentity.TypeTestImpl;
 // utility imports

@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
- - Copyright (C) 2011-2012 BITPlan GmbH
+ - Copyright (C) 2011-2014 BITPlan GmbH
  - 
  - Pater-Delp-Str. 1
  - D-47877 Willich-Schiefbahn
  -
  - http://www.bitplan.com
  - 
- - generated: 2013-04-26 16:28 with smartGENERATOR
+ - generated: 2014-12-18 13:57 with smartGENERATOR
  -->
 <persistence xmlns="http://java.sun.com/xml/ns/persistence"
 	version="2.0">
 	<persistence-unit name="com.bitplan.testentity" transaction-type="RESOURCE_LOCAL">
-		<description>testentity</description>
 		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
 		<class>com.bitplan.testentity.jpa.CustomerJpaDao</class>
 		<class>com.bitplan.testentity.jpa.OrderJpaDao</class>
