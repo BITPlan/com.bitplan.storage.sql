@@ -1,8 +1,18 @@
-
+/**
+ * Copyright (C) 2011-2015 BITPlan GmbH
+ * 
+ * Pater-Delp-Str. 1
+ * D-47877 Willich-Schiefbahn
+ *
+ * http://www.bitplan.com
+ * 
+ */
 package com.bitplan.storage.sql;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
@@ -16,7 +26,7 @@ import com.bitplan.restinterface.BO;
  *
  */
 public class JPAQuery<BO_T> implements com.bitplan.javax.persistence.Query {
-
+  protected static Logger LOGGER = Logger.getLogger("com.bitplan.storage.sql");
 	TypedQuery<? extends BO<?>> javaxQuery;
 	String name;
 	
@@ -25,6 +35,7 @@ public class JPAQuery<BO_T> implements com.bitplan.javax.persistence.Query {
 	/**
 	 * create a query
 	 * @param pManager
+	 * @param pName - potentially a named query
 	 */
 	public JPAQuery(JPAEntityManager<BO_T> pManager, String pName) {
 	  myManager=pManager;	
@@ -53,6 +64,10 @@ public class JPAQuery<BO_T> implements com.bitplan.javax.persistence.Query {
 
 	@Override
 	public List<Object> getResultList() {
+	  if (javaxQuery==null) {
+	    LOGGER.log(Level.SEVERE,"javaxQuery named query not set");
+	    throw new IllegalStateException("javaxQuery is null with name: "+this.getName());
+	  }
 		List<? extends BO<?>> qresult = javaxQuery.getResultList();
 		List<Object> result=new ArrayList<Object>();
 		for (BO<?> bo:qresult) {
