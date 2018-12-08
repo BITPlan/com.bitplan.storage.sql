@@ -39,508 +39,530 @@ import com.bitplan.restinterface.BOManager;
  * 
  */
 public abstract class JPAEntityManager<BO_T> extends BOManagerImpl<BO_T>
-		implements BOManager<BO_T> {
+    implements BOManager<BO_T> {
 
-	public static boolean debug = true;
-	// for examples
-	// http://www.winstonprakash.com/articles/netbeans/JPA_Add_Update_Delete.html
-	EntityManager entityManager;
-	String tableName;
+  public static boolean debug = true;
+  // for examples
+  // http://www.winstonprakash.com/articles/netbeans/JPA_Add_Update_Delete.html
+  EntityManager entityManager;
+  String tableName;
   protected String puName;
-	protected static Logger LOGGER=Logger.getLogger("com.bitplan.storage.sql");
-  
-	/**
-	 * @return the puName
-	 */
-	public String getPuName() {
-		return puName;
-	}
+  protected static Logger LOGGER = Logger.getLogger("com.bitplan.storage.sql");
 
-	/**
-	 * @param puName the puName to set
-	 */
-	public void setPuName(String puName) {
-		LOGGER.log(Level.INFO,"setting puname for "+this.getClass().getSimpleName()+" to "+puName);
-		if (this.getClass().getSimpleName().contains("acy")) {
-			LOGGER.log(Level.INFO,"setting puname for "+this.getClass().getSimpleName()+" to "+puName);
-		}
-		this.puName = puName;
-	}
-	
-	/**
-	 * @return the tableName
-	 */
-	public String getTableName() {
-		return tableName;
-	}
+  /**
+   * @return the puName
+   */
+  public String getPuName() {
+    return puName;
+  }
 
-	/**
-	 * @param tableName
-	 *          the tableName to set
-	 */
-	public void setTableName(String tableName) {
-		this.tableName = tableName;
-	}
+  /**
+   * @param puName
+   *          the puName to set
+   */
+  public void setPuName(String puName) {
+    LOGGER.log(Level.INFO, "setting puname for "
+        + this.getClass().getSimpleName() + " to " + puName);
+    if (this.getClass().getSimpleName().contains("acy")) {
+      LOGGER.log(Level.INFO, "setting puname for "
+          + this.getClass().getSimpleName() + " to " + puName);
+    }
+    this.puName = puName;
+  }
 
-	/**
-	 * @return the entityManager
-	 */
-	public EntityManager getEntityManager() {
-		return entityManager;
-	}
+  /**
+   * @return the tableName
+   */
+  public String getTableName() {
+    return tableName;
+  }
 
-	/**
-	 * @param entityManager
-	 *          the entityManager to set
-	 */
-	public void setEntityManager(EntityManager entityManager) {
-		this.entityManager = entityManager;
-	}
+  /**
+   * @param tableName
+   *          the tableName to set
+   */
+  public void setTableName(String tableName) {
+    this.tableName = tableName;
+  }
 
-	@Override
-	public void setContext(Object context) {
-		if (entityManager!=null)
-			return;
-		assert (context != null);
-		if (context == this.getFactory()) {
-			context = this.getFactory().getContext();
-		}
-		assert (context instanceof EntityManager);
-		this.setEntityManager((EntityManager) context);
-	}
-	
+  /**
+   * @return the entityManager
+   */
+  public EntityManager getEntityManager() {
+    return entityManager;
+  }
 
-	@Override
-	public BO_T create(boolean withInitialPersist) throws Exception {
-		// create a new business object but do not persist it (yet)
-		BO_T result=this.createNew();
-		// if initial persist is asked for do it now
-		if (withInitialPersist) {
-			// FIXME - should we handle transactions here?
-			beginTransaction();
-			persist(result);
-			commit();
-		}
-		return result;
-	}
+  /**
+   * @param entityManager
+   *          the entityManager to set
+   */
+  public void setEntityManager(EntityManager entityManager) {
+    this.entityManager = entityManager;
+  }
 
-	@Override
-	public void commit() {
-		EntityTransaction transaction = getEntityManager().getTransaction();
-		if (transaction.isActive())
-			transaction.commit();
-		else
-			LOGGER.log(Level.SEVERE,"commit called on non-active transaction");
-	}
-	
-	@Override
-	public void rollback() {
-		this.getEntityManager().getTransaction().rollback();
-	}
+  @Override
+  public void setContext(Object context) {
+    if (entityManager != null)
+      return;
+    assert (context != null);
+    if (context == this.getFactory()) {
+      context = this.getFactory().getContext();
+    }
+    assert (context instanceof EntityManager);
+    this.setEntityManager((EntityManager) context);
+  }
 
-	@Override
-	public void beginTransaction() {
-		assert (this.getEntityManager().isOpen());
-		EntityTransaction transaction = getEntityManager().getTransaction();
-		// only begin transaction if it is not already active
-		if (!transaction.isActive())
-			transaction.begin();		
-		else
-			LOGGER.log(Level.SEVERE,"begin called on non-active transaction");
-	}
-	
-	@Override
-	public void clearCache() {
-		EntityManager em = this.getEntityManager();
-		if (em!=null)
-		 em.getEntityManagerFactory().getCache().evictAll();
-		else
-			LOGGER.log(Level.WARNING,"EntityManager is null for "+this.getEntityName());
-		bolist.clear();
-	}
-	
-	@Override
-	public void purge() {
-		Query query = getEntityManager().createQuery(
-				"DELETE FROM " + this.getEntityName());
-		query.executeUpdate();
-		bolist.clear();
-	}
+  @Override
+  public BO_T create(boolean withInitialPersist) throws Exception {
+    // create a new business object but do not persist it (yet)
+    BO_T result = this.createNew();
+    // if initial persist is asked for do it now
+    if (withInitialPersist) {
+      // FIXME - should we handle transactions here?
+      beginTransaction();
+      persist(result);
+      commit();
+    }
+    return result;
+  }
 
-	@Override
-	public void persist(BO_T entity) {
-		this.getEntityManager().persist(entity);
-		this.attachMe(entity);
-	}
-	
-	@Override
-	public void merge(BO_T entity) {
-		this.getEntityManager().merge(entity);
-	}
+  @Override
+  public void commit() {
+    EntityTransaction transaction = getEntityManager().getTransaction();
+    if (transaction.isActive())
+      transaction.commit();
+    else
+      LOGGER.log(Level.SEVERE, "commit called on non-active transaction");
+  }
 
-	@Override
-	public void close() {
-		this.getEntityManager().close();
-	}
-	
-	/**
-	 * set a back pointer to me in the given business object
-	 * @param bo
-	 */
-	public void attachMe(BO_T bo) {
-		if (bo instanceof BOImpl) {
-			@SuppressWarnings("unchecked")
-			BOImpl<BO_T> boimpl = (BOImpl<BO_T>)bo;
-			boimpl.setBOManager(this);;
-		}		
-	}
+  @Override
+  public void rollback() {
+    this.getEntityManager().getTransaction().rollback();
+  }
 
-	@Override
-	public BO_T findById(Object id) throws Exception {
-		@SuppressWarnings("unchecked")
-		BO_T result = (BO_T) getEntityManager().find(this.getEntityType(), id);
-		if (result!=null)
-			attachMe(result);
-		else
-			LOGGER.log(Level.SEVERE,"findById failed for entity "+this.entityName+" id "+id);
-		return result;
-	}
+  @Override
+  public void beginTransaction() {
+    assert (this.getEntityManager().isOpen());
+    EntityTransaction transaction = getEntityManager().getTransaction();
+    // only begin transaction if it is not already active
+    if (!transaction.isActive())
+      transaction.begin();
+    else
+      LOGGER.log(Level.SEVERE, "begin called on non-active transaction");
+  }
 
-	@Override
-	public List<BO_T> findBy(String attributeName, Object attributeValue,
-			int maxResults) throws Exception {
-		// FIXME avoid native query ...
-		String sqlquery=
-				"SELECT * FROM " + this.getTableName() + " WHERE " + attributeName
-						+ "='" + attributeValue.toString() + "'";
-	  List<BO_T> result = this.findByNativeQuery(sqlquery, maxResults);
-	  return result;
-	}
-	
-	/**
-	 * get all entries that match the given native SQL query
-	 * @param sqlquery
-	 * @param maxResults
-	 * @return
-	 */
-	public List<BO_T> findByNativeQuery(String sqlquery,int maxResults) {
-		Query query = getEntityManager().createNativeQuery(sqlquery,this.getEntityType());
-		query.setMaxResults(maxResults);
-		@SuppressWarnings("unchecked")
-		List<BO_T> result = query.getResultList();
-		for (BO_T bo:result) {
-			attachMe(bo);
-		}
-		return result;	
-	}
+  @Override
+  public void clearCache() {
+    EntityManager em = this.getEntityManager();
+    if (em != null)
+      em.getEntityManagerFactory().getCache().evictAll();
+    else
+      LOGGER.log(Level.WARNING,
+          "EntityManager is null for " + this.getEntityName());
+    bolist.clear();
+  }
 
-	@Override
-	public <T> T find(Class<T> entityClass, Object primaryKey) throws Exception {
-		T result = this.getEntityManager().find(entityClass, primaryKey);
-		return result;
-	}
+  @Override
+  public void purge() {
+    Query query = getEntityManager()
+        .createQuery("DELETE FROM " + this.getEntityName());
+    query.executeUpdate();
+    bolist.clear();
+  }
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public void findAll(int maxResults) {
-		// clear 2nd level cache
-		// http://stackoverflow.com/questions/13258976/how-to-refresh-jpa-entities-when-backend-database-changes-asynchronously
-		clearCache();
+  @Override
+  public void persist(BO_T entity) {
+    this.getEntityManager().persist(entity);
+    this.attachMe(entity);
+  }
 
-		// http://stackoverflow.com/questions/2401129/hql-equivalent-query-to-this-sql-query
-		//http://stackoverflow.com/questions/6650768/jpa-and-inheritance-how-do-i-get-all-entities-of-a-given-superclass
-		String sql="SELECT e FROM " + this.getEntityName()+" e";
-		LOGGER.log(Level.INFO,sql+"["+this.getPuName()+"]");
-		EntityManager em = getEntityManager();
-		if (em==null) {
-			throw new RuntimeException("EntityManager not set for "+this.getEntityName());
-		}
-		Query query = em.createQuery(sql,this.getEntityType());
-		query.setMaxResults(maxResults);
-		bolist = query.getResultList();
-		for (BO_T bo:bolist) {
-			attachMe(bo);
-		}
-	}
-	
-	@Override
-	public com.bitplan.javax.persistence.Query createNamedQuery(String name) {
-		JPAQuery<BO_T> query=new JPAQuery<BO_T>(this,name);
-		return query;
-	}
+  @Override
+  public void merge(BO_T entity) {
+    this.getEntityManager().merge(entity);
+  }
 
-	/**
-	 * split a comma separated in List
-	 * 
-	 * @param inClause
-	 * @return
-	 */
-	public List<String> getInMemberList(String inClause) {
-		List<String> inMemberList = new ArrayList<String>();
-		String[] inMembers = inClause.split(",");
-		for (String member : inMembers) {
-			inMemberList.add(member);
-		}
-		return inMemberList;
-	}
+  @Override
+  public void close() {
+    this.getEntityManager().close();
+  }
 
-	/**
-	 * help building Criteria Queries
-	 * 
-	 * @author wf
-	 * 
-	 */
-	protected class QueryHelper {
-		CriteriaBuilder builder;
-		CriteriaQuery<BO_T> query;
-		CriteriaQuery<BO_T> select;
+  /**
+   * set a back pointer to me in the given business object
+   * 
+   * @param bo
+   */
+  public void attachMe(BO_T bo) {
+    if (bo instanceof BOImpl) {
+      @SuppressWarnings("unchecked")
+      BOImpl<BO_T> boimpl = (BOImpl<BO_T>) bo;
+      boimpl.setBOManager(this);
+      ;
+    }
+  }
 
-		CriteriaQuery<Long> countQuery;
-		TypedQuery<Long> countTypedQuery;
+  @Override
+  public BO_T findById(Object id) throws Exception {
+    String msg="findById failed for entity " + this.entityName + " id " + id;
+    @SuppressWarnings("unchecked")
+    EntityManager em=getEntityManager();
+    if (em==null) {
+      throw new Exception(msg+" EntityManager not initialized - you might want to have your admin check permissions");
+    }
+    BO_T result = (BO_T) em.find(this.getEntityType(), id);
+    if (result != null)
+      attachMe(result);
+    else
+      LOGGER.log(Level.SEVERE,
+          msg);
+    return result;
+  }
 
-		Root<BO_T> from;
-		Root<BO_T> countFrom;
+  @Override
+  public List<BO_T> findBy(String attributeName, Object attributeValue,
+      int maxResults) throws Exception {
+    // FIXME avoid native query ...
+    String sqlquery = "SELECT * FROM " + this.getTableName() + " WHERE "
+        + attributeName + "='" + attributeValue.toString() + "'";
+    List<BO_T> result = this.findByNativeQuery(sqlquery, maxResults);
+    return result;
+  }
 
-		CriteriaQuery<Long> countSelect;
-		ForeignKey fk;
+  /**
+   * get all entries that match the given native SQL query
+   * 
+   * @param sqlquery
+   * @param maxResults
+   * @return
+   */
+  public List<BO_T> findByNativeQuery(String sqlquery, int maxResults) {
+    Query query = getEntityManager().createNativeQuery(sqlquery,
+        this.getEntityType());
+    query.setMaxResults(maxResults);
+    @SuppressWarnings("unchecked")
+    List<BO_T> result = query.getResultList();
+    for (BO_T bo : result) {
+      attachMe(bo);
+    }
+    return result;
+  }
 
-		@SuppressWarnings("unchecked")
-		public QueryHelper(ForeignKey foreignKey) {
-			this.fk=foreignKey;
-			builder = getEntityManager().getCriteriaBuilder();
+  @Override
+  public <T> T find(Class<T> entityClass, Object primaryKey) throws Exception {
+    T result = this.getEntityManager().find(entityClass, primaryKey);
+    return result;
+  }
 
-			query = (CriteriaQuery<BO_T>) builder.createQuery(getEntityType());
-			countQuery = builder.createQuery(Long.class);
+  @SuppressWarnings("unchecked")
+  @Override
+  public void findAll(int maxResults) {
+    // clear 2nd level cache
+    // http://stackoverflow.com/questions/13258976/how-to-refresh-jpa-entities-when-backend-database-changes-asynchronously
+    clearCache();
 
-			from = (Root<BO_T>) query.from(getEntityType());
-			countFrom = (Root<BO_T>) countQuery.from(getEntityType());
+    // http://stackoverflow.com/questions/2401129/hql-equivalent-query-to-this-sql-query
+    // http://stackoverflow.com/questions/6650768/jpa-and-inheritance-how-do-i-get-all-entities-of-a-given-superclass
+    String sql = "SELECT e FROM " + this.getEntityName() + " e";
+    LOGGER.log(Level.INFO, sql + "[" + this.getPuName() + "]");
+    EntityManager em = getEntityManager();
+    if (em == null) {
+      throw new RuntimeException(
+          "EntityManager not set for " + this.getEntityName());
+    }
+    Query query = em.createQuery(sql, this.getEntityType());
+    query.setMaxResults(maxResults);
+    bolist = query.getResultList();
+    for (BO_T bo : bolist) {
+      attachMe(bo);
+    }
+  }
 
-			select = query.select(from);
-			countSelect = countQuery.select(builder.count(from));
-		}
-		
-		/**
-		 * does this QueryHelper have a foreign key?
-		 * @return
-		 */
-		boolean hasForeignKey() {
-			return fk!=null && fk.foreignAttribute != null && fk.foreignKey != null
-					&& (!fk.foreignKey.trim().equals(""));
-		} 
+  @Override
+  public com.bitplan.javax.persistence.Query createNamedQuery(String name) {
+    JPAQuery<BO_T> query = new JPAQuery<BO_T>(this, name);
+    return query;
+  }
 
-	}
+  /**
+   * split a comma separated in List
+   * 
+   * @param inClause
+   * @return
+   */
+  public List<String> getInMemberList(String inClause) {
+    List<String> inMemberList = new ArrayList<String>();
+    String[] inMembers = inClause.split(",");
+    for (String member : inMembers) {
+      inMemberList.add(member);
+    }
+    return inMemberList;
+  }
 
-	/**
-	 * get the Bean Field name
-	 * 
-	 * @param fieldName
-	 * @return
-	 */
-	public static String getBeanFieldName(String fieldName) {
-		return java.beans.Introspector.decapitalize(fieldName);
-	}
-	
-	/**
-	 * helper to handle foreign Key setting - usually used for parent Key
-	 * @author wf
-	 *
-	 */
-	public static class ForeignKey {
-		String foreignAttribute=null;
-		String foreignKey=null;
-		String foreignValue=null;
+  /**
+   * help building Criteria Queries
+   * 
+   * @author wf
+   * 
+   */
+  protected class QueryHelper {
+    CriteriaBuilder builder;
+    CriteriaQuery<BO_T> query;
+    CriteriaQuery<BO_T> select;
 
-		/**
-		 * create the given Foreign Key
-		 * @param fullyQualifyingforeignKey
-		 * @param foreignValue
-		 */
-		public ForeignKey(String fullyQualifyingforeignKey, String foreignValue) {
-			this.foreignValue=foreignValue;
-			if (!fullyQualifyingforeignKey.trim().equals("")) {
-				String[] fqParts = fullyQualifyingforeignKey.split("::");
-				String attributeName = fqParts[fqParts.length - 1];
-				String[] aParts = attributeName.split("\\.");
-				foreignAttribute = aParts[0];
-				foreignKey = aParts[1];
-				foreignKey = getBeanFieldName(foreignKey);
-			}
-		}
+    CriteriaQuery<Long> countQuery;
+    TypedQuery<Long> countTypedQuery;
 
-		/**
-		 * create the given foreign key
-		 * @param pForeignAttribute
-		 * @param pForeignKey
-		 * @param pForeignValue
-		 */
-		public ForeignKey(String pForeignAttribute, String pForeignKey,
-				String pForeignValue) {
-			this.foreignAttribute=pForeignAttribute;
-			this.foreignKey=pForeignKey;
-			this.foreignValue=pForeignValue;
-		}
-	}
+    Root<BO_T> from;
+    Root<BO_T> countFrom;
 
-	/**
-	 * find given JqGrid search Parameters
-	 * 
-	 * @param search
-	 * @param fullyQualifyingforeignKey
-	 *          e.g. ::com::bitplan::smartCRM::Person::meineOrganisation
-	 * @param foreignValue
-	 *          - the id
-	 * @return
-	 */
-	public List<BO_T> findByJqGridFilter(JqGridSearch search,
-			String fullyQualifyingForeignKey, String foreignValue) {
-		ForeignKey foreignKey=new ForeignKey(fullyQualifyingForeignKey,foreignValue);
-		return this.findByJqGridFilter(search, foreignKey);
-	}
-	
-	/**
-	 * find by JQGrid Filter
-	 * @param search
-	 * @return
-	 */
-	public List<BO_T> findByJqGridFilter(JqGridSearch search) {
-		return this.findByJqGridFilter(search, null);
-	}
-	
-	/**
-	 * find given JqGrid search and a foreign Key
-	 * @param search
-	 * @param foreignKey
-	 * @return
-	 */
-	public List<BO_T> findByJqGridFilter(JqGridSearch search,
-			ForeignKey foreignKey) {
-		QueryHelper qh = new QueryHelper(foreignKey);
+    CriteriaQuery<Long> countSelect;
+    ForeignKey fk;
 
-		if (search.getSortIndex() != null
-				&& (!search.getSortIndex().trim().equals(""))) {
-			String beanField = getBeanFieldName(search.getSortIndex());
-			Path<Object> sortPath = qh.from.get(beanField);
-			switch (search.getSortOrder()) {
-			case asc:
-				qh.query.orderBy(qh.builder.asc(sortPath));
-				break;
-			case desc:
-				qh.query.orderBy(qh.builder.desc(sortPath));
-				break;
-			}
-		}
+    @SuppressWarnings("unchecked")
+    public QueryHelper(ForeignKey foreignKey) {
+      this.fk = foreignKey;
+      builder = getEntityManager().getCriteriaBuilder();
 
-		JqGridFilter filter = search.getFilter();
-		Predicate whereExpr = null;
+      query = (CriteriaQuery<BO_T>) builder.createQuery(getEntityType());
+      countQuery = builder.createQuery(Long.class);
 
-		if (filter != null) {
-			List<Predicate> predicates = new ArrayList<Predicate>();
-			for (JqGridRule rule : filter.getRules()) {
-				String beanField = getBeanFieldName(rule.getField());
-				Path<String> beanValue = qh.from.<String> get(beanField);
-				Predicate expr;
-				switch (rule.getOp()) {
-				case eq: // equals
-					expr = qh.builder.equal(beanValue, rule.getData());
-					break;
-				case ne: // not equals
-					expr = qh.builder.notEqual(qh.from.get(beanField), rule.getData());
-					break;
-				case bw: // begins with
-					expr = qh.builder.like(beanValue, rule.getData() + "%");
-					break;
-				case ew: // ends with
-					expr = qh.builder.like(beanValue, "%" + rule.getData());
-					break;
-				case en: // does not end with
-					expr = qh.builder.notLike(beanValue, "%" + rule.getData());
-					break;
-				case bn: // does not begin with
-					expr = qh.builder.notLike(beanValue, rule.getData() + "%");
-					break;
-				case cn: // contains
-					expr = qh.builder.like(beanValue, "%" + rule.getData() + "%");
-					break;
-				case nc: // does not contain
-					expr = qh.builder.notLike(beanValue, "%" + rule.getData() + "%");
-					break;
-				case nu: // is null
-					expr = qh.builder.isNull(beanValue);
-					break;
-				case nn: // is not null
-					expr = qh.builder.isNotNull(beanValue);
-					break;
-				case in: // in
-					expr = beanValue.in(this.getInMemberList(rule.getData()));
-					break;
-				case ni: // not in
-					expr = qh.builder.not(beanValue.in(this.getInMemberList(rule
-							.getData())));
-					break;
-				case lt: // less than
-					expr = qh.builder.lessThan(beanValue, rule.getData());
-					break;
-				case le: // less than or equal
-					expr = qh.builder.lessThanOrEqualTo(beanValue, rule.getData());
-					break;
-				case gt: // greater than
-					expr = qh.builder.greaterThan(beanValue, rule.getData());
-					break;
-				case ge: // greater than or equal
-					expr = qh.builder.greaterThanOrEqualTo(beanValue, rule.getData());
-					break;
-				default:
-					throw new IllegalArgumentException("unsupported operation "
-							+ rule.getOp());
-				} // switch
-				predicates.add(expr);
-			} // for
+      from = (Root<BO_T>) query.from(getEntityType());
+      countFrom = (Root<BO_T>) countQuery.from(getEntityType());
 
-			switch (filter.getGroupOp()) {
-			case AND:
-				whereExpr = qh.builder.conjunction();
-				whereExpr = qh.builder.and(predicates.toArray(new Predicate[predicates
-						.size()]));
-				break;
-			case OR:
-				whereExpr = qh.builder.disjunction();
-				whereExpr = qh.builder.or(predicates.toArray(new Predicate[predicates
-						.size()]));
-				break;
-			} // switch
-		} // if filter
-		if (qh.hasForeignKey()) {
-			Path<BO_T> path = qh.from.join(qh.fk.foreignAttribute).get(qh.fk.foreignKey);
-			Predicate joinExpr = qh.builder.equal(path, qh.fk.foreignValue);
-			if (whereExpr != null)
-				whereExpr = qh.builder.and(whereExpr, joinExpr);
-			else
-				whereExpr = qh.builder.and(joinExpr);
-		}
-		if (whereExpr != null) {
-			qh.query.where(whereExpr);
-			qh.countQuery.where(whereExpr);
-		}
-		// http://stackoverflow.com/questions/5349264/total-row-count-for-pagination-using-jpa-criteria-api
-		qh.countTypedQuery = getEntityManager().createQuery(qh.countSelect);
-		search.setTotalRowCount(qh.countTypedQuery.getSingleResult());
+      select = query.select(from);
+      countSelect = countQuery.select(builder.count(from));
+    }
 
-		TypedQuery<BO_T> query = getEntityManager().createQuery(qh.select);
-		query.setFirstResult(search.getFirstResult());
-		query.setMaxResults(search.getMaxResults());
-		List<BO_T> results = query.getResultList();
+    /**
+     * does this QueryHelper have a foreign key?
+     * 
+     * @return
+     */
+    boolean hasForeignKey() {
+      return fk != null && fk.foreignAttribute != null && fk.foreignKey != null
+          && (!fk.foreignKey.trim().equals(""));
+    }
 
-		// set the ResultRowCount
-		search.setResultRowCount(results.size());
-		if (debug) {
-			String sql = query.unwrap(JpaQuery.class).getDatabaseQuery()
-					.getSQLString();
-			String countSql = qh.countTypedQuery.unwrap(JpaQuery.class)
-					.getDatabaseQuery().getSQLString();
-			System.out.println(sql);
-			System.out.println("\t" + countSql);
-		}
-		return results;
-	}
+  }
+
+  /**
+   * get the Bean Field name
+   * 
+   * @param fieldName
+   * @return
+   */
+  public static String getBeanFieldName(String fieldName) {
+    return java.beans.Introspector.decapitalize(fieldName);
+  }
+
+  /**
+   * helper to handle foreign Key setting - usually used for parent Key
+   * 
+   * @author wf
+   *
+   */
+  public static class ForeignKey {
+    String foreignAttribute = null;
+    String foreignKey = null;
+    String foreignValue = null;
+
+    /**
+     * create the given Foreign Key
+     * 
+     * @param fullyQualifyingforeignKey
+     * @param foreignValue
+     */
+    public ForeignKey(String fullyQualifyingforeignKey, String foreignValue) {
+      this.foreignValue = foreignValue;
+      if (!fullyQualifyingforeignKey.trim().equals("")) {
+        String[] fqParts = fullyQualifyingforeignKey.split("::");
+        String attributeName = fqParts[fqParts.length - 1];
+        String[] aParts = attributeName.split("\\.");
+        foreignAttribute = aParts[0];
+        foreignKey = aParts[1];
+        foreignKey = getBeanFieldName(foreignKey);
+      }
+    }
+
+    /**
+     * create the given foreign key
+     * 
+     * @param pForeignAttribute
+     * @param pForeignKey
+     * @param pForeignValue
+     */
+    public ForeignKey(String pForeignAttribute, String pForeignKey,
+        String pForeignValue) {
+      this.foreignAttribute = pForeignAttribute;
+      this.foreignKey = pForeignKey;
+      this.foreignValue = pForeignValue;
+    }
+  }
+
+  /**
+   * find given JqGrid search Parameters
+   * 
+   * @param search
+   * @param fullyQualifyingforeignKey
+   *          e.g. ::com::bitplan::smartCRM::Person::meineOrganisation
+   * @param foreignValue
+   *          - the id
+   * @return
+   */
+  public List<BO_T> findByJqGridFilter(JqGridSearch search,
+      String fullyQualifyingForeignKey, String foreignValue) {
+    ForeignKey foreignKey = new ForeignKey(fullyQualifyingForeignKey,
+        foreignValue);
+    return this.findByJqGridFilter(search, foreignKey);
+  }
+
+  /**
+   * find by JQGrid Filter
+   * 
+   * @param search
+   * @return
+   */
+  public List<BO_T> findByJqGridFilter(JqGridSearch search) {
+    return this.findByJqGridFilter(search, null);
+  }
+
+  /**
+   * find given JqGrid search and a foreign Key
+   * 
+   * @param search
+   * @param foreignKey
+   * @return
+   */
+  public List<BO_T> findByJqGridFilter(JqGridSearch search,
+      ForeignKey foreignKey) {
+    QueryHelper qh = new QueryHelper(foreignKey);
+
+    if (search.getSortIndex() != null
+        && (!search.getSortIndex().trim().equals(""))) {
+      String beanField = getBeanFieldName(search.getSortIndex());
+      Path<Object> sortPath = qh.from.get(beanField);
+      switch (search.getSortOrder()) {
+      case asc:
+        qh.query.orderBy(qh.builder.asc(sortPath));
+        break;
+      case desc:
+        qh.query.orderBy(qh.builder.desc(sortPath));
+        break;
+      }
+    }
+
+    JqGridFilter filter = search.getFilter();
+    Predicate whereExpr = null;
+
+    if (filter != null) {
+      List<Predicate> predicates = new ArrayList<Predicate>();
+      for (JqGridRule rule : filter.getRules()) {
+        String beanField = getBeanFieldName(rule.getField());
+        Path<String> beanValue = qh.from.<String> get(beanField);
+        Predicate expr;
+        switch (rule.getOp()) {
+        case eq: // equals
+          expr = qh.builder.equal(beanValue, rule.getData());
+          break;
+        case ne: // not equals
+          expr = qh.builder.notEqual(qh.from.get(beanField), rule.getData());
+          break;
+        case bw: // begins with
+          expr = qh.builder.like(beanValue, rule.getData() + "%");
+          break;
+        case ew: // ends with
+          expr = qh.builder.like(beanValue, "%" + rule.getData());
+          break;
+        case en: // does not end with
+          expr = qh.builder.notLike(beanValue, "%" + rule.getData());
+          break;
+        case bn: // does not begin with
+          expr = qh.builder.notLike(beanValue, rule.getData() + "%");
+          break;
+        case cn: // contains
+          expr = qh.builder.like(beanValue, "%" + rule.getData() + "%");
+          break;
+        case nc: // does not contain
+          expr = qh.builder.notLike(beanValue, "%" + rule.getData() + "%");
+          break;
+        case nu: // is null
+          expr = qh.builder.isNull(beanValue);
+          break;
+        case nn: // is not null
+          expr = qh.builder.isNotNull(beanValue);
+          break;
+        case in: // in
+          expr = beanValue.in(this.getInMemberList(rule.getData()));
+          break;
+        case ni: // not in
+          expr = qh.builder
+              .not(beanValue.in(this.getInMemberList(rule.getData())));
+          break;
+        case lt: // less than
+          expr = qh.builder.lessThan(beanValue, rule.getData());
+          break;
+        case le: // less than or equal
+          expr = qh.builder.lessThanOrEqualTo(beanValue, rule.getData());
+          break;
+        case gt: // greater than
+          expr = qh.builder.greaterThan(beanValue, rule.getData());
+          break;
+        case ge: // greater than or equal
+          expr = qh.builder.greaterThanOrEqualTo(beanValue, rule.getData());
+          break;
+        default:
+          throw new IllegalArgumentException(
+              "unsupported operation " + rule.getOp());
+        } // switch
+        predicates.add(expr);
+      } // for
+
+      switch (filter.getGroupOp()) {
+      case AND:
+        whereExpr = qh.builder.conjunction();
+        whereExpr = qh.builder
+            .and(predicates.toArray(new Predicate[predicates.size()]));
+        break;
+      case OR:
+        whereExpr = qh.builder.disjunction();
+        whereExpr = qh.builder
+            .or(predicates.toArray(new Predicate[predicates.size()]));
+        break;
+      } // switch
+
+    } // if filter
+    if (qh.hasForeignKey()) {
+      Path<BO_T> path = qh.from.join(qh.fk.foreignAttribute)
+          .get(qh.fk.foreignKey);
+      Predicate joinExpr = qh.builder.equal(path, qh.fk.foreignValue);
+      if (whereExpr != null)
+        whereExpr = qh.builder.and(whereExpr, joinExpr);
+      else
+        whereExpr = qh.builder.and(joinExpr);
+    }
+    if (whereExpr != null) {
+      qh.query.where(whereExpr);
+      qh.countQuery.where(whereExpr);
+    }
+    // http://stackoverflow.com/questions/5349264/total-row-count-for-pagination-using-jpa-criteria-api
+    qh.countTypedQuery = getEntityManager().createQuery(qh.countSelect);
+    search.setTotalRowCount(qh.countTypedQuery.getSingleResult());
+
+    TypedQuery<BO_T> query = getEntityManager().createQuery(qh.select);
+    query.setFirstResult(search.getFirstResult());
+    query.setMaxResults(search.getMaxResults());
+    List<BO_T> results = query.getResultList();
+
+    // set the ResultRowCount
+    search.setResultRowCount(results.size());
+    if (debug) {
+      String sql = query.unwrap(JpaQuery.class).getDatabaseQuery()
+          .getSQLString();
+      String countSql = qh.countTypedQuery.unwrap(JpaQuery.class)
+          .getDatabaseQuery().getSQLString();
+      System.out.println(sql);
+      System.out.println("\t" + countSql);
+    }
+    return results;
+  }
 
 }
