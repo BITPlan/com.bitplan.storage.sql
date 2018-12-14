@@ -1,0 +1,16 @@
+# simple mysql docker container
+# WF 2018-12-14
+mysql:
+    container_name: sqlstorage
+    image: mysql/mysql-server:5.7
+    environment:
+      # Oracle style
+      - MYSQL_DATABASE=testsqlstorage
+      - MYSQL_ROOT_PASSWORD=anyThingGoes2Day!
+      - MYSQL_ROOT_HOST=172.17.0.1
+      - MYSQL_USER=cm
+      - MYSQL_PASSWORD=secret
+      - MYSQL_LOG_CONSOLE=true
+
+    ports:
+        - "3306:3306"
