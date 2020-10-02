@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Copyright (C) 2011-2017 BITPlan GmbH Pater-Delp-Str. 1 D-47877 Willich-Schiefbahn
+<!-- Copyright (C) 2011-2020 BITPlan GmbH Pater-Delp-Str. 1 D-47877 Willich-Schiefbahn
 	http://www.bitplan.com install maven 2 to use this pom file run e.g. mvn
 	dependency:go-offline to download all libraries add M2_REPO variable pointing
 	to $HOME/.m2/repository to your Eclipse settings Install m2eclipse plugin
@@ -87,7 +87,7 @@
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
-			<version>5.1.39</version>
+			<version>5.1.47</version>
 		</dependency>
 	</dependencies>
 	<build>
